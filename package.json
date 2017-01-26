@@ -1,0 +1,20 @@
+{
+  "name": "newfi-customer-portal-redesign",
+  "version": "1.0.0",
+  "dependencies": {
+    "bootstrap-sass": "3.3.7",
+    "inuitcss": ""
+  },
+  "devDependencies": {
+    "autoprefixer": "",
+    "grunt": "",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-htmlmin": "^2.1.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "",
+    "grunt-grunticon": "",
+    "grunt-postcss": "",
+    "grunt-processhtml": "^0.4.1",
+    "grunt-sass": ">=1.0.0"
+  }
+}

@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <title>Newfi</title>
+
+  <!-- Lato is Newfi's primary typeface. We're using TYpekit's version in prefernce to
+       Google's as it is a newer version, with significantly better typographic fratures and additiona weights.
+  -->
+  <script src="https://use.typekit.net/mnt6fsi.js"></script>
+  <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+  <!-- This stylesheet is generated via a grunt task from the scss source files found in the
+       sass directory. We've attempted to build a strong foundation for a modular style system
+       that can be extended to build a more maintainable and extensible codebase for Newfi's
+       whole backend as its UX and visual identity are refactored as part of the redesign
+       effort to come. At present, we've only built out the modules necessary for the customer
+       engagement portal redesign.
+  -->
+  <link href="./css/customer-engagement.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+  <!-- Using Grunt-Icon to generate svg and fallback png css for icons.
+
+       To add new icons (or replace existing):
+       1) Optimize source svg files and then add to the icons_source directory.
+       2) Run the "grunt icons" task via shell to regenerate css and fallback png files.
+       3) Add respective rules (for dimensions) to /sass/objects/_objects.icon.scss partial.
+
+       The following code is required to load appropriate styles for any given browser.
+  -->
+  <script type="text/javascript">
+  /*! grunt-grunticon Stylesheet Loader - v2.1.6 | https://github.com/filamentgroup/grunticon | (c) 2015 Scott Jehl, Filament Group, Inc. | MIT license. */
+  !function(){function e(e,n,t){"use strict";var o=window.document.createElement("link"),a=n||window.document.getElementsByTagName("script")[0],i=window.document.styleSheets;return o.rel="stylesheet",o.href=e,o.media="only x",a.parentNode.insertBefore(o,a),o.onloadcssdefined=function(e){for(var n,t=0;t<i.length;t++)i[t].href&&i[t].href===o.href&&(n=!0);n?e():setTimeout(function(){o.onloadcssdefined(e)})},o.onloadcssdefined(function(){o.media=t||"all"}),o}function n(e,n){e.onload=function(){e.onload=null,n&&n.call(e)},"isApplicationInstalled"in navigator&&"onloadcssdefined"in e&&e.onloadcssdefined(n)}!function(t){var o=function(a,i){"use strict";if(a&&3===a.length){var r=t.navigator,d=t.document,s=t.Image,c=!(!d.createElementNS||!d.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect||!d.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1")||t.opera&&r.userAgent.indexOf("Chrome")===-1||r.userAgent.indexOf("Series40")!==-1),l=new s;l.onerror=function(){o.method="png",o.href=a[2],e(a[2])},l.onload=function(){var t=1===l.width&&1===l.height,r=a[t&&c?0:t?1:2];t&&c?o.method="svg":t?o.method="datapng":o.method="png",o.href=r,n(e(r),i)},l.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",d.documentElement.className+=" grunticon"}};o.loadCSS=e,o.onloadCSS=n,t.grunticon=o}(this)}();
+  grunticon(["./css/icons/icons.data.svg.css", "./css/icons/icons.data.png.css", "./css/icons/icons.fallback.css"], grunticon.svgLoadedCallback);
+  </script>
+  <noscript><link href="./css/icons/icons.fallback.css" rel="stylesheet"></noscript>
+
+  <!-- //***************** NOTES ON SCRIPT DEVELOPMENT FOR THIS PROTOTYPE *****************
+       We've intentionally avoided using ECMA6 and any framework or strict methodolgy to
+       develop this prototype, since we don't know how  it will be integrated into Newfi's
+       larger codebase.
+  -->
+  <!-- jQuery is a prerequisite for several vendor scripts below. -->
+  <script type="text/javascript" src="./js/vendors/jquery-3.1.1.min.js"></script>
+
+<!-- build:js:prod ./js/app.min.js -->
+  <!-- simple polyfill for string.trim -->
+  <script type="text/javascript" src="./js/polyfill.string-trim.js"></script>
+
+  <!-- Functional helper library -->
+  <script type="text/javascript" src="./js/vendors/lodash.custom.min.js"></script>
+
+  <!-- Simple library for formatting numbers as currency -->
+  <script type="text/javascript" src="./js/vendors/accounting.js"></script>
+
+  <!-- Form validation library
+       - Depends on jQuery.
+  -->
+  <script type="text/javascript" src="./js/vendors/jquery.validate.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+  <!-- Templating -->
+  <script type="text/javascript" src="./js/vendors/handlebars.min-v4.0.5.js"></script>
+
+  <!-- Using just the "collapse" and "transitions" scripts from Bootstrap, to match the
+       behavior of the main site's mobile nav. The requisite styles for these scripts are
+       included as a utility partial in the prototype's sass directory.
+       - Depends on jQuery. (or jQuery.slim)
+
+       TODO: Replace with lighter solution and/or one not tied to Bootstrap's classes
+  -->
+  <script type="text/javascript" src="./js/vendors/bootstrap.custom.js"></script>
+
+  <!-- Polyfill/extend functionality of html5 range inputs
+       - Depends on jQuery.
+   -->
+  <script type="text/javascript" src="./js/vendors/rangeslider.js"></script>
+
+
+  <!-- Custom handlebars helpers -->
+  <script type="text/javascript" src="./js/handlebars-helpers.js"></script>
+
+  <!-- Setup global config for validator plugin to suit our components -->
+  <script type="text/javascript" src="./js/validator-global-defaults.js"></script>
+
+  <!-- Default settings for Accounting library -->
+  <script type="text/javascript" src="./js/accounting-settings.js"></script>
+
+  <!-- Custom plugin, wrapping rangeslider and linking it to another numeric input
+       - Depends on jQuery.
+   -->
+  <script type="text/javascript" src="./js/components/c-linked-percent-slider.js"></script>
+
+  <!-- Custom plugin, enhances input fields with automatically formatted currency strings.
+       - Depends on accountability.js and jQuery.
+   -->
+  <script type="text/javascript" src="./js/components/c-currency-input.js"></script>
+  <!-- Custom script, manages state classes for radio fields
+       - Depends on jQuery.
+   -->
+  <script type="text/javascript" src="./js/components/c-radio.js"></script>
+  <!-- Custom script, additional functionality for mobile nav, not handled by
+       bootstrap collapse
+       - Depends on jQuery.
+   -->
+  <script type="text/javascript" src="./js/mobilenav.js"></script>
+
+  <!-- Main app script; handles all aspects of UX for portal -->
+  <script type="text/javascript" src="./js/customer-engagement-portal.js"></script>
+<!-- /build -->
+
+  <script id="details_summary_template" type="text/x-handlebars-template">
+    <h5 class="u-margin-bottom-tiny">Your quote details: <button class="c-btn c-btn--small c-btn--as-link" data-js="show-details-form">Edit…</button></h5>
+    <dl class="c-form-summary">
+      {{#each rows}}
+      <div class="c-form-summary__item">
+        <dt class="c-form-summary__label">{{label}}</dt>
+        <dd class="c-form-summary__value">{{value}}</dd>
+      </div>
+      {{/each}}
+    </dl>
+  </script>
+
+  <script id="chosen_rate_summary_template" type="text/x-handlebars-template">
+    <div class="o-wrapper o-wrapper--narrow u-margin-bottom-small">
+      <div class="o-layout">
+        <div class="o-layout__item u-1/1 c-rates-listing">
+          <h5 class="u-margin-bottom-tiny">Your chosen rate: <button class="c-btn c-btn--small c-btn--as-link" data-js="show-rate-table">Edit…</button></h5>
+          <dl class="c-form-summary">
+            <div class="c-form-summary__item">
+              <dt class="c-form-summary__label">Program</dt>
+              <dd class="c-form-summary__value">{{program.name}}</dd>
+            </div>
+            <div class="c-form-summary__item">
+              <dt class="c-form-summary__label">Rate</dt>
+              <dd class="c-form-summary__value">{{loanRate rate.rate}}</dd>
+            </div>
+            <div class="c-form-summary__item">
+              <dt class="c-form-summary__label">APR</dt>
+              <dd class="c-form-summary__value">{{loanRate rate.apr}}</dd>
+            </div>
+            <div class="c-form-summary__item">
+              <dt class="c-form-summary__label">Closing Costs</dt>
+              <dd class="c-form-summary__value">{{currencyUSDNoCents rate.total_closing_costs}}</dd>
+            </div>
+            <div class="c-form-summary__item">
+              <dt class="c-form-summary__label">Mo. Payments</dt>
+              <dd class="c-form-summary__value">{{currencyUSDNoCents rate.mo_mortgage}}</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script id="rates_listing_template" type="text/x-handlebars-template">
+    <div class="o-wrapper o-wrapper--narrow u-margin-bottom-large">
+      <div class="o-layout">
+        <div class="o-layout__item u-1/1 c-rates-listing">
+          <h5>Select your preferred loan option:</h5>
+          <table class="c-rates-listing__header">
+            <thead>
+              <tr>
+                <th class="c-rates-listing__program-shim"></th>
+                <th class="c-rates-listing__heading c-rates-listing__heading--rate">Rate<sup>*</sup></th>
+                <th class="c-rates-listing__heading c-rates-listing__heading--apr">APR<sup>*</sup></th>
+                <th class="c-rates-listing__heading c-rates-listing__heading--closing">Closing<sup>**</sup></th>
+                <th class="c-rates-listing__heading c-rates-listing__heading--monthlies" colspan="2"><span class="c-rates-listing--verbose">Monthly Mortgage Payment</span><span class="c-rates-listing--normal">Monthly Mortgage Payment</span><span class="c-rates-listing--terse">Mo. Payment</span><sup>**</sup></th>
+              </tr>
+            </thead>
+          </table>
+          {{#each programs}}
+          <table class="c-rates-listing__program" data-js-program-id="{{@index}}">
+            <caption class="c-rates-listing__program-label">
+              <span class="c-rates-listing__program-label-heading">{{name}}</span>
+              <span class="c-rates-listing__program-label-subheading">{{product_type}}</span>
+            </caption>
+            {{#each rates}}
+            <tr class="c-rates-listing__result{{#each tags}} c-rates-listing__result--{{this}}{{/each}}" data-js-rate-id="{{@index}}" data-js-rate-attributes="{{#each tags}} tag-{{this}}{{/each}}">
+              <td class="c-rates-listing__program-shim"></td>
+              <td class="c-rates-listing__rate">{{loanRate rate}}</td>
+              <td class="c-rates-listing__apr">{{loanRate apr}}</td>
+              <td class="c-rates-listing__closing">{{currencyUSDNoCents total_closing_costs}}</td>
+              <td class="c-rates-listing__monthlies">{{currencyUSDNoCents mo_mortgage}}</td>
+              <td class="c-rates-listing__actions">
+                <button class="c-btn c-btn--small c-btn--primary c-rates-listing--terse" data-js="show-rate-details">Select</button>
+                <button class="c-btn c-btn--small c-btn--subtle  c-rates-listing--normal" data-js="show-rate-details">Details</button>
+                <button class="c-btn c-btn--small c-btn--as-link c-rates-listing--normal" data-js-program-id="{{@../index}}" data-js-rate-id="{{@index}}">Select</button>
+                <button class="c-btn c-btn--small c-btn--subtle  c-rates-listing--verbose" data-js="show-rate-details">Detailed Costs</button>
+                <button class="c-btn c-btn--small c-btn--as-link c-rates-listing--verbose" data-js-program-id="{{@../index}}" data-js-rate-id="{{@index}}" data-js="select-rate">Select</button>
+              </td>
+            </tr>
+            {{/each}}
+          </table>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script id="rate_loading_animation_template" type="text/x-handlebars-template">
+    <div class="c-rates-loading" data-js="rates-loading-indicator">
+      <span class="c-rates-loading__spinner"></span>
+      <span class="o-icon o-icon--abacus c-rates-loading__icon"></span>
+      <span class="c-rates-loading__message">Searching for the best rates…</span>
+    </div>
+  </script>
+
+  <script id="rates_detail_template" type="text/x-handlebars-template">
+    <div class="">
+      <div class="c-rates-detail">
+        <button class="c-btn c-btn--icon c-rates-detail__icon-close" data-js="close-rate-details">
+          <span class="u-hidden-visually">Close Rate Details</span><span class="o-icon o-icon--close-button"></span>
+        </button>
+
+        <div class="o-layout">
+          <div class="o-layout__item u-1/1">
+            <h5 class="c-rates-detail__header"><strong>Detailed Costs</strong> for a <em>{{program.name}}</em> loan, with a <em>{{loanRate rate.rate}}</em> interest rate (<em>{{loanRate rate.apr}} APR</em>)</h5>
+          </div>
+        </div>
+
+        <div class="o-layout u-margin-bottom">
+
+          <div class="o-layout__item u-1/2@mediumsmall">
+            <table>
+              <tr class="c-rates-detail__items-heading">
+                <td colspan="2">Estimated Lender Costs:</td>
+              </tr>
+              <tr class="c-rates-detail__item">
+                <td class="c-rates-detail__item-label">Lender Fee</td>
+                <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.lender_costs.lender_fee}}</td>
+              </tr>
+              <tr class="c-rates-detail__item">
+                <td class="c-rates-detail__item-label">Your cost or credit, based on this rate</td>
+                <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.lender_costs.loanee_cost}}</td>
+              </tr>
+              <tr class="c-rates-detail__items-heading">
+                <td colspan="2">Estimated Third Party Costs:</td>
+              </tr>
+              <tr class="c-rates-detail__item">
+                <td class="c-rates-detail__item-label">Appraisal Fee</td>
+                <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.third_party_costs.appraisal_fee}}</td>
+              </tr>
+              <tr class="c-rates-detail__item">
+                <td class="c-rates-detail__item-label">Owner‘s Title Ins.</td>
+                <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.third_party_costs.owners_title_ins}}</td>
+              </tr>
+              <tr class="c-rates-detail__item">
+                <td class="c-rates-detail__item-label">Lender‘s Title Ins.</td>
+                <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.third_party_costs.lenders_title_ins}}</td>
+              </tr>
+              <tr class="c-rates-detail__item">
+                <td class="c-rates-detail__item-label">Closing/Escrow Fees</td>
+                <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.third_party_costs.closing_and_escrow_fees}}</td>
+              </tr>
+              <tr class="c-rates-detail__item">
+                <td class="c-rates-detail__item-label">Other Fees</td>
+                <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.third_party_costs.other_fees}}</td>
+              </tr>
+              <tr class="c-rates-detail__totals">
+                <td class="c-rates-detail__totals-label">Total Estimated Closing Costs</td>
+                <td class="c-rates-detail__totals-value">{{currencyUSDNoCents rate.total_closing_costs}}</td>
+              </tr>
+              <tr class="c-rates-detail__totals">
+                <td class="c-rates-detail__totals-label">Monthly Loan Payments</td>
+                <td class="c-rates-detail__totals-value">{{currencyUSDNoCents rate.mo_mortgage}}</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="o-layout__item u-1/2@mediumsmall">
+            <table>
+              <tr class="c-rates-detail__items-heading">
+                <td colspan="2">Estimated Prepaids:</td>
+              </tr>
+              <tr class="c-rates-detail__item">
+                <td class="c-rates-detail__item-label">Interest</td>
+                <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.prepaids.interest}}</td>
+              </tr>
+              <tr class="c-rates-detail__item">
+                <td class="c-rates-detail__item-label">Homeowner’s Ins.</td>
+                <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.prepaids.homeowners_ins}}</td>
+              </tr>
+              <tr class="c-rates-detail__item">
+                <td class="c-rates-detail__item-label">Tax Reserve—est. 2 months</td>
+                <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.prepaids.tax_reserve}}</td>
+              </tr>
+              <tr class="c-rates-detail__item">
+                <td colpsan="2" class="c-rates-detail__item-sublabel">Varies based on calendar month</td>
+              </tr>
+              <tr class="c-rates-detail__item">
+                <td class="c-rates-detail__item-label">Homeowner’s Ins. Reserve—est. 2 months</td>
+                <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.prepaids.homeowners_ins_reserve}}</td>
+              </tr>
+              <tr class="c-rates-detail__item">
+                <td colpsan="2" class="c-rates-detail__item-sublabel">Provided you have 6 months of remaining coverage
+                  <br>Note: Taxes for 1st and 2nd installments must be paid or will be collected at closing.</td>
+              </tr>
+              <tr class="c-rates-detail__totals">
+                <td class="c-rates-detail__totals-label">Total Estimated Prepaids</td>
+                <td class="c-rates-detail__totals-value">{{currencyUSDNoCents rate.total_prepaids}}</td>
+              </tr>
+            </table>
+          </div>
+
+        </div>
+
+        <div class="o-layout">
+          <div class="o-layout__item u-1/1 o-layout--right">
+            <button class="c-btn c-btn--prominent u-margin-bottom-small" data-js-program-id="{{program_id}}" data-js-rate-id="{{rate_id}}" data-js="select-rate">Get Started With This Rate</button>
+            <button class="c-btn c-btn--subtle u-margin-bottom-small" data-js="close-rate-details">Choose a Different Rate</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </script>
+
+</head>
+
+<body>
+  <!-- BEGIN header Component -->
+  <header class="c-masthead" role="banner">
+    <div class="o-wrapper">
+      <a class="c-masthead__logo o-icon o-icon--brand-logo" href="https://www.newfi.com/" title="Better Mortgage Loans &amp; Refinance Services">
+        <h1 class="u-hidden-visually">Newfi</h1>
+      </a>
+
+
+      <a class="c-btn c-btn--icon c-nav-menu--main__mobile-toggle collapsed" href="#main_nav" data-toggle="collapse" data-target=".c-masthead__navbar">
+        <span class="u-hidden-visually">Navigation</span><span class="o-icon o-icon--bars"></span>
+      </a>
+
+      <nav class="c-masthead__navbar collapse" role="navigation">
+        <ul class="c-nav-menu c-nav-menu--main" id="main_nav">
+          <li class="c-nav-menu__item"><a href="https://www.newfi.com/"><span>Home</span></a></li>
+          <li class="c-nav-menu__item"><a href="https://www.newfi.com/about-us/"><span>Why Newfi</span></a></li>
+          <li class="c-nav-menu__item c-nav-menu__item--current"><span>See Rates</span></li>
+          <li class="c-nav-menu__item"><a href="https://www.newfi.com/NewfiWeb/"><span>Login</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!-- END header Component -->
+
+  <!-- BEGIN page-content Component -->
+  <article class="c-page-content c-loan-form">
+
+    <section class="c-page-content__section s-hero s-hero--dark">
+      <div class="o-wrapper">
+        <div class="o-layout">
+          <div class="o-layout__item  u-1/1">
+            <h1>Real-Time, Transparent Rates</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="c-page-content__section">
+      <div class="o-wrapper o-wrapper--narrow">
+        <div class="o-layout">
+          <div class="o-layout__item  u-1/1">
+            <h3 class="u-text-centered">Find the Best Rate</h3>
+            <p>Enter some basic information below and we will give you a customized quote with the best rates we offer for a variety of loan types.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BEGIN loan details section -->
+    <section class="c-page-content__section">
+      <!-- BEGIN loan details form -->
+      <form class="c-rates-app__loan-form c-form--stacked o-wrapper o-wrapper--narrow u-margin-top-none" data-js="loan-form">
+
+        <!-- Stage 1. Intro -->
+        <div class="o-layout u-margin-bottom-large c-loan-form__intro-stage">
+          <div class="o-layout__item u-1/1">
+
+            <h5 class="u-margin-bottom-small">What will your loan be for?</h5>
+            <div class="c-form-element__control c-radio__toggle-trio" data-js="loantype-radioset">
+              <span class="c-radio">
+                <input type="radio" id="loantype--new-purchase" name="loantype" value="new-purchase"/>
+                <label class="c-radio__label" for="loantype--new-purchase">
+                  <span class="c-radio--faux"></span>
+                  <span class="c-form-element__label">Home Purchase</span>
+                </label>
+                <span class="o-icon o-icon--centered o-icon--condomnium u-margin-top"></span>
+              </span>
+              <span class="c-radio">
+                <input type="radio" id="loantype--refinance" name="loantype" value="refinance"/>
+                <label class="c-radio__label" for="loantype--refinance">
+                  <span class="c-radio--faux"></span>
+                  <span class="c-form-element__label">Refinance</span>
+                </label>
+                <span class="o-icon o-icon--centered o-icon--house-money u-margin-top"></span>
+              </span>
+              <span class="c-radio">
+                <input type="radio" id="loantype--cashout" name="loantype" value="cashout"/>
+                <label class="c-radio__label" for="loantype--cashout">
+                  <span class="c-radio--faux"></span>
+                  <span class="c-form-element__label">Take Out Cash</span>
+                </label>
+                <span class="o-icon o-icon--centered o-icon--piggy-bank u-margin-top"></span>
+              </span>
+              <span class="c-radio__toggle-slider"></span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Stage 2. Collect Details -->
+        <div class="o-layout c-loan-form__collect-details-stage" data-js="loan-form__collect-details-stage" style="display:none">
+          <div class="o-layout__item u-1/1">
+            <h5>We only need a few details to calculate your rates:</h5>
+          </div>
+
+          <div class="o-layout__item u-1/1 u-1/2@small u-1/3@medium" data-js="details--zipcode">
+            <div class="c-form-element u-margin-bottom-small">
+              <label class="c-form-element__label" for="zipcode">Zip Code</label>
+              <div class="c-form-element__control">
+                <input id="zipcode" name="zipcode" class="c-input" type="text" />
+              </div>
+            </div>
+          </div>
+
+          <div class="o-layout__item u-1/1 u-1/2@small u-1/3@medium" data-js="details--residencetype">
+            <div class="c-form-element u-margin-bottom-small">
+              <label class="c-form-element__label" for="residencetype">Property Type</label>
+              <div class="c-form-element__control">
+                <div class="c-select_container">
+                  <select id="residencetype" name="residencetype" class="c-select">
+                    <option value="">Select One</option>
+                    <option value="0">Single Family</option>
+                    <option value="1">Condo</option>
+                    <option value="2">2 Units</option>
+                    <option value="3">3 Units</option>
+                    <option value="4">4 Units</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="o-layout__item u-1/1 u-1/2@small u-1/3@medium" data-js="details--propertyuse">
+            <div class="c-form-element u-margin-bottom-small">
+              <label class="c-form-element__label" for="propertyuse">Property Use</label>
+              <div class="c-form-element__control">
+                <div class="c-select_container">
+                  <select id="propertyuse" name="propertyuse" class="c-select">
+                    <option value="">Select One</option>
+                    <option value="0">Primary Residence</option>
+                    <option value="1">Vacation/Second Home</option>
+                    <option value="2">Investment Property</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="o-layout__item u-1/1 u-1/2@small u-1/3@medium" data-js="details--creditscore">
+            <div class="c-form-element u-margin-bottom-small">
+              <label class="c-form-element__label" for="creditscore">Credit Score</label>
+              <div class="c-form-element__control">
+                <div class="c-select_container">
+                  <select id="creditscore" name="creditscore" class="c-select">
+                    <option value="">Select One</option>
+                    <option value="740">740+ — Excellent</option>
+                    <option value="720">720-739 — Great</option>
+                    <option value="700">700-719 — Very Good</option>
+                    <option value="680">680-699 — Good</option>
+                    <option value="660">660-679 — Average</option>
+                    <option value="640">640-659 — Fair</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="o-layout__item u-1/1 u-1/2@small u-1/3@medium" data-js="details--purchaseprice">
+            <div class="c-form-element u-margin-bottom-small">
+              <label class="c-form-element__label" for="purchaseprice">Purchase Price</label>
+              <div class="c-form-element__control c-input-has-fixed-addon">
+                <span class="c-form-element__addon c-form-element__addon--hanging-prefix">$</span>
+                <input id="purchaseprice" name="purchaseprice" class="c-input" type="text" data-format-as-currency />
+              </div>
+            </div>
+          </div>
+
+          <div class="o-layout__item u-1/1 u-1/2@small u-1/3@medium" data-js="details--downpaymentpercent">
+            <div class="c-form-element u-margin-bottom-small">
+              <label class="c-form-element__label" for="downpaymentpercent">Down Payment</label>
+              <div class="c-form-element__control">
+                <input id="downpaymentpercent" name="downpaymentpercent" class="c-linked-percent-slider" type="range" min="3" max="99" value="20" data-rangeslider data-linkedpercentslider data-linked-element="#purchaseprice">
+                <span class="c-linked-percent-slider__percent-value"></span>
+                <span class="c-linked-percent-slider__numeric-value"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="o-layout__item u-1/1 u-1/2@small u-1/3@medium" data-js="details--estval">
+            <div class="c-form-element u-margin-bottom-small">
+              <label class="c-form-element__label" for="estval">Estimated Home Value</label>
+              <div class="c-form-element__control c-input-has-fixed-addon">
+                <span class="c-form-element__addon c-form-element__addon--hanging-prefix">$</span>
+                <input id="estval" name="estval" class="c-input" type="text" data-format-as-currency />
+              </div>
+            </div>
+          </div>
+
+          <div class="o-layout__item u-1/1 u-1/2@small u-1/3@medium" data-js="details--curmortgagebalance">
+            <div class="c-form-element u-margin-bottom-small">
+              <label class="c-form-element__label" for="curmortgagebalance">Current Mortgage Balance</label>
+              <div class="c-form-element__control c-input-has-fixed-addon">
+                <span class="c-form-element__addon c-form-element__addon--hanging-prefix">$</span>
+                <input id="curmortgagebalance" name="curmortgagebalance" class="c-input" type="text" data-format-as-currency />
+              </div>
+            </div>
+          </div>
+
+          <div class="o-layout__item u-1/1 u-1/2@small u-1/3@medium" data-js="details--fha">
+            <div class="c-form-element u-margin-bottom-small">
+              <label class="c-form-element__label" for="fha">Is Your Current Loan FHA?</label>
+              <div class="c-form-element__control">
+                <div class="c-select_container">
+                  <select id="fha" name="fha" class="c-select">
+                    <option value="">Select One</option>
+                    <option value="FHA-Streamline">Yes</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="o-layout__item u-1/1 u-1/2@small u-1/3@medium" data-js="details--cashout">
+            <div class="c-form-element u-margin-bottom-small">
+              <label class="c-form-element__label u-text-nowrap" for="cashout">How much cash would you like to take out?</label>
+              <div class="c-form-element__control c-input-has-fixed-addon">
+                <span class="c-form-element__addon c-form-element__addon--hanging-prefix">$</span>
+                <input id="cashout" name="cashout" class="c-input" type="text" data-format-as-currency />
+              </div>
+            </div>
+          </div>
+
+          <div class="o-layout__item u-1/1 u-text-centered  u-margin-bottom-large">
+            <input class="c-btn c-btn--prominent" type="submit" value="View Loan Options">
+          </div>
+
+        </div> <!-- End Layout Block -->
+      </form>
+      <!-- END loan details form-->
+
+      <!-- BEGIN loan details summary-->
+      <div class="c-rates-app__loan-details-summary o-wrapper o-wrapper--narrow u-margin-top-none" data-js="loan-form__details-summary-stage">
+        <div class="o-layout">
+          <div class="o-layout__item  u-1/1" data-js="loan-form__details-summary-injectionpoint">
+
+          </div>
+        </div>
+      </div>
+      <!-- END loan details summary-->
+    </section>
+    <!-- END loan details section-->
+
+    <!-- BEGIN rates type form section -->
+    <section class="c-page-content__section c-rates-app__rates-listing-wrapper" data-js="rates-listing__wrapper" style="display:none">
+      <!-- BEGIN rate type form -->
+      <form class="c-form--stacked o-wrapper o-wrapper--narrow u-margin-top-none" data-js="ratetype-form">
+
+        <div class="o-layout">
+          <div class="o-layout__item u-1/1">
+            <h5 class="u-margin-bottom-small">Show:</h5>
+
+            <div class="c-form-element__control c-radio__toggle-trio u-margin-bottom-large" data-js="ratetype-radioset">
+              <span class="c-radio">
+                <input type="radio" checked id="ratetype--bestrate" name="ratetype" value="bestrate"/>
+                <label class="c-radio__label" for="ratetype--bestrate">
+                  <span class="c-radio--faux"></span>
+                  <span class="c-form-element__label">Lowest Rates</span>
+                </label>
+              </span>
+              <span class="c-radio">
+                <input type="radio" id="ratetype--bestclosingcosts" name="ratetype" value="bestclosingcosts"/>
+                <label class="c-radio__label" for="ratetype--bestclosingcosts">
+                  <span class="c-radio--faux"></span>
+                  <span class="c-form-element__label">Lowest Closing Costs</span>
+                </label>
+              </span>
+              <span class="c-radio">
+                <input type="radio" id="ratetype--all" name="ratetype" value="all"/>
+                <label class="c-radio__label" for="ratetype--all">
+                  <span class="c-radio--faux"></span>
+                  <span class="c-form-element__label">All Rates</span>
+                </label>
+              </span>
+              <span class="c-radio__toggle-slider"></span>
+            </div>
+
+          </div>
+        </div>
+      </form>
+      <!-- END rate type form -->
+    </section>
+    <!-- END rates type form section -->
+
+    <!-- BEGIN rate listings table -->
+    <section data-js="rates-listing__injectionpoint">
+    </section>
+    <!-- END rate listings table -->
+
+    <!-- BEGIN user registration -->
+    <section data-js="user-registration-wrapper" class="u-margin-bottom-large" style="display:none">
+      <div class="o-wrapper o-wrapper--narrow u-margin-top-none">
+        <div class="o-layout">
+
+          <div class="o-layout__item  u-1/1">
+            <h5>Secure this Rate:</h5>
+          </div>
+
+          <div class="o-layout__item  u-1/2@medium">
+            <p>Complete your contact information to create your Newfi account and someone from our team will contact you shortly to take the next step in securing your rate. It’s that simple and your information is secure!</p>
+          </div>
+
+          <div class="o-layout__item  u-1/2@medium">
+            <form data-js="user-registration-form">
+
+              <div class="c-form-element u-margin-bottom-small">
+                <label class="c-form-element__label" for="fname">First Name</label>
+                <div class="c-form-element__control">
+                  <input type="text" id="fname" name="fname" class="c-input"/>
+                </div>
+              </div>
+
+              <div class="c-form-element u-margin-bottom-small">
+                <label class="c-form-element__label" for="lname">Last Name</label>
+                <div class="c-form-element__control">
+                  <input type="text" id="lname" name="lname" class="c-input"/>
+                </div>
+              </div>
+
+              <div class="c-form-element u-margin-bottom-small">
+                <label class="c-form-element__label" for="email">Email Address</label>
+                <div class="c-form-element__control">
+                  <input type="email" id="email" name="email" class="c-input"/>
+                </div>
+              </div>
+
+              <fieldset class="c-form-element u-margin-bottom-small">
+                <legend class="c-form-element__legend c-form-element__label">Are you working with a Newfi Loan Advisor?</legend>
+                <div class="c-form-element__control c-form-element__control--inline">
+                  <span class="c-radio">
+                    <input type="radio" id="newfiadvisor--yes" name="newfiadvisor" value="yes" />
+                    <label class="c-radio__label" for="newfiadvisor--yes">
+                      <span class="c-radio--faux"></span>
+                      <span class="c-form-element__label">Yes</span>
+                    </label>
+                  </span>
+                  <span class="c-radio">
+                    <input type="radio" id="newfiadvisor--no" name="newfiadvisor" value="no"/>
+                    <label class="c-radio__label" for="newfiadvisor--no">
+                      <span class="c-radio--faux"></span>
+                      <span class="c-form-element__label">No</span>
+                    </label>
+                  </span>
+                </div>
+              </fieldset>
+
+              <div class="c-form-element">
+                <label class="c-form-element__label" for="newfiadvisorsname">Great! What is your advisor’s name?</label>
+                <div class="c-form-element__control">
+                  <input type="text" id="newfiadvisorsname" name="newfiadvisorsname" class="c-input" />
+                </div>
+              </div>
+              <input type="hidden" id="newfiadvisorsid">
+
+              <input class="c-btn c-btn--prominent u-margin-top" type="submit" value="Create Account">
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <!-- END user registration -->
+
+
+
+  </article>
+  <!-- END page-content Component -->
+
+
+  <!-- BEGIN Footer Component -->
+  <footer class="c-footer s-footer" role="contentinfo">
+    <section class="o-wrapper">
+      <div class="o-layout">
+
+        <div class="o-layout__item  u-1/1  u-1/3@mediumlarge">
+          <ul class="c-vlist c-vlist--footer">
+            <li class="c-vlist__item"><a class="c-vlist__link" href="https://www.newfi.com/">Home</a></li>
+            <li class="c-vlist__item"><a class="c-vlist__link" href="https://www.newfi.com/about-us/">Why Newfi</a></li>
+            <li class="c-vlist__item"><a class="c-vlist__link" href="https://www.newfi.com/NewfiWeb/customerEngagement.do">See Rates</a></li>
+            <li class="c-vlist__item"><a class="c-vlist__link" href="https://www.newfi.com/blog/">Blog</a></li>
+            <li class="c-vlist__item"><a class="c-vlist__link" href="https://www.newfi.com/NewfiWeb/">Login</a></li>
+          </ul>
+        </div>
+        <div class="o-layout__item  u-1/1  u-1/3@mediumlarge">
+          <ul class="c-vlist c-vlist--footer">
+            <li class="c-vlist__item"><a class="c-vlist__link" href="https://www.newfi.com/disclosures/">Disclosures</a></li>
+            <li class="c-vlist__item"><a class="c-vlist__link" href="https://www.newfi.com/privacy-policy/">Privacy Policy</a></li>
+            <li class="c-vlist__item"><a class="c-vlist__link" href="https://www.newfi.com/information/">Terms of Use</a></li>
+            <li class="c-vlist__item"><a class="c-vlist__link" href="https://www.newfi.com/licensing/">Licensing</a></li>
+          </ul>
+        </div>
+        <div class="o-layout__item  u-1/1  u-1/3@mediumlarge">
+          <h4 class="c-footer__heading">Contact Us</h4>
+          <div vocab="http://schema.org/" typeof="Organization" class="c-address">
+            <span property="name" class="u-hidden-visually">Newfi</span>
+            <address property="address" typeof="PostalAddress">2200 Powell Street, Suite 340<br> Emeryville, CA 94608</address>
+            <span property="telephone">888-316-3934</span>
+          </div>
+          <a class="o-icon o-icon--facebook-logo" href="https://www.facebook.com/newfinow/?fref=ts" target="_blank"><span class="u-hidden-visually">Facebook</span></a>
+        </div>
+
+        <div class="o-layout__item u-1/1">
+          <div class="c-footer__norton-seal" id="nortonSeal">
+        		<script type="text/javascript" src="https://seal.websecurity.norton.com/getseal?host_name=www.newfi.com&size=XS&use_flash=NO&use_transparent=NO&lang=en"></script>
+        		<!-- <a href="http://www.symantec.com/ssl-certificates" target="_blank"  style="color:#000000; text-decoration:none; font:bold 7px verdana,sans-serif; letter-spacing:.5px; text-align:center; margin:0px; padding:0px;">ABOUT SSL CERTIFICATES</a> -->
+        	</div>
+          <p class="o-text-centered">© 2016 newfi dba of Nexera Holding LLC | All Rights Reserved | NMLS ID 1231327 | <a target="_blank" href="http://www.nmlsconsumeraccess.org/Home.aspx/SubSearch?searchText=newfi" class="consumer-access-footer">NMLS Consumer Access</a></p>
+          <p class="o-text-centered"><a href="https://portal.hud.gov/hudportal/HUD" target="_blank">Equal Housing Lender <span class="o-icon o-icon--hud-logo"></span></a></p>
+        </div>
+      </div>
+    </section>
+  </footer>
+  <!-- END Footer Component -->
+
+  <!-- build:remove:prod -->
+
+  <!-- START DEVELOPMENT TOOLS -->
+  <!-- ****************** DEV ONLY ****************** -->
+  <script type="text/javascript" src="./js/dev/vendors/jquery.mockjax.js"></script>
+  <script type="text/javascript" src="./js/dev/ajax-mock-data/findteaseratevalue.js"></script>
+  <script type="text/javascript">
+  // var mockTest504_count = 0;
+  // $.mockjax({
+  //   url:"/NewfiWeb/rest/calculator/findteaseratevalue",
+  //   response: function(){
+  //     ++mockTest504_count;
+  //     this.status = (mockTest504_count > 2) ? 200 : 504;;
+  //   },
+  //   responseTime: 1000,
+  //   responseText: mock_findteaseratevalue_purchase_2m
+  // });
+  // $.mockjax({
+  //   url:"/NewfiWeb/rest/states/zipCode",
+  //   responseTime: 0,
+  //   responseText: '{"error":null,"resultObject":"Valid ZipCode","currentServerTime":1484605203138}'
+  //   // responseText: '{"error":null,"resultObject":"Zip code is not valid","currentServerTime":1484605203138}'
+  // });
+  </script>
+
+
+  <div class="devtools">Dev Tools:
+    <button class="c-btn c-btn--small c-btn--subtle" onclick="devtoolsFillRateForm();">Fill Rate Form</button>
+  </div>
+  <style media="screen">
+    div.devtools {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      padding: 3px 8px;
+      background: #eaeaea;
+      border: 2px solid white;
+      border-bottom: none;
+      border-left: none;
+      border-top-right-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+  </style>
+  <script type="text/javascript">
+    // function devtoolsFillRateForm() {
+    //   $('#zipcode').val('94611');
+    //   $('#residencetype').val('0');
+    //   $('#propertyuse').val('0');
+    //   $('#creditscore').val('720');
+    //   $('#purchaseprice').val('320000');
+    //   $('#downpaymentpercent').val('15');
+    //   $('#estval').val('360000');
+    //   $('#curmortgagebalance').val('30000');
+    //   $('#fha').val('FHA-Streamline');
+    //   $('#cashout').val('120000');
+    // }
+
+    // // Automatically progress to viewing rates
+    // $(function() {
+    //   $('#loantype--new-purchase').click();
+    //   devtoolsFillRateForm();
+    //   $('[data-js=loan-form]').submit();
+    // });
+
+
+  </script>
+  <!-- END DEVELOPMENT TOOLS -->
+<!-- /build -->
+</body>
+
+</html>

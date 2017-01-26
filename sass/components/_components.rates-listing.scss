@@ -1,0 +1,145 @@
+/* ==========================================================================
+   # RATES-LISTING
+   ========================================================================== */
+
+/**
+ * Responsive rates listing table
+ *
+ * 1. provide a minimum padding when screen gets narrow.
+ * 2. Don't let table grow so wide that cells loose their visual relationship
+ *    to one another
+ * 3. Align table appropriately when they are narrower than the page.
+ * 4. Shift program "headings" to left of listing data for wide screens.
+ * 5. Make sure buttons appear centered vertically with rate data.
+ */
+
+.c-rates-listing {
+  max-width: inuit-rem(850px); /*[2]*/
+  margin-left: auto; /*[3]*/
+  margin-right: auto; /*[3]*/
+  color: newfi-color(nero);
+  font-size: inuit-rem(14px);
+
+  @include mq($until: rates_collapse_table) {
+    max-width: inuit-rem(440px); /*[2]*/
+    margin-left: 0; /*[3]*/
+    font-size: inuit-rem(13px);
+  }
+  @include mq($until: small) {
+    font-size: inuit-rem(12px);
+  }
+
+  &__header {
+  }
+
+  &__program-shim {
+    width: 16%; /*[4]*/
+    min-width: inuit-rem(130px); /*[4]*/
+    // width: .5rem;
+    @include mq($until: rates_collapse_table) {
+      width: 0;
+      min-width: 0;
+    }
+  }
+
+  &__heading {
+    text-align: left;
+    vertical-align: top;
+
+    &--rate,
+  	&--apr,
+  	&--closing {
+      width: 12%;
+      @include mq($until: rates_collapse_table) {
+        width: 20%;
+      }
+    }
+  }
+
+	&__program {
+    border-top: 1px solid newfi-color(gainsboro);
+
+    &-label {
+      text-align: left;
+
+      @include mq($from: rates_collapse_table) {
+        position: relative; /*[4]*/
+        top: 0; /*[4]*/
+      }
+    }
+    &-label-heading {
+      display: inline-block;
+      margin-right: .3em;
+      font-size: inuit-rem(14px);
+      font-weight: 700;
+      @include mq($from: rates_collapse_table) {
+        position: absolute;
+        top: 0;
+      }
+    }
+    &-label-subheading {
+      display: inline-block;
+      font-size: inuit-rem(11px);
+      color: newfi-color(dove_grey);
+      @include mq($from: rates_collapse_table) {
+        position: absolute;
+        top: 1.1rem;
+      }
+    }
+	}
+
+
+  // TODO: This approach is too hacky; use js to add a highlighting div behind the table.
+
+  // &__result:hover {
+  //   [data-highlight-on-hover] {
+  //     background-color: mix($color-interactive, white, 30%);
+  //   }
+  // }
+
+  &__rate,
+	&__apr,
+	&__closing,
+  &__monthlies {
+    text-align: left;
+    width: 12%;
+    padding-right:5px; /*[1]*/
+    @include mq($until: rates_collapse_table) {
+      width: 20%;
+    }
+	}
+
+  &__actions {
+    text-align: right;
+    padding: 0 0 2px; /*[5]*/
+
+    .c-btn {
+      margin-left: 0;
+    }
+	}
+
+  // responsive "component utilities"
+  &--normal {
+    display: none;
+    @include mq($from: rates_collapse_table, $until: medium) {
+      display: inline-block;
+      z-index: 2;
+    }
+  }
+  &--terse {
+    display: none;
+    @include mq($until: rates_collapse_table) {
+      display: inline-block;
+      z-index: 3;
+    }
+  }
+
+  &--verbose {
+    display: none;
+    @include mq($from: medium) {
+      display: inline-block;
+      z-index: 4;
+    }
+  }
+
+}

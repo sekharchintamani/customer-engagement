@@ -1,0 +1,29 @@
+/* ==========================================================================
+   # FOOTER
+   ========================================================================== */
+
+/**
+ * 1.
+ */
+
+.c-footer {
+  padding-top: 40px;
+  padding-bottom: 10px;
+
+  &__heading {
+    line-height: 1;
+    margin-bottom: .5em;
+    font-size: inuit-rem(12px);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+  }
+
+  &__norton-seal {
+    margin-top: inuit-rem(10px);
+    margin-bottom: inuit-rem(25px);
+    @include mq($from: mediumlarge) {
+      margin-top: inuit-rem(30px);
+    }
+  }
+}

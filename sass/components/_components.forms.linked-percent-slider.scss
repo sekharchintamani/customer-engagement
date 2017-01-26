@@ -1,0 +1,84 @@
+/* ==========================================================================
+   # FORMS.LINKED-PERCENT-SLIDER
+   ========================================================================== */
+/**
+ * This is a slider input that is linked to another numerical input field.
+ * It displays its own value as both a percent value and as a fractional
+ * amount of the linked input field. Relies on javascript for full
+ * functionality. Falls back to an unstyled html5 range input (or text input
+ * for older browsers).
+ *
+ * See the custom plugin "linkedPercentSlider.js" and vendor javascript
+ * "rangeslider.js" for implementation details.
+ */
+
+.c-linked-percent-slider,
+.c-linked-percent-slider__fill {
+	display: block;
+	// box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+	border-radius: 10px;
+}
+
+.c-linked-percent-slider {
+	background: $color-background-slider;
+	position: relative;
+	height: 7px;
+	width: 100%;
+  margin: 3px 0;
+
+
+	&__fill {
+		background: $color-background-slider-fill;
+		position: absolute;
+		top: 0;
+		height: 100%;
+	}
+
+
+	&__handle {
+		background: $color-background-slider-handle;
+		border: 1px solid $color-border-slider-handle;
+		cursor: pointer;
+		display: inline-block;
+		width: inuit-rem(20px);
+		height: inuit-rem(20px);
+		position: absolute;
+		top: -7px;
+		background-size: 100%;
+		box-shadow: $shadow-slider-handle;
+		border-radius: 50%;
+
+		touch-action: pan-y;
+		-ms-touch-action: pan-y;
+	}
+
+	&__percent-value,
+	&__numeric-value {
+		color: $color-text-default;
+		font-weight: 600;
+		font-size: $font-size-small;
+	}
+
+	&__numeric-value {
+
+	}
+
+
+	// States
+	&--disabled {
+		filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
+		opacity: 0.4;
+	}
+
+	&--active .c-linked-percent-slider__handle,
+	&__handle:active {
+		border-color: $color-border-slider-handle-focus;
+		box-shadow: $shadow-slider-handle-focus;
+	}
+
+}
+
+input[type="range"]:focus + .c-linked-percent-slider .c-linked-percent-slider__handle {
+	border-color: $color-border-slider-handle-focus;
+	box-shadow: $shadow-slider-handle-focus;
+}

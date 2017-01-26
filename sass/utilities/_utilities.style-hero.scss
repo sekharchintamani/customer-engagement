@@ -1,0 +1,45 @@
+/* ==========================================================================
+   # HERO STYLE
+   ========================================================================== */
+
+/**
+ * One of the available styles intended for sections within the page-content component.
+ *
+ * This style should only be used once, as the first section. While it has a
+ * fallback color and gradient, the intention is that it have a
+ * background-image applied inline.
+ *
+ * 1. Fallback color so contents aren't invisible on slow load of
+ *    background image.
+ * 2. Fallback to a nice gradient if no image is applied inline
+ * 3. Contrasting text colors.
+ */
+
+.s-hero {
+  text-align: center;
+  padding-top: $inuit-global-spacing-unit*3;
+  padding-bottom: $inuit-global-spacing-unit*3;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+
+  // Variations
+  &--dark {
+    background-color: newfi-color(newfi_blue); /* [1] */
+    background-image: linear-gradient(174deg, hsl(209, 85%, 32%) 26.8%, hsl(210, 73%, 40%) 100%); /* [2] */
+    color: newfi-color(white); /* [3] */
+
+    blockquote,
+    .h1, .h1 a, .h2, .h2 a, .h3, .h3 a, .h4, .h4 a, .h5, .h5 a, .h6, .h6 a,
+    h1, h1 a, h2, h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a {
+      color: inherit; /* [3] */
+    }
+  }
+
+  &--light {
+    background-color: newfi-color(alabaster); /* [1] */
+    background-image: linear-gradient(174deg, hsl(0, 0%, 98%) 26.8%, hsl(0, 0%, 93%) 100%); /* [2] */
+    color: inherit; /* [3] */
+  }
+
+}

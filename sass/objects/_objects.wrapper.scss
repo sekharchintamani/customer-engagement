@@ -1,0 +1,21 @@
+/* ==========================================================================
+   #WRAPPER
+   ========================================================================== */
+
+/**
+ * Page-level constraining and wrapping elements.
+ *
+ * Replacement for Inuit's built-in wrapper object, in order to mirror the
+ * behavior of Newfi's WP theme
+ */
+
+.o-wrapper {
+  width: 88%;
+  margin-right: auto;
+  margin-left:  auto;
+  max-width: inuit-rem(1050px);
+
+  &--narrow {
+    max-width: inuit-rem(700px);
+  }
+}

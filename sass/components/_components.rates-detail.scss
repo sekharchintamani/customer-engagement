@@ -1,0 +1,92 @@
+/* ==========================================================================
+   # RATES-DETAIL
+   ========================================================================== */
+
+/**
+ * Responsive rates detail table
+ *
+ */
+
+.c-rates-detail {
+  position: relative;
+  max-width: inuit-rem(700px + (2*$inuit-global-spacing-unit));
+  margin: 0 auto $inuit-global-spacing-unit;
+  padding: $inuit-global-spacing-unit;
+  border: 1px solid #E5E5E5;
+  background-color: newfi-color(alabaster);
+  color: newfi-color(dove_grey);
+  font-size: inuit-rem(14px);
+  font-weight: 600;
+
+
+  @include mq($until: rates_collapse_table) {
+    font-size: inuit-rem(13px);
+  }
+  @include mq($until: small) {
+    font-size: inuit-rem(12px);
+  }
+
+  &__header {
+    font-weight: 400;
+    color: newfi-color(gainsboro);
+
+    em {
+      font-weight: 800;
+      color: newfi-color(newfi_blue);
+      font-style: normal;
+    }
+
+    strong {
+      font-weight: 800;
+      font-style: normal;
+      color: newfi-color(nero);
+    }
+  }
+
+  &__icon-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: $inuit-global-spacing-unit-small;
+  }
+
+  &__items-heading {
+    // line-height: 18px;
+  }
+
+  &__item {
+    font-size: inuit-rem(12px);
+
+    &-label {
+      color: #5F5F5F;
+      padding-left: $inuit-global-spacing-unit-small;
+    }
+
+    &-sublabel {
+      color: #5F5F5F;
+      padding-left: $inuit-global-spacing-unit;
+      font-style: italic;
+    }
+
+    &-value {
+    }
+	}
+
+  &__totals {
+    font-weight: 700;
+    &-label {
+      color: #2C3239;
+    }
+
+    &-value {
+    }
+	}
+  &__item-value,
+  &__totals-value {
+    color: #0C5397;
+    text-align: right;
+  }
+
+
+
+}

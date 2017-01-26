@@ -1,0 +1,56 @@
+///* ========================================================================
+//   #GLOBAL
+//   ======================================================================== */
+// The global settings file contains any project-wide variables; things that
+// need to be made available to the entire codebase.
+
+// Standardise some UI treatments.
+$ui-border-radius: 2px;
+$global-transition: (1/4) + s;
+
+$newfi-colors-map: (
+  newfi_blue:      #0C5397,
+  newfi_orange:    #F27521,
+  dark_orange:     #FD8A10,
+  picton_blue:     #42BAF1,
+  aquamarine_blue: #6ed1e4,
+  jelly_bean:      #44798E,
+  white:           #FFFFFF,
+  alabaster:       #FAFAFA,
+  white_smoke:     #EEEEEE,
+  gainsboro:       #DDDDDD,
+  dove_grey:       #666666,
+  nero:            #272727,
+);
+
+@function newfi-color($key) {
+  @return map-get($newfi-colors-map, $key);
+}
+
+$color-interactive: newfi-color(picton_blue);
+$color-interactive-hover: adjust-color($color-interactive, $saturation: +30%, $lightness: -15%);
+$color-interactive-active: adjust-color($color-interactive, $saturation: +35%, $lightness: -20%);
+$color-interactive--contrasted: white;
+$color-interactive-hover--contrasted: white;
+$color-interactive-active--contrasted: white;
+
+$color-prominent: newfi-color(dark_orange);
+$color-prominent-hover: adjust-color($color-prominent, $saturation: +30%, $lightness: -5%);
+$color-prominent-active: adjust-color($color-prominent, $saturation: +35%, $lightness: -10%);
+$color-prominent--contrasted: white;
+$color-prominent-hover--contrasted: white;
+$color-prominent-active--contrasted: white;
+
+$color-neutral: newfi-color(white_smoke);
+$color-neutral-hover: adjust-color($color-neutral, $lightness: -11%);;
+$color-neutral-active: adjust-color($color-neutral, $lightness: -19%);
+$color-neutral--contrasted: newfi-color(dove_grey);
+$color-neutral-hover--contrasted: newfi-color(nero);
+$color-neutral-active--contrasted: newfi-color(nero);
+
+$color-subtle: newfi-color(white);
+$color-subtle-hover: adjust-color($color-subtle, $lightness: -11%);
+$color-subtle-active: adjust-color($color-subtle, $lightness: -19%);
+$color-subtle--contrasted: newfi-color(dove_grey);
+$color-subtle-hover--contrasted: newfi-color(dove_grey);
+$color-subtle-active--contrasted: newfi-color(nero);

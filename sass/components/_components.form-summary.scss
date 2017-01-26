@@ -1,0 +1,38 @@
+/* ==========================================================================
+   # FORM-SUMMARY
+   ========================================================================== */
+
+/**
+ *
+ *
+ */
+
+.c-form-summary {
+  margin-bottom: 1.655em;
+  margin-left: inuit-rem(14px);
+
+  @include inuit-font-size( 14px);
+
+  @media (min-width: inuit-rem(700px)) {
+    column-count: 2;
+  }
+
+  &__item {
+    width: 100%;
+    clear: left;
+  }
+
+  &__label {
+    float: left;
+    clear: left;
+    width: inuit-rem(120px);
+    color: $color-text-label;
+    font-weight: 400;
+  }
+
+  &__value {
+    color: $color-text-default;
+    font-weight: 700;
+    margin-left: inuit-rem(125px);
+  }
+}

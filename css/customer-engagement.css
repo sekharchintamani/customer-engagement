@@ -1,0 +1,3832 @@
+@charset "UTF-8";
+/* ==========================================================================
+   NEWFI STYLE SYSTEM
+   ========================================================================== */
+/**
+ * This code uses BEM methodology [1], namespaces [2], and the Inuitcss framework [3].
+
+ * 1. http://getbem.com/introduction/
+ * 2. http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/
+ * 3. https://github.com/inuitcss/inuitcss
+ *
+ */
+/**
+ * CONTENTS
+ *
+ * SETTINGS
+ * Config...............Project-level configuration and feature switches.
+ * Core.................inuitcss’ core and setup settings.
+ * Global...............Project-wide variables and settings.
+ *
+ * TOOLS
+ * Rem..................Tools for converting pixel inputs into their rem
+ *                      equivalents.
+ * Font-size............A mixin which guarantees baseline-friendly line-heights.
+ * Clearfix.............Micro clearfix mixin.
+ * Hidden...............Mixin for hiding elements.
+ * Sass MQ..............inuitcss’ default media query manager.
+ *
+ * GENERIC
+ * Box-sizing...........Better default `box-sizing`.
+ * Normalize.css........A level playing field using @necolas’ Normalize.css.
+ * Reset................A tiny reset to complement Normalize.css.
+ * Shared...............Sensibly and tersely share some global commonalities
+ *                      (particularly useful when managing vertical rhythm).
+ *
+ * ELEMENTS
+ * Page.................Set up our document’s default `font-size` and
+ *                      `line-height`.
+ * Headings.............Very minimal (i.e. only font-size information) for
+ *                      headings 1 through 6.
+ * Images...............Base image styles.
+ * Tables...............Simple table styles.
+ *
+ * OBJECTS
+ * Wrapper..............Page constraint object.
+ * Layout...............Generic layout module.
+ * Media................Image- and text-like content side by side. The
+ *                      poster-child of OOCSS.
+ * Flag.................Table-layout-based advancement on the Media object.
+ * List-bare............Lists with no bullets or indents.
+ * List-inline..........A list whose items all site in a line.
+ * Box..................Simple boxing abstraction.
+ * Block................Image-on-top-of-text object.
+ * Ratio................A container for maintaining aspect ratio of content.
+ * Crop.................Provide a cropping context for media (images, etc.).
+ * Tables...............Classes for manipulating `table`s.
+ * Pack.................Pack items into available horizontal space.
+ *
+ * COMPONENTS
+ * Buttons..............
+ *
+ * UTILITIES
+ * Clearfix.............Bind our clearfix onto a utility class.
+ * Widths...............Simple width helper classes.
+ * Headings.............Reassigning our heading styles to helper classes.
+ * Spacing..............Nudge bits of the DOM around with these spacing
+ *                      classes.
+ * Print................Reset-like styles taken from the HTML5 Boilerplate.
+ * Hide.................Helper classes to hide content
+ */
+/* ==========================================================================
+   # ALIASES
+   ========================================================================== */
+/* ==========================================================================
+   # FORMS MIXINS
+   ========================================================================== */
+/**
+ * Derived from Salesforce's Open-source (BSD) "Lightning" design system;
+ * heavily modified to accomodate Newfi's design system.
+ */
+/* ==========================================================================
+   #BOX-SIZING
+   ========================================================================== */
+/**
+ * More sensible default box-sizing:
+ * css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
+ */
+html {
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
+/*! normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
+/**
+ * 1. Change the default font family in all browsers (opinionated).
+ * 2. Correct the line height in all browsers.
+ * 3. Prevent adjustments of font size after orientation changes in
+ *    IE on Windows Phone and in iOS.
+ */
+/* Document
+   ========================================================================== */
+html {
+  font-family: sans-serif;
+  /* 1 */
+  line-height: 1.15;
+  /* 2 */
+  -ms-text-size-adjust: 100%;
+  /* 3 */
+  -webkit-text-size-adjust: 100%;
+  /* 3 */ }
+
+/* Sections
+   ========================================================================== */
+/**
+ * Remove the margin in all browsers (opinionated).
+ */
+body {
+  margin: 0; }
+
+/**
+ * Add the correct display in IE 9-.
+ */
+article,
+aside,
+footer,
+header,
+nav,
+section {
+  display: block; }
+
+/**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
+ */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0; }
+
+/* Grouping content
+   ========================================================================== */
+/**
+ * Add the correct display in IE 9-.
+ * 1. Add the correct display in IE.
+ */
+figcaption,
+figure,
+main {
+  /* 1 */
+  display: block; }
+
+/**
+ * Add the correct margin in IE 8.
+ */
+figure {
+  margin: 1em 40px; }
+
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+hr {
+  box-sizing: content-box;
+  /* 1 */
+  height: 0;
+  /* 1 */
+  overflow: visible;
+  /* 2 */ }
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+pre {
+  font-family: monospace, monospace;
+  /* 1 */
+  font-size: 1em;
+  /* 2 */ }
+
+/* Text-level semantics
+   ========================================================================== */
+/**
+ * 1. Remove the gray background on active links in IE 10.
+ * 2. Remove gaps in links underline in iOS 8+ and Safari 8+.
+ */
+a {
+  background-color: transparent;
+  /* 1 */
+  -webkit-text-decoration-skip: objects;
+  /* 2 */ }
+
+/**
+ * Remove the outline on focused links when they are also active or hovered
+ * in all browsers (opinionated).
+ */
+a:active,
+a:hover {
+  outline-width: 0; }
+
+/**
+ * 1. Remove the bottom border in Firefox 39-.
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+abbr[title] {
+  border-bottom: none;
+  /* 1 */
+  text-decoration: underline;
+  /* 2 */
+  text-decoration: underline dotted;
+  /* 2 */ }
+
+/**
+ * Prevent the duplicate application of `bolder` by the next rule in Safari 6.
+ */
+b,
+strong {
+  font-weight: inherit; }
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+b,
+strong {
+  font-weight: bolder; }
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+code,
+kbd,
+samp {
+  font-family: monospace, monospace;
+  /* 1 */
+  font-size: 1em;
+  /* 2 */ }
+
+/**
+ * Add the correct font style in Android 4.3-.
+ */
+dfn {
+  font-style: italic; }
+
+/**
+ * Add the correct background and color in IE 9-.
+ */
+mark {
+  background-color: #ff0;
+  color: #000; }
+
+/**
+ * Add the correct font size in all browsers.
+ */
+small {
+  font-size: 80%; }
+
+/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
+sub {
+  bottom: -0.25em; }
+
+sup {
+  top: -0.5em; }
+
+/* Embedded content
+   ========================================================================== */
+/**
+ * Add the correct display in IE 9-.
+ */
+audio,
+video {
+  display: inline-block; }
+
+/**
+ * Add the correct display in iOS 4-7.
+ */
+audio:not([controls]) {
+  display: none;
+  height: 0; }
+
+/**
+ * Remove the border on images inside links in IE 10-.
+ */
+img {
+  border-style: none; }
+
+/**
+ * Hide the overflow in IE.
+ */
+svg:not(:root) {
+  overflow: hidden; }
+
+/* Forms
+   ========================================================================== */
+/**
+ * 1. Change the font styles in all browsers (opinionated).
+ * 2. Remove the margin in Firefox and Safari.
+ */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: sans-serif;
+  /* 1 */
+  font-size: 100%;
+  /* 1 */
+  line-height: 1.15;
+  /* 1 */
+  margin: 0;
+  /* 2 */ }
+
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+button,
+input {
+  /* 1 */
+  overflow: visible; }
+
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+button,
+select {
+  /* 1 */
+  text-transform: none; }
+
+/**
+ * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`
+ *    controls in Android 4.
+ * 2. Correct the inability to style clickable types in iOS and Safari.
+ */
+button,
+html [type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */ }
+
+/**
+ * Remove the inner border and padding in Firefox.
+ */
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0; }
+
+/**
+ * Restore the focus styles unset by the previous rule.
+ */
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText; }
+
+/**
+ * Change the border, margin, and padding in all browsers (opinionated).
+ */
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em; }
+
+/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */
+legend {
+  box-sizing: border-box;
+  /* 1 */
+  color: inherit;
+  /* 2 */
+  display: table;
+  /* 1 */
+  max-width: 100%;
+  /* 1 */
+  padding: 0;
+  /* 3 */
+  white-space: normal;
+  /* 1 */ }
+
+/**
+ * 1. Add the correct display in IE 9-.
+ * 2. Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+progress {
+  display: inline-block;
+  /* 1 */
+  vertical-align: baseline;
+  /* 2 */ }
+
+/**
+ * Remove the default vertical scrollbar in IE.
+ */
+textarea {
+  overflow: auto; }
+
+/**
+ * 1. Add the correct box sizing in IE 10-.
+ * 2. Remove the padding in IE 10-.
+ */
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */ }
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto; }
+
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+[type="search"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  outline-offset: -2px;
+  /* 2 */ }
+
+/**
+ * Remove the inner padding and cancel buttons in Chrome and Safari on macOS.
+ */
+[type="search"]::-webkit-search-cancel-button,
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none; }
+
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  /* 1 */
+  font: inherit;
+  /* 2 */ }
+
+/* Interactive
+   ========================================================================== */
+/*
+ * Add the correct display in IE 9-.
+ * 1. Add the correct display in Edge, IE, and Firefox.
+ */
+details,
+menu {
+  display: block; }
+
+/*
+ * Add the correct display in all browsers.
+ */
+summary {
+  display: list-item; }
+
+/* Scripting
+   ========================================================================== */
+/**
+ * Add the correct display in IE 9-.
+ */
+canvas {
+  display: inline-block; }
+
+/**
+ * Add the correct display in IE.
+ */
+template {
+  display: none; }
+
+/* Hidden
+   ========================================================================== */
+/**
+ * Add the correct display in IE 10-.
+ */
+[hidden] {
+  display: none; }
+
+/* ==========================================================================
+   #RESET
+   ========================================================================== */
+/**
+ * A very simple reset that sits on top of Normalize.css.
+ */
+body,
+h1, h2, h3, h4, h5, h6,
+blockquote, p, pre,
+dl, dd, ol, ul,
+figure,
+hr,
+fieldset, legend {
+  margin: 0;
+  padding: 0; }
+
+/**
+ * Remove trailing margins from nested lists.
+ */
+li > ol,
+li > ul {
+  margin-bottom: 0; }
+
+/**
+ * Remove default table spacing.
+ */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/**
+ * 1. Reset Chrome and Firefox behaviour which sets a `min-width: min-content;`
+ *    on fieldsets.
+ */
+fieldset {
+  min-width: 0;
+  /* [1] */
+  border: 0; }
+
+/* ==========================================================================
+   #SHARED
+   ========================================================================== */
+/**
+ * Shared declarations for certain elements.
+ */
+/**
+ * Always declare margins in the same direction:
+ * csswizardry.com/2012/06/single-direction-margin-declarations
+ */
+/* stylelint-disable selector-list-comma-newline-after */
+address,
+h1, h2, h3, h4, h5, h6,
+blockquote, p, pre,
+dl, ol, ul,
+figure,
+hr,
+table,
+fieldset {
+  margin-bottom: 27px;
+  margin-bottom: 1.6875rem; }
+
+/**
+ * Consistent indentation for lists.
+ */
+dd, ol, ul {
+  margin-left: 27px;
+  margin-left: 1.6875rem; }
+
+/* stylelint-enable selector-list-comma-newline-after */
+/* ==========================================================================
+   # TYPOGRAPHY
+   ========================================================================== */
+/**
+ * 1. Reduce thickening effect on Mac browsers.
+ * 2. Lato's "fi" ligature removes the dot above the lowercase i, making Newfi's name look odd.
+ */
+body {
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "liga" 0;
+  /* [1] */ }
+
+button, input, optgroup, select, textarea {
+  font-family: "Lato", sans-serif; }
+
+/* ==========================================================================
+   #PAGE
+   ========================================================================== */
+/**
+ * Simple page-level setup.
+ *
+ * 1. Set the default `font-size` and `line-height` for the entire project,
+ *    sourced from our default variables. The `font-size` is calculated to exist
+ *    in ems, the `line-height` is calculated to exist unitlessly.
+ * 2. Force scrollbars to always be visible to prevent awkward ‘jumps’ when
+ *    navigating between pages that do/do not have enough content to produce
+ *    scrollbars naturally.
+ * 3. Ensure the page always fills at least the entire height of the viewport.
+ */
+html {
+  font-size: 1em;
+  /* [1] */
+  line-height: 1.6875;
+  /* [1] */
+  overflow-y: scroll;
+  /* [2] */
+  min-height: 100%;
+  /* [3] */ }
+
+/* ==========================================================================
+   # HTML
+   ========================================================================== */
+html {
+  font-family: "Lato", sans-serif;
+  color: #666666;
+  font-weight: 400; }
+
+/* ==========================================================================
+ # HEADINGS
+ ========================================================================== */
+/**
+* These properties are derived from the main WP theme, but adjusted to use
+* rems for font-size. One major difference: We're deferring to inuit's preferred
+* approach of only applying margin-bottom to elements (and not overriding the
+* properties already set margins on elements), as it has several benefirs for
+* maintaining consistent spacing regardless of what elements may come first in
+* a particular DOM structure.
+*/
+.h1, .h2, .h3, .h4, .h5, .h6,
+h1, h2, h3, h4, h5, h6 {
+  text-rendering: optimizelegibility; }
+
+.h1, h1 {
+  font-size: 2.25rem;
+  line-height: 1.1; }
+
+.h2, h2 {
+  font-size: 1.875rem;
+  line-height: 1.2; }
+
+.h3, h3 {
+  font-size: 1.5625rem;
+  line-height: 1.3; }
+
+.h4, .h5, .h6, h4, h5, h6 {
+  line-height: 1.4; }
+
+.h4, h4 {
+  font-size: 1.3125rem; }
+
+.h5, h5 {
+  font-size: 1.125rem; }
+
+.h6, h6 {
+  font-size: 1rem;
+  text-transform: uppercase; }
+
+/* ==========================================================================
+ # EMPHASIS
+ ========================================================================== */
+/**
+* These properties are derived from the main WP theme, but adjusted to use
+* rems for font-size.
+*/
+small {
+  font-size: 0.8em; }
+
+b,
+strong {
+  font-weight: 700; }
+
+em {
+  font-style: italic; }
+
+cite {
+  font-style: normal; }
+
+/* ==========================================================================
+ # EMPHASIS
+ ========================================================================== */
+/**
+* These properties are derived from the main WP theme, but adjusted to use
+* rems for font-size.
+*/
+ul,
+ol {
+  padding: 0;
+  margin: 0 0 27px 1.655em; }
+
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+  margin-bottom: 0; }
+
+ul {
+  list-style: disc; }
+
+ol {
+  list-style: decimal; }
+
+ul.unstyled,
+ol.unstyled {
+  margin-left: 0;
+  list-style: none; }
+
+ul.inline,
+ol.inline {
+  margin-left: 0;
+  list-style: none; }
+  ul.inline > li,
+  ol.inline > li {
+    display: inline-block;
+    padding-left: 1em;
+    padding-right: 1em; }
+
+dl {
+  margin-bottom: 27px; }
+
+dt {
+  font-weight: 700; }
+
+dd {
+  margin-left: 27px; }
+
+/* ==========================================================================
+   #IMAGES
+   ========================================================================== */
+/**
+ * 1. Fluid images for responsive purposes.
+ * 2. Offset `alt` text from surrounding copy.
+ * 3. Setting `vertical-align` removes the whitespace that appears under `img`
+ *    elements when they are dropped into a page as-is. Safer alternative to
+ *    using `display: block;`.
+ */
+img {
+  max-width: 100%;
+  /* [1] */
+  font-style: italic;
+  /* [2] */
+  vertical-align: middle;
+  /* [3] */ }
+
+/**
+ * 1. If a `width` and/or `height` attribute have been explicitly defined, let’s
+ *    not make the image fluid.
+ */
+img[width],
+img[height] {
+  /* [1] */
+  max-width: none; }
+
+/* ==========================================================================
+   #TABLES
+   ========================================================================== */
+/**
+ * 1. Ensure tables fill up as much space as possible.
+ */
+table {
+  width: 100%;
+  /* [1] */ }
+
+td, tr {
+  padding: 0; }
+
+/* ==========================================================================
+   # ANCHORS
+   ========================================================================== */
+a {
+  color: #42BAF1;
+  text-decoration: none; }
+
+/* ==========================================================================
+   #WRAPPER
+   ========================================================================== */
+/**
+ * Page-level constraining and wrapping elements.
+ *
+ * Replacement for Inuit's built-in wrapper object, in order to mirror the
+ * behavior of Newfi's WP theme
+ */
+.o-wrapper {
+  width: 88%;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 65.625rem; }
+  .o-wrapper--narrow {
+    max-width: 43.75rem; }
+
+/* ==========================================================================
+   #LAYOUT
+   ========================================================================== */
+/**
+ * Grid-like layout system.
+ *
+ * The layout object provides us with a column-style layout system. This file
+ * contains the basic structural elements, but classes should be complemented
+ * with width utilities, for example:
+ *
+ *   <div class="o-layout">
+ *     <div class="o-layout__item  u-1/2">
+ *     </div>
+ *     <div class="o-layout__item  u-1/2">
+ *     </div>
+ *   </div>
+ *
+ * The above will create a two-column structure in which each column will
+ * fluidly fill half of the width of the parent. We can have more complex
+ * systems:
+ *
+ *   <div class="o-layout">
+ *     <div class="o-layout__item  u-1/1  u-1/3@medium">
+ *     </div>
+ *     <div class="o-layout__item  u-1/2  u-1/3@medium">
+ *     </div>
+ *     <div class="o-layout__item  u-1/2  u-1/3@medium">
+ *     </div>
+ *   </div>
+ *
+ * The above will create a system in which the first item will be 100% width
+ * until we enter our medium breakpoint, when it will become 33.333% width. The
+ * second and third items will be 50% of their parent, until they also become
+ * 33.333% width at the medium breakpoint.
+ *
+ * We can also manipulate entire layout systems by adding a series of modifiers
+ * to the `.o-layout` block. For example:
+ *
+ *   <div class="o-layout  o-layout--reverse">
+ *
+ * This will reverse the displayed order of the system so that it runs in the
+ * opposite order to our source, effectively flipping the system over.
+ *
+ *   <div class="o-layout  o-layout--[right|center]">
+ *
+ * This will cause the system to fill up from either the centre or the right
+ * hand side. Default behaviour is to fill up the layout system from the left.
+ *
+ * There are plenty more options available to us: explore them below.
+ */
+/* Default/mandatory classes.
+   ========================================================================== */
+/**
+ * 1. Allows us to use the layout object on any type of element.
+ * 2. We need to defensively reset any box-model properties.
+ * 3. Use the negative margin trick for multi-row grids:
+ *    http://csswizardry.com/2011/08/building-better-grid-systems/
+ */
+.o-layout {
+  display: block;
+  /* [1] */
+  margin: 0;
+  /* [2] */
+  padding: 0;
+  /* [2] */
+  list-style: none;
+  /* [1] */
+  margin-left: -27px;
+  /* [3] */
+  font-size: 0; }
+
+/**
+   * 1. Required in order to combine fluid widths with fixed gutters.
+   * 2. Allows us to manipulate grids vertically, with text-level properties,
+   *    etc.
+   * 3. Default item alignment is with the tops of each other, like most
+   *    traditional grid/layout systems.
+   * 4. By default, all layout items are full-width (mobile first).
+   * 5. Gutters provided by left padding:
+   *    http://csswizardry.com/2011/08/building-better-grid-systems/
+   * 6. Fallback for old IEs not supporting `rem` values.
+   */
+.o-layout__item {
+  box-sizing: border-box;
+  /* [1] */
+  display: inline-block;
+  /* [2] */
+  vertical-align: top;
+  /* [3] */
+  width: 100%;
+  /* [4] */
+  padding-left: 27px;
+  /* [5] */
+  font-size: 16px;
+  /* [6] */
+  font-size: 1rem; }
+
+/* Gutter size modifiers.
+   ========================================================================== */
+.o-layout--tiny {
+  margin-left: -7px; }
+  .o-layout--tiny > .o-layout__item {
+    padding-left: 7px; }
+
+.o-layout--small {
+  margin-left: -14px; }
+  .o-layout--small > .o-layout__item {
+    padding-left: 14px; }
+
+.o-layout--large {
+  margin-left: -54px; }
+  .o-layout--large > .o-layout__item {
+    padding-left: 54px; }
+
+.o-layout--huge {
+  margin-left: -108px; }
+  .o-layout--huge > .o-layout__item {
+    padding-left: 108px; }
+
+.o-layout--flush {
+  margin-left: 0; }
+  .o-layout--flush > .o-layout__item {
+    padding-left: 0; }
+
+/* Vertical alignment modifiers.
+   ========================================================================== */
+/**
+ * Align all grid items to the middles of each other.
+ */
+.o-layout--middle > .o-layout__item {
+  vertical-align: middle; }
+
+/**
+ * Align all grid items to the bottoms of each other.
+ */
+.o-layout--bottom > .o-layout__item {
+  vertical-align: bottom; }
+
+/* Fill order modifiers.
+   ========================================================================== */
+/**
+ * Fill up the layout system from the centre.
+ */
+.o-layout--center {
+  text-align: center; }
+  .o-layout--center > .o-layout__item {
+    text-align: left; }
+
+/**
+ * Fill up the layout system from the right-hand side.
+ */
+.o-layout--right {
+  text-align: right; }
+  .o-layout--right > .o-layout__item {
+    text-align: left; }
+
+/**
+ * Reverse the rendered order of the grid system.
+ */
+.o-layout--reverse {
+  direction: rtl; }
+  .o-layout--reverse > .o-layout__item {
+    direction: ltr;
+    text-align: left; }
+
+/* ==========================================================================
+   #MEDIA
+   ========================================================================== */
+/**
+ * Place any image- and text-like content side-by-side, as per:
+ * http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code
+ */
+.o-media {
+  display: block; }
+  .o-media:after {
+    content: "" !important;
+    display: block !important;
+    clear: both !important; }
+
+.o-media__img {
+  float: left;
+  margin-right: 27px; }
+  .o-media__img > img {
+    display: block; }
+
+.o-media__body {
+  overflow: hidden;
+  display: block; }
+  .o-media__body,
+  .o-media__body > :last-child {
+    margin-bottom: 0; }
+
+/* Size variants
+   ========================================================================== */
+/**
+ * Modify the amount of space between our image and our text. We also have
+ * reversible options for all available sizes.
+ */
+.o-media--tiny > .o-media__img {
+  margin-right: 7px; }
+
+.o-media--tiny.o-media--reverse > .o-media__img {
+  margin-right: 0;
+  margin-left: 7px; }
+
+.o-media--small > .o-media__img {
+  margin-right: 14px; }
+
+.o-media--small.o-media--reverse > .o-media__img {
+  margin-right: 0;
+  margin-left: 14px; }
+
+.o-media--large > .o-media__img {
+  margin-right: 54px; }
+
+.o-media--large.o-media--reverse > .o-media__img {
+  margin-right: 0;
+  margin-left: 54px; }
+
+.o-media--huge > .o-media__img {
+  margin-right: 108px; }
+
+.o-media--huge.o-media--reverse > .o-media__img {
+  margin-right: 0;
+  margin-left: 108px; }
+
+/* Reversed media objects
+   ========================================================================== */
+.o-media--reverse > .o-media__img {
+  float: right;
+  margin-right: 0;
+  margin-left: 27px; }
+
+/* Gutterless media objects
+   ========================================================================== */
+.o-media--flush > .o-media__img {
+  margin-right: 0;
+  margin-left: 0; }
+
+/* ==========================================================================
+   #FLAG
+   ========================================================================== */
+/**
+ * The flag object is a design pattern similar to the media object, however it
+ * utilises `display: table[-cell];` to give us control over the vertical
+ * alignments of the text and image.
+ *
+ * http://csswizardry.com/2013/05/the-flag-object/
+ *
+ * 1. Allows us to control vertical alignments.
+ * 2. Force the object to be the full width of its parent. Combined with [1],
+ *    this makes the object behave in a quasi-`display: block;` manner.
+ */
+.o-flag {
+  display: table;
+  /* [1] */
+  width: 100%;
+  /* [2] */ }
+
+/**
+   * Items within a flag object. There should only ever be one of each.
+   *
+   * 1. Default to aligning content to their middles.
+   */
+.o-flag__img,
+.o-flag__body {
+  display: table-cell;
+  vertical-align: middle;
+  /* [1] */ }
+
+/**
+   * Flag images have a space between them and the body of the object.
+   *
+   * 1. Force `.flag__img` to take up as little space as possible:
+   *    https://pixelsvsbytes.com/2012/02/this-css-layout-grid-is-no-holy-grail/
+   */
+.o-flag__img {
+  width: 1px;
+  /* [1] */
+  padding-right: 27px;
+  /**
+     * 1. Fixes problem with images disappearing.
+     */ }
+  .o-flag__img > img {
+    max-width: none;
+    /* [1] */ }
+
+/**
+   * The container for the main content of the flag object.
+   *
+   * 1. Forces the `.flag__body` to take up all remaining space.
+   */
+.o-flag__body {
+  width: auto;
+  /* [1] */ }
+  .o-flag__body,
+  .o-flag__body > :last-child {
+    margin-bottom: 0; }
+
+/* Size variants.
+   ========================================================================== */
+.o-flag--tiny > .o-flag__img {
+  padding-right: 7px; }
+
+.o-flag--tiny.o-flag--reverse > .o-flag__img {
+  padding-right: 0;
+  padding-left: 7px; }
+
+.o-flag--small > .o-flag__img {
+  padding-right: 14px; }
+
+.o-flag--small.o-flag--reverse > .o-flag__img {
+  padding-right: 0;
+  padding-left: 14px; }
+
+.o-flag--large > .o-flag__img {
+  padding-right: 54px; }
+
+.o-flag--large.o-flag--reverse > .o-flag__img {
+  padding-right: 0;
+  padding-left: 54px; }
+
+.o-flag--huge > .o-flag__img {
+  padding-right: 108px; }
+
+.o-flag--huge.o-flag--reverse > .o-flag__img {
+  padding-right: 0;
+  padding-left: 108px; }
+
+.o-flag--flush > .o-flag__img {
+  padding-right: 0;
+  padding-left: 0; }
+
+/* Reversed flag.
+   ========================================================================== */
+/**
+ * 1. Swap the rendered direction of the object…
+ * 2. …and reset it.
+ * 3. Reassign margins to the correct sides.
+ */
+.o-flag--reverse {
+  direction: rtl;
+  /* [1] */ }
+  .o-flag--reverse > .o-flag__img,
+  .o-flag--reverse > .o-flag__body {
+    direction: ltr;
+    /* [2] */ }
+  .o-flag--reverse > .o-flag__img {
+    padding-right: 0;
+    /* [3] */
+    padding-left: 27px;
+    /* [3] */ }
+
+/* Alignment variants.
+   ========================================================================== */
+/**
+ * Vertically align the image- and body-content differently. Defaults to middle.
+ */
+.o-flag--top > .o-flag__img,
+.o-flag--top > .o-flag__body {
+  vertical-align: top; }
+
+.o-flag--bottom > .o-flag__img,
+.o-flag--bottom > .o-flag__body {
+  vertical-align: bottom; }
+
+/* ==========================================================================
+   #LIST-BARE
+   ========================================================================== */
+/**
+ * Strip list-like appearance from lists by removing their bullets, and any
+ * indentation.
+ */
+.o-list-bare {
+  list-style: none;
+  margin-left: 0; }
+
+/* ==========================================================================
+   #LIST-INLINE
+   ========================================================================== */
+/**
+ * The list-inline object simply displays a list of items in one line.
+ */
+.o-list-inline {
+  margin-left: 0;
+  list-style: none; }
+
+.o-list-inline__item {
+  display: inline-block; }
+
+/* Delimited list.
+   ========================================================================== */
+/**
+ * By default, applying this class will comma separate your list items. You can
+ * change the delimiter by predefining the following variable:
+ */
+/**
+ * 1. Fallback for old IEs not supporting `rem` values.
+ */
+.o-list-inline--delimited {
+  font-size: 0; }
+  .o-list-inline--delimited > .o-list-inline__item {
+    font-size: 16px;
+    /* [1] */
+    font-size: 1rem; }
+  .o-list-inline--delimited > .o-list-inline__item + .o-list-inline__item:before {
+    content: ", "; }
+
+/* ==========================================================================
+   #BOX
+   ========================================================================== */
+/**
+ * The box object simply boxes off content. Extend with cosmetic styles in the
+ * Components layer.
+ *
+ * 1. So we can apply the `.o-box` class to naturally-inline elements.
+ */
+.o-box {
+  display: block;
+  /* [1] */
+  padding: 27px; }
+  .o-box:after {
+    content: "" !important;
+    display: block !important;
+    clear: both !important; }
+  .o-box > :last-child {
+    margin-bottom: 0; }
+
+/* Size variants
+   ========================================================================== */
+.o-box--flush {
+  padding: 0; }
+
+.o-box--tiny {
+  padding: 7px; }
+
+.o-box--small {
+  padding: 14px; }
+
+.o-box--large {
+  padding: 54px; }
+
+.o-box--huge {
+  padding: 108px; }
+
+/* ==========================================================================
+   #BLOCK
+   ========================================================================== */
+/**
+ * Stacked image-with-text object. A simple abstraction to cover a very commonly
+ * occurring design pattern.
+ */
+.o-block {
+  display: block;
+  text-align: center; }
+
+.o-block__img {
+  margin-bottom: 27px;
+  /* Size variants.
+       ====================================================================== */ }
+  .o-block--flush > .o-block__img {
+    margin-bottom: 0; }
+  .o-block--tiny > .o-block__img {
+    margin-bottom: 7px; }
+  .o-block--small > .o-block__img {
+    margin-bottom: 14px; }
+  .o-block--large > .o-block__img {
+    margin-bottom: 54px; }
+  .o-block--huge > .o-block__img {
+    margin-bottom: 108px; }
+
+.o-block__body {
+  display: block; }
+
+/* Alignment variants.
+   ========================================================================== */
+.o-block--right {
+  text-align: right; }
+
+.o-block--left {
+  text-align: left; }
+
+/* ==========================================================================
+   #RATIO
+   ========================================================================== */
+/**
+ * Create ratio-bound content blocks, to keep media (e.g. images, videos) in
+ * their correct aspect ratios.
+ *
+ * http://alistapart.com/article/creating-intrinsic-ratios-for-video
+ *
+ * 1. Default cropping is a 1:1 ratio (i.e. a perfect square).
+ */
+.o-ratio {
+  position: relative;
+  display: block;
+  overflow: hidden; }
+  .o-ratio:before {
+    content: "";
+    display: block;
+    width: 100%;
+    padding-bottom: 100%;
+    /* [1] */ }
+
+.o-ratio__content,
+.o-ratio > iframe,
+.o-ratio > embed,
+.o-ratio > object {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%; }
+
+/* stylelint-disable */
+/* Ratio variants.
+   ========================================================================== */
+/**
+ * Generate a series of ratio classes to be used like so:
+ *
+ *   <div class="o-ratio  o-ratio--16:9">
+ *
+ */
+.o-ratio--2\:1:before {
+  padding-bottom: 50%; }
+
+.o-ratio--4\:3:before {
+  padding-bottom: 75%; }
+
+.o-ratio--16\:9:before {
+  padding-bottom: 56.25%; }
+
+/* stylelint-enable */
+/* ==========================================================================
+   #CROP
+   ========================================================================== */
+/**
+ * Provide a cropping container in order to display media (usually images)
+ * cropped to certain ratios.
+ *
+ * 1. Set up a positioning context in which the image can sit.
+ * 2. This is the crucial part: where the cropping happens.
+ */
+.o-crop {
+  position: relative;
+  /* [1] */
+  display: block;
+  overflow: hidden;
+  /* [2] */ }
+
+/**
+   * Apply this class to the content (usually `img`) that needs cropping.
+   *
+   * 1. Image’s default positioning is top-left in the cropping box.
+   * 2. Make sure the media doesn’t stop itself too soon.
+   */
+.o-crop__content {
+  position: absolute;
+  top: 0;
+  /* [1] */
+  left: 0;
+  /* [1] */
+  max-width: none;
+  /* [2] */ }
+
+/**
+   * We can position the media in different locations within the cropping area.
+   */
+.o-crop__content--right {
+  right: 0;
+  left: auto; }
+
+.o-crop__content--bottom {
+  top: auto;
+  bottom: 0; }
+
+.o-crop__content--center {
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%); }
+
+/* stylelint-disable */
+/* Crop-ratio variants.
+   ========================================================================== */
+/**
+ * Generate a series of crop classes to be used like so:
+ *
+ *   <div class="o-crop  o-crop--16:9">
+ *
+ */
+.o-crop--2\:1 {
+  padding-bottom: 50%; }
+
+.o-crop--4\:3 {
+  padding-bottom: 75%; }
+
+.o-crop--16\:9 {
+  padding-bottom: 56.25%; }
+
+/* stylelint-enable */
+/* ==========================================================================
+   #TABLES
+   ========================================================================== */
+/**
+ * A simple object for manipulating the structure of HTML `table`s.
+ */
+.o-table {
+  width: 100%; }
+
+/* Equal-width table cells.
+   ========================================================================== */
+/**
+ * `table-layout: fixed` forces all cells within a table to occupy the same
+ * width as each other. This also has performance benefits: because the browser
+ * does not need to (re)calculate cell dimensions based on content it discovers,
+ * the table can be rendered very quickly. Further reading:
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout#Values
+ */
+.o-table--fixed {
+  table-layout: fixed; }
+
+/* Size variants.
+   ========================================================================== */
+.o-table--tiny th,
+.o-table--tiny td {
+  padding: 7px; }
+
+.o-table--small th,
+.o-table--small td {
+  padding: 14px; }
+
+.o-table--large th,
+.o-table--large td {
+  padding: 54px; }
+
+.o-table--huge th,
+.o-table--huge td {
+  padding: 108px; }
+
+/* ==========================================================================
+   #PACK
+   ========================================================================== */
+/**
+ * The pack object simply causes any number of elements pack up horizontally to
+ * automatically fill an equal, fluid width of their parent.
+ *
+ * 1. Fill all available space.
+ * 2. Remove any leftover styling from lists.
+ * 3. Cause children to be automatically equally sized.
+ */
+.o-pack {
+  width: 100%;
+  /* [1] */
+  margin-left: 0;
+  /* [2] */
+  display: table;
+  table-layout: fixed;
+  /* [3] */ }
+
+/**
+   * 1. Cause children to adopt table-like structure.
+   */
+.o-pack__item {
+  display: table-cell;
+  /* [1] */
+  /* Vertical alignment variants.
+       ====================================================================== */ }
+  .o-pack--middle > .o-pack__item {
+    vertical-align: middle; }
+  .o-pack--bottom > .o-pack__item {
+    vertical-align: bottom; }
+
+/* Unequal-width items.
+   ========================================================================== */
+.o-pack--auto {
+  table-layout: auto; }
+
+/* Size variants.
+   ========================================================================== */
+.o-pack--tiny {
+  border-spacing: 7px; }
+
+.o-pack--small {
+  border-spacing: 14px; }
+
+.o-pack--large {
+  border-spacing: 54px; }
+
+.o-pack--huge {
+  border-spacing: 108px; }
+
+/* Reversed order packs
+   ========================================================================== */
+.o-pack--rev {
+  direction: rtl; }
+  .o-pack--rev > .o-pack__item {
+    direction: ltr; }
+
+/* ==========================================================================
+   #ICON
+   ========================================================================== */
+/**
+ * Works in conjunction with styles generated by grunticon which provide
+ * background-image for specific icons
+ */
+.o-icon {
+  width: 2rem;
+  height: 1.875rem;
+  display: inline-block;
+  background-size: contain; }
+  .o-icon--centered {
+    display: block;
+    margin-bottom: 27px;
+    margin-left: auto;
+    margin-right: auto; }
+
+/* Specific icons
+   ========================================================================== */
+.o-icon--bars {
+  width: 1rem;
+  height: 1.125rem; }
+
+.o-icon--brand-logo {
+  width: 3.125rem;
+  height: 1.125rem; }
+
+.o-icon--facebook-logo {
+  width: 0.5625rem;
+  height: 1.0625rem; }
+
+.o-icon--hud-logo {
+  width: 1.0625rem;
+  height: 0.9375rem; }
+
+.o-icon--piggy-bank,
+.o-icon--house-money,
+.o-icon--condomnium,
+.o-icon--abacus {
+  width: 3.75rem;
+  height: 3.75rem; }
+
+.o-icon--close-button {
+  width: 1.4375rem;
+  height: 1.4375rem; }
+
+/* ==========================================================================
+   #BUTTONS
+   ========================================================================== */
+/**
+ * 1. Allow us to style box model properties.
+ * 2. Line different sized buttons up a little nicer.
+ * 3. Make buttons inherit font styles (often necessary when styling `input`s as
+ *    buttons).
+ * 4. Reset/normalize some styles.
+ * 5. Force all button-styled elements to appear clickable.
+ * 6. Position as relative to allow for "depressing" buttons on click
+ */
+.c-btn {
+  display: inline-block;
+  /* [1] */
+  vertical-align: middle;
+  /* [2] */
+  font: inherit;
+  /* [3] */
+  text-align: center;
+  /* [4] */
+  text-decoration: none;
+  /* [4] */
+  line-height: 1em;
+  /* [4] */
+  margin: 0;
+  /* [4] */
+  box-sizing: border-box;
+  /* [4] */
+  -webkit-appearance: none;
+  /* [4] */
+  white-space: normal;
+  /* [4] */
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  /* [4] */
+  border-style: none;
+  /* [4] */
+  cursor: pointer;
+  /* [5] */
+  position: relative;
+  /* [6] */
+  top: 0;
+  /* [6] */
+  border-radius: 2px;
+  -webkit-transition: top 0.125s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+  transition: top 0.125s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+  background-color: #42BAF1;
+  color: white;
+  padding: 0.625rem 1em 0.5625rem;
+  font-weight: 900;
+  font-size: 0.9375rem;
+  letter-spacing: .02em;
+  /* Style variants
+  ========================================================================== */
+  /* Size variants
+  ========================================================================== */ }
+  .c-btn:hover {
+    background-color: #009ee7;
+    color: white;
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1); }
+  .c-btn:active, .c-btn:focus {
+    background-color: #009ee7;
+    color: white;
+    outline: none; }
+  .c-btn:active {
+    top: 1px;
+    /* [6] */
+    -webkit-transition: all .125s ease;
+    transition: all .125s ease; }
+  .c-btn--icon, .c-btn--icon:hover, .c-btn--icon:active, .c-btn--icon:focus {
+    background-color: transparent;
+    box-shadow: none; }
+  .c-btn--prominent {
+    background-color: #FD8A10;
+    color: white; }
+    .c-btn--prominent:hover {
+      background-color: #f47d00;
+      color: white; }
+    .c-btn--prominent:active, .c-btn--prominent:focus {
+      background-color: #f47d00;
+      color: white; }
+  .c-btn--neutral {
+    background-color: #EEEEEE;
+    color: #666666; }
+    .c-btn--neutral:hover {
+      background-color: #d2d2d2;
+      color: #272727;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08); }
+    .c-btn--neutral:active, .c-btn--neutral:focus {
+      background-color: #bebebe;
+      color: #272727; }
+  .c-btn--subtle {
+    background-color: #FFFFFF;
+    color: #666666;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #DDDDDD; }
+    .c-btn--subtle:hover {
+      background-color: #e3e3e3;
+      color: #666666;
+      border-color: #aaaaaa;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08); }
+    .c-btn--subtle:active, .c-btn--subtle:focus {
+      background-color: #cfcfcf;
+      color: #272727;
+      border-color: #919090; }
+  .c-btn--as-link {
+    background: none;
+    border: none;
+    color: #42BAF1;
+    font-weight: 400;
+    text-decoration: underline; }
+    .c-btn--as-link:hover {
+      text-decoration: none; }
+  .c-btn--small {
+    padding: 0.3125rem 1em 0.25rem;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: .04em; }
+  .c-btn + .c-btn {
+    margin-left: 1rem; }
+
+/* ==========================================================================
+   # VLIST
+   ========================================================================== */
+/**
+ * 1. Prevent dispalying as list items.
+ * 1.
+ */
+.c-vlist {
+  list-style: none;
+  /* [1] */
+  margin-left: 0;
+  /* [1] */
+  margin-bottom: 1.655em; }
+  .c-vlist__link:hover {
+    text-decoration: underline; }
+
+/* ==========================================================================
+   # FORMS
+   ========================================================================== */
+/**
+ * Foundational form componenets:
+ * .c-form--stacked
+ * .c-form-element
+ * .c-required
+ * .c-has-error
+ *
+ * Derived from Salesforce's "Lightning" design system; heavily modified to
+ * accomodate Newfi's design system.
+ */
+.c-form--stacked .c-form-element {
+  display: block; }
+  .c-form--stacked .c-form-element + .c-form-element {
+    margin-top: 0.75rem; }
+    @media (max-width: 29.99em) {
+      .c-form--stacked .c-form-element + .c-form-element {
+        margin-top: 0.5rem; } }
+
+.c-form--stacked .c-checkbox,
+.c-form--stacked .c-radio {
+  display: block; }
+
+.c-form-element {
+  position: relative; }
+  .c-form-element__label {
+    display: inline-block;
+    color: #666666;
+    font-size: 0.875rem;
+    line-height: 1.375;
+    margin-right: 0.75rem;
+    margin-bottom: 0.25rem; }
+    .c-form-element__label:empty {
+      margin: 0; }
+  .c-form-element__control .c-radio,
+  .c-form-element__control .c-checkbox {
+    display: block; }
+  .c-form-element__control--inline .c-radio,
+  .c-form-element__control--inline .c-checkbox {
+    display: inline-block;
+    margin-right: 1em; }
+    .c-form-element__control--inline .c-radio:last-of-type,
+    .c-form-element__control--inline .c-checkbox:last-of-type {
+      margin-right: 0; }
+  .c-form-element__icon {
+    display: inline-block;
+    position: relative; }
+  .c-form-element__help {
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    display: block; }
+  .c-form-element__static {
+    display: inline-block;
+    line-height: 2.125rem;
+    min-height: calc(2.125rem + 2px); }
+    .c-form-element__static.c-text-longform {
+      line-height: 1.375; }
+
+.c-required,
+.c-required[title] {
+  color: #EA7641;
+  text-decoration: none;
+  position: absolute;
+  right: 100%;
+  margin-right: 0.3em;
+  top: 0.5em; }
+
+.c-has-error .c-form-element__help {
+  font-size: 0.75rem;
+  line-height: 1.333333;
+  font-style: italic;
+  background-color: #EA7641;
+  color: #FFFFFF;
+  border-radius: 2px;
+  padding: 0.125rem 0.35rem;
+  margin: .33em .4rem 0; }
+
+/* ==========================================================================
+   # FORMS.INPUT
+   ========================================================================== */
+/**
+ * Derived from Salesforce's Open-source (BSD) "Lightning" design system;
+ * heavily modified to accomodate Newfi's design system.
+ */
+.c-input {
+  background-color: white;
+  color: #272727;
+  border: 1px solid #ababab;
+    border-radius: 2px;
+  width: 100%;
+  -webkit-transition: border 0.1s linear, background-color 0.1s linear;
+  transition: border 0.1s linear, background-color 0.1s linear;
+  display: inline-block;
+  padding: 0 0.75rem 0 0.5rem;
+  line-height: 1.875rem;
+  min-height: calc(1.875rem + (1px * 2)); }
+  .c-input:focus, .c-input:active {
+    outline: 0;
+    border-color: #42BAF1;
+    background-color: white;
+    box-shadow: 0 0 3px rgba(66, 186, 241, 0.6); }
+  .c-input[disabled], .c-input.c-is-disabled {
+    background-color: #e0e5ee;
+    border-color: #a8b7c7;
+    cursor: not-allowed;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none; }
+    .c-input[disabled]:focus, .c-input[disabled]:active, .c-input.c-is-disabled:focus, .c-input.c-is-disabled:active {
+      box-shadow: none; }
+  .c-input--bare {
+    background-color: transparent;
+    border: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0.75rem;
+    color: #272727;
+    line-height: 1.875rem; }
+    .c-input--bare:focus, .c-input--bare:active {
+      outline: 0; }
+  .c-input--height {
+    min-height: calc(1.875rem + (1px * 2)); }
+
+.c-input-has-fixed-addon {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
+
+.c-form-element__addon {
+  display: inline-block;
+  margin: 0 0.5rem;
+  -webkit-align-self: center;
+      -ms-flex-item-align: center;
+              -ms-grid-row-align: center;
+          align-self: center; }
+  .c-form-element__addon--hanging-prefix {
+    display: block;
+    position: absolute;
+    right: 100%;
+    margin: 0 0.25rem; }
+
+.c-has-error .c-input {
+  background-color: #fdf1ec;
+  border-color: #EA7641;
+  box-shadow: #EA7641 0 0 0 1px inset;
+  background-clip: padding-box; }
+  .c-has-error .c-input:focus, .c-has-error .c-input:active {
+    box-shadow: #EA7641 0 0 0 1px inset, 0 0 3px rgba(234, 118, 65, 0.6); }
+
+.c-has-error .c-input__icon {
+  fill: #FFFFFF; }
+
+/* ==========================================================================
+   # FORMS.TEXTAREA
+   ========================================================================== */
+/**
+ * Derived from Salesforce's Open-source (BSD) "Lightning" design system;
+ * heavily modified to accomodate Newfi's design system.
+ */
+.c-textarea {
+  background-color: white;
+  color: #272727;
+  border: 1px solid #ababab;
+    border-radius: 2px;
+  width: 100%;
+  -webkit-transition: border 0.1s linear, background-color 0.1s linear;
+  transition: border 0.1s linear, background-color 0.1s linear;
+  resize: vertical;
+  padding: 0.5rem 0.75rem; }
+  .c-textarea:focus, .c-textarea:active {
+    outline: 0;
+    border-color: #42BAF1;
+    background-color: white;
+    box-shadow: 0 0 3px rgba(66, 186, 241, 0.6); }
+  .c-textarea[disabled], .c-textarea.c-is-disabled {
+    background-color: #e0e5ee;
+    border-color: #a8b7c7;
+    cursor: not-allowed;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none; }
+    .c-textarea[disabled]:focus, .c-textarea[disabled]:active, .c-textarea.c-is-disabled:focus, .c-textarea.c-is-disabled:active {
+      box-shadow: none; }
+
+.c-has-error .c-textarea {
+  background-color: #fdf1ec;
+  border-color: #EA7641;
+  box-shadow: #EA7641 0 0 0 1px inset;
+  background-clip: padding-box; }
+  .c-has-error .c-textarea:focus, .c-has-error .c-textarea:active {
+    box-shadow: #EA7641 0 0 0 1px inset, 0 0 3px rgba(234, 118, 65, 0.6); }
+
+/* ==========================================================================
+   # FORMS.CHECKBOX
+   ========================================================================== */
+/**
+ * Derived from Salesforce's Open-source (BSD) "Lightning" design system;
+ * heavily modified to accomodate Newfi's design system.
+ */
+.c-checkbox {
+  display: inline-block; }
+  .c-checkbox .c-checkbox--faux {
+    width: 1rem;
+    height: 1rem;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    border: 1px solid #ababab;
+    border-radius: 2px;
+    background: white;
+    -webkit-transition: border 0.1s linear, background-color 0.1s linear;
+    transition: border 0.1s linear, background-color 0.1s linear; }
+  .c-checkbox .c-form-element__label {
+    display: inline;
+    vertical-align: middle;
+    font-size: 0.875rem; }
+  .c-checkbox [type="checkbox"] {
+    width: 1px;
+    height: 1px;
+    border: 0;
+    clip: rect(0 0 0 0);
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute; }
+    .c-checkbox [type="checkbox"]:checked + .c-checkbox--faux:after,
+    .c-checkbox [type="checkbox"]:checked ~ .c-checkbox--faux:after,
+    .c-checkbox [type="checkbox"]:checked + .c-checkbox__label .c-checkbox--faux:after {
+      display: block;
+      content: '';
+      height: 0.25rem;
+      width: 0.5rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate3d(-50%, -50%, 0) rotate(-45deg);
+              transform: translate3d(-50%, -50%, 0) rotate(-45deg);
+      border-bottom: 2px solid #42BAF1;
+      border-left: 2px solid #42BAF1; }
+    .c-checkbox [type="checkbox"]:focus + .c-checkbox--faux,
+    .c-checkbox [type="checkbox"]:focus ~ .c-checkbox--faux,
+    .c-checkbox [type="checkbox"]:focus + .c-checkbox__label .c-checkbox--faux {
+      content: '';
+      border-color: #42BAF1;
+      box-shadow: 0 0 3px rgba(66, 186, 241, 0.6); }
+    .c-checkbox [type="checkbox"]:focus:checked > .c-checkbox--faux,
+    .c-checkbox [type="checkbox"]:focus:checked ~ .c-checkbox--faux,
+    .c-checkbox [type="checkbox"]:focus:checked + .c-checkbox__label .c-checkbox--faux {
+      border-color: #42BAF1;
+      background-color: white; }
+    .c-checkbox [type="checkbox"]:indeterminate + .c-checkbox--faux:after,
+    .c-checkbox [type="checkbox"]:indeterminate ~ .c-checkbox--faux:after,
+    .c-checkbox [type="checkbox"]:indeterminate + .c-checkbox__label .c-checkbox--faux:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0.5rem;
+      height: 2px;
+      background: #42BAF1;
+      border: 0;
+      -webkit-transform: translate3d(-50%, -50%, 0);
+              transform: translate3d(-50%, -50%, 0); }
+    .c-checkbox [type="checkbox"][disabled] + .c-checkbox--faux,
+    .c-checkbox [type="checkbox"][disabled] ~ .c-checkbox--faux,
+    .c-checkbox [type="checkbox"][disabled] + .c-checkbox__label .c-checkbox--faux {
+      background-color: #e0e5ee;
+      border-color: #a8b7c7; }
+      .c-checkbox [type="checkbox"][disabled] + .c-checkbox--faux:after,
+      .c-checkbox [type="checkbox"][disabled] ~ .c-checkbox--faux:after,
+      .c-checkbox [type="checkbox"][disabled] + .c-checkbox__label .c-checkbox--faux:after {
+        border-color: white; }
+
+.c-has-error .c-checkbox [type="checkbox"] + .c-checkbox--faux,
+.c-has-error .c-checkbox [type="checkbox"] ~ .c-checkbox--faux,
+.c-has-error .c-checkbox [type="checkbox"] + .c-checkbox__label .c-checkbox--faux {
+  border-color: #EA7641;
+  border-width: 2px; }
+
+.c-has-error .c-checkbox [type="checkbox"]:checked + .c-checkbox--faux,
+.c-has-error .c-checkbox [type="checkbox"]:checked ~ .c-checkbox--faux,
+.c-has-error .c-checkbox [type="checkbox"]:checked + .c-checkbox__label .c-checkbox--faux {
+  border-color: #EA7641;
+  background-color: white; }
+  .c-has-error .c-checkbox [type="checkbox"]:checked + .c-checkbox--faux:after,
+  .c-has-error .c-checkbox [type="checkbox"]:checked ~ .c-checkbox--faux:after,
+  .c-has-error .c-checkbox [type="checkbox"]:checked + .c-checkbox__label .c-checkbox--faux:after {
+    border-color: #EA7641; }
+
+.c-form-element .c-checkbox [type="checkbox"] + .c-checkbox--faux,
+.c-form-element .c-checkbox [type="checkbox"] ~ .c-checkbox--faux,
+.c-form-element .c-checkbox [type="checkbox"] + .c-checkbox__label .c-checkbox--faux {
+  margin-right: 0.5rem; }
+
+/* ==========================================================================
+   # FORMS.RADIO
+   ========================================================================== */
+/**
+ * Foundational form componenets:
+ * Derived from Salesforce's Open-source (BSD) "Lightning" design system;
+ * heavily modified to accomodate Newfi's design system.
+ *
+ * 1. Use display:content-box on slider to accomodate for extending the size
+ *    of slider beyond a baseline percentage,so it can slightly overlap the
+ *    boundary of the option it is meant to highlight.
+ */
+.c-radio {
+  display: inline-block; }
+  .c-radio .c-radio--faux {
+    width: 1rem;
+    height: 1rem;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    border: 1px solid #ababab;
+    border-radius: 50%;
+    background: white;
+    -webkit-transition: border 0.1s linear, background-color 0.1s linear;
+    transition: border 0.1s linear, background-color 0.1s linear; }
+  .c-radio .c-form-element__label {
+    display: inline;
+    vertical-align: middle;
+    font-size: 0.875rem; }
+  .c-radio [type="radio"] {
+    width: 1px;
+    height: 1px;
+    border: 0;
+    clip: rect(0 0 0 0);
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute; }
+    .c-radio [type="radio"]:checked + .c-radio--faux,
+    .c-radio [type="radio"]:checked ~ .c-radio--faux,
+    .c-radio [type="radio"]:checked + .c-radio__label .c-radio--faux {
+      background: white; }
+      .c-radio [type="radio"]:checked + .c-radio--faux:after,
+      .c-radio [type="radio"]:checked ~ .c-radio--faux:after,
+      .c-radio [type="radio"]:checked + .c-radio__label .c-radio--faux:after {
+        width: 0.5rem;
+        height: 0.5rem;
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate3d(-50%, -50%, 0);
+                transform: translate3d(-50%, -50%, 0);
+        border-radius: 50%;
+        background: #42BAF1; }
+    .c-radio [type="radio"]:focus + .c-radio--faux,
+    .c-radio [type="radio"]:focus ~ .c-radio--faux,
+    .c-radio [type="radio"]:focus + .c-radio__label .c-radio--faux {
+      border-color: #42BAF1;
+      box-shadow: 0 0 3px rgba(66, 186, 241, 0.6); }
+    .c-radio [type="radio"][disabled] {
+      cursor: not-allowed;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none; }
+      .c-radio [type="radio"][disabled] ~ .c-radio--faux,
+      .c-radio [type="radio"][disabled] + .c-radio__label .c-radio--faux {
+        background-color: #e0e5ee;
+        border-color: #a8b7c7; }
+
+.c-radio__toggle-duo,
+.c-radio__toggle-trio,
+.c-radio__toggle-quartet,
+.c-radio__toggle-quintet,
+.c-radio__toggle-sextet,
+.c-radio__toggle-septet,
+.c-radio__toggle-octet {
+  position: relative;
+  z-index: 0; }
+  .c-radio__toggle-duo:after,
+  .c-radio__toggle-trio:after,
+  .c-radio__toggle-quartet:after,
+  .c-radio__toggle-quintet:after,
+  .c-radio__toggle-sextet:after,
+  .c-radio__toggle-septet:after,
+  .c-radio__toggle-octet:after {
+    content: "" !important;
+    display: block !important;
+    clear: both !important; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-duo,
+    .c-radio__toggle-trio,
+    .c-radio__toggle-quartet,
+    .c-radio__toggle-quintet,
+    .c-radio__toggle-sextet,
+    .c-radio__toggle-septet,
+    .c-radio__toggle-octet {
+      background-color: #f3f3f3;
+      border-radius: 1em;
+      height: 1.875rem; } }
+  .c-radio__toggle-duo .c-radio,
+  .c-radio__toggle-trio .c-radio,
+  .c-radio__toggle-quartet .c-radio,
+  .c-radio__toggle-quintet .c-radio,
+  .c-radio__toggle-sextet .c-radio,
+  .c-radio__toggle-septet .c-radio,
+  .c-radio__toggle-octet .c-radio {
+    position: relative;
+    z-index: 2; }
+    @media (min-width: 47.9375em) {
+      .c-radio__toggle-duo .c-radio,
+      .c-radio__toggle-trio .c-radio,
+      .c-radio__toggle-quartet .c-radio,
+      .c-radio__toggle-quintet .c-radio,
+      .c-radio__toggle-sextet .c-radio,
+      .c-radio__toggle-septet .c-radio,
+      .c-radio__toggle-octet .c-radio {
+        float: left; } }
+    .c-radio__toggle-duo .c-radio__label,
+    .c-radio__toggle-trio .c-radio__label,
+    .c-radio__toggle-quartet .c-radio__label,
+    .c-radio__toggle-quintet .c-radio__label,
+    .c-radio__toggle-sextet .c-radio__label,
+    .c-radio__toggle-septet .c-radio__label,
+    .c-radio__toggle-octet .c-radio__label {
+      width: 100%;
+      height: 1.875rem;
+      display: block;
+      line-height: 1;
+      padding: 5px .5rem; }
+    .c-radio__toggle-duo .c-radio__toggle-slider,
+    .c-radio__toggle-trio .c-radio__toggle-slider,
+    .c-radio__toggle-quartet .c-radio__toggle-slider,
+    .c-radio__toggle-quintet .c-radio__toggle-slider,
+    .c-radio__toggle-sextet .c-radio__toggle-slider,
+    .c-radio__toggle-septet .c-radio__toggle-slider,
+    .c-radio__toggle-octet .c-radio__toggle-slider {
+      display: block;
+      box-sizing: content-box;
+      /*[1]*/
+      z-index: 1;
+      opacity: 0;
+      height: 2.125rem;
+      /*[1]*/
+      position: absolute;
+      top: -0.1875rem;
+      margin-left: -0.1875rem;
+      padding-right: 2px;
+      /*[1]*/
+      background-color: white;
+      border-radius: 1.125rem;
+      /*[1]*/
+      border: 0.0625rem solid #F2F2F2;
+      box-shadow: 0 2px 3px 0 rgba(10, 14, 31, 0.09);
+      -webkit-transition: all .2s ease;
+      transition: all .2s ease; }
+
+@media (max-width: 47.9275em) {
+  .c-radio__toggle-duo .c-radio,
+  .c-radio__toggle-duo .c-radio__toggle-slider {
+    width: 100%; } }
+
+@media (min-width: 47.9375em) {
+  .c-radio__toggle-duo .c-radio,
+  .c-radio__toggle-duo .c-radio__toggle-slider {
+    width: 50%; } }
+
+.c-radio__toggle-duo .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-duo .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+      left: 0; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-duo .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+      top: -0.1875rem; } }
+
+.c-radio__toggle-duo .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-duo .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+      left: 50%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-duo .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+      top: 1.6875rem; } }
+
+@media (max-width: 47.9275em) {
+  .c-radio__toggle-trio .c-radio,
+  .c-radio__toggle-trio .c-radio__toggle-slider {
+    width: 100%; } }
+
+@media (min-width: 47.9375em) {
+  .c-radio__toggle-trio .c-radio,
+  .c-radio__toggle-trio .c-radio__toggle-slider {
+    width: 33.3333333333%; } }
+
+.c-radio__toggle-trio .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-trio .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+      left: 0; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-trio .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+      top: -0.1875rem; } }
+
+.c-radio__toggle-trio .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-trio .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+      left: 33.3333333333%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-trio .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+      top: 1.6875rem; } }
+
+.c-radio__toggle-trio .c-radio.is-selected:nth-child(3) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-trio .c-radio.is-selected:nth-child(3) ~ .c-radio__toggle-slider {
+      left: 66.6666666667%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-trio .c-radio.is-selected:nth-child(3) ~ .c-radio__toggle-slider {
+      top: 3.5625rem; } }
+
+@media (max-width: 47.9275em) {
+  .c-radio__toggle-quartet .c-radio,
+  .c-radio__toggle-quartet .c-radio__toggle-slider {
+    width: 100%; } }
+
+@media (min-width: 47.9375em) {
+  .c-radio__toggle-quartet .c-radio,
+  .c-radio__toggle-quartet .c-radio__toggle-slider {
+    width: 25%; } }
+
+.c-radio__toggle-quartet .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-quartet .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+      left: 0; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-quartet .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+      top: -0.1875rem; } }
+
+.c-radio__toggle-quartet .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-quartet .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+      left: 25%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-quartet .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+      top: 1.6875rem; } }
+
+.c-radio__toggle-quartet .c-radio.is-selected:nth-child(3) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-quartet .c-radio.is-selected:nth-child(3) ~ .c-radio__toggle-slider {
+      left: 50%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-quartet .c-radio.is-selected:nth-child(3) ~ .c-radio__toggle-slider {
+      top: 3.5625rem; } }
+
+.c-radio__toggle-quartet .c-radio.is-selected:nth-child(4) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-quartet .c-radio.is-selected:nth-child(4) ~ .c-radio__toggle-slider {
+      left: 75%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-quartet .c-radio.is-selected:nth-child(4) ~ .c-radio__toggle-slider {
+      top: 5.4375rem; } }
+
+@media (max-width: 47.9275em) {
+  .c-radio__toggle-quintet .c-radio,
+  .c-radio__toggle-quintet .c-radio__toggle-slider {
+    width: 100%; } }
+
+@media (min-width: 47.9375em) {
+  .c-radio__toggle-quintet .c-radio,
+  .c-radio__toggle-quintet .c-radio__toggle-slider {
+    width: 20%; } }
+
+.c-radio__toggle-quintet .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-quintet .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+      left: 0; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-quintet .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+      top: -0.1875rem; } }
+
+.c-radio__toggle-quintet .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-quintet .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+      left: 20%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-quintet .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+      top: 1.6875rem; } }
+
+.c-radio__toggle-quintet .c-radio.is-selected:nth-child(3) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-quintet .c-radio.is-selected:nth-child(3) ~ .c-radio__toggle-slider {
+      left: 40%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-quintet .c-radio.is-selected:nth-child(3) ~ .c-radio__toggle-slider {
+      top: 3.5625rem; } }
+
+.c-radio__toggle-quintet .c-radio.is-selected:nth-child(4) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-quintet .c-radio.is-selected:nth-child(4) ~ .c-radio__toggle-slider {
+      left: 60%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-quintet .c-radio.is-selected:nth-child(4) ~ .c-radio__toggle-slider {
+      top: 5.4375rem; } }
+
+.c-radio__toggle-quintet .c-radio.is-selected:nth-child(5) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-quintet .c-radio.is-selected:nth-child(5) ~ .c-radio__toggle-slider {
+      left: 80%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-quintet .c-radio.is-selected:nth-child(5) ~ .c-radio__toggle-slider {
+      top: 7.3125rem; } }
+
+@media (max-width: 47.9275em) {
+  .c-radio__toggle-sextet .c-radio,
+  .c-radio__toggle-sextet .c-radio__toggle-slider {
+    width: 100%; } }
+
+@media (min-width: 47.9375em) {
+  .c-radio__toggle-sextet .c-radio,
+  .c-radio__toggle-sextet .c-radio__toggle-slider {
+    width: 16.6666666667%; } }
+
+.c-radio__toggle-sextet .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-sextet .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+      left: 0; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-sextet .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+      top: -0.1875rem; } }
+
+.c-radio__toggle-sextet .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-sextet .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+      left: 16.6666666667%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-sextet .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+      top: 1.6875rem; } }
+
+.c-radio__toggle-sextet .c-radio.is-selected:nth-child(3) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-sextet .c-radio.is-selected:nth-child(3) ~ .c-radio__toggle-slider {
+      left: 33.3333333333%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-sextet .c-radio.is-selected:nth-child(3) ~ .c-radio__toggle-slider {
+      top: 3.5625rem; } }
+
+.c-radio__toggle-sextet .c-radio.is-selected:nth-child(4) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-sextet .c-radio.is-selected:nth-child(4) ~ .c-radio__toggle-slider {
+      left: 50%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-sextet .c-radio.is-selected:nth-child(4) ~ .c-radio__toggle-slider {
+      top: 5.4375rem; } }
+
+.c-radio__toggle-sextet .c-radio.is-selected:nth-child(5) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-sextet .c-radio.is-selected:nth-child(5) ~ .c-radio__toggle-slider {
+      left: 66.6666666667%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-sextet .c-radio.is-selected:nth-child(5) ~ .c-radio__toggle-slider {
+      top: 7.3125rem; } }
+
+.c-radio__toggle-sextet .c-radio.is-selected:nth-child(6) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-sextet .c-radio.is-selected:nth-child(6) ~ .c-radio__toggle-slider {
+      left: 83.3333333333%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-sextet .c-radio.is-selected:nth-child(6) ~ .c-radio__toggle-slider {
+      top: 9.1875rem; } }
+
+@media (max-width: 47.9275em) {
+  .c-radio__toggle-septet .c-radio,
+  .c-radio__toggle-septet .c-radio__toggle-slider {
+    width: 100%; } }
+
+@media (min-width: 47.9375em) {
+  .c-radio__toggle-septet .c-radio,
+  .c-radio__toggle-septet .c-radio__toggle-slider {
+    width: 14.2857142857%; } }
+
+.c-radio__toggle-septet .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-septet .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+      left: 0; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-septet .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+      top: -0.1875rem; } }
+
+.c-radio__toggle-septet .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-septet .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+      left: 14.2857142857%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-septet .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+      top: 1.6875rem; } }
+
+.c-radio__toggle-septet .c-radio.is-selected:nth-child(3) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-septet .c-radio.is-selected:nth-child(3) ~ .c-radio__toggle-slider {
+      left: 28.5714285714%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-septet .c-radio.is-selected:nth-child(3) ~ .c-radio__toggle-slider {
+      top: 3.5625rem; } }
+
+.c-radio__toggle-septet .c-radio.is-selected:nth-child(4) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-septet .c-radio.is-selected:nth-child(4) ~ .c-radio__toggle-slider {
+      left: 42.8571428571%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-septet .c-radio.is-selected:nth-child(4) ~ .c-radio__toggle-slider {
+      top: 5.4375rem; } }
+
+.c-radio__toggle-septet .c-radio.is-selected:nth-child(5) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-septet .c-radio.is-selected:nth-child(5) ~ .c-radio__toggle-slider {
+      left: 57.1428571429%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-septet .c-radio.is-selected:nth-child(5) ~ .c-radio__toggle-slider {
+      top: 7.3125rem; } }
+
+.c-radio__toggle-septet .c-radio.is-selected:nth-child(6) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-septet .c-radio.is-selected:nth-child(6) ~ .c-radio__toggle-slider {
+      left: 71.4285714286%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-septet .c-radio.is-selected:nth-child(6) ~ .c-radio__toggle-slider {
+      top: 9.1875rem; } }
+
+.c-radio__toggle-septet .c-radio.is-selected:nth-child(7) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-septet .c-radio.is-selected:nth-child(7) ~ .c-radio__toggle-slider {
+      left: 85.7142857143%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-septet .c-radio.is-selected:nth-child(7) ~ .c-radio__toggle-slider {
+      top: 11.0625rem; } }
+
+@media (max-width: 47.9275em) {
+  .c-radio__toggle-octet .c-radio,
+  .c-radio__toggle-octet .c-radio__toggle-slider {
+    width: 100%; } }
+
+@media (min-width: 47.9375em) {
+  .c-radio__toggle-octet .c-radio,
+  .c-radio__toggle-octet .c-radio__toggle-slider {
+    width: 12.5%; } }
+
+.c-radio__toggle-octet .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-octet .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+      left: 0; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-octet .c-radio.is-selected:nth-child(1) ~ .c-radio__toggle-slider {
+      top: -0.1875rem; } }
+
+.c-radio__toggle-octet .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-octet .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+      left: 12.5%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-octet .c-radio.is-selected:nth-child(2) ~ .c-radio__toggle-slider {
+      top: 1.6875rem; } }
+
+.c-radio__toggle-octet .c-radio.is-selected:nth-child(3) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-octet .c-radio.is-selected:nth-child(3) ~ .c-radio__toggle-slider {
+      left: 25%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-octet .c-radio.is-selected:nth-child(3) ~ .c-radio__toggle-slider {
+      top: 3.5625rem; } }
+
+.c-radio__toggle-octet .c-radio.is-selected:nth-child(4) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-octet .c-radio.is-selected:nth-child(4) ~ .c-radio__toggle-slider {
+      left: 37.5%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-octet .c-radio.is-selected:nth-child(4) ~ .c-radio__toggle-slider {
+      top: 5.4375rem; } }
+
+.c-radio__toggle-octet .c-radio.is-selected:nth-child(5) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-octet .c-radio.is-selected:nth-child(5) ~ .c-radio__toggle-slider {
+      left: 50%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-octet .c-radio.is-selected:nth-child(5) ~ .c-radio__toggle-slider {
+      top: 7.3125rem; } }
+
+.c-radio__toggle-octet .c-radio.is-selected:nth-child(6) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-octet .c-radio.is-selected:nth-child(6) ~ .c-radio__toggle-slider {
+      left: 62.5%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-octet .c-radio.is-selected:nth-child(6) ~ .c-radio__toggle-slider {
+      top: 9.1875rem; } }
+
+.c-radio__toggle-octet .c-radio.is-selected:nth-child(7) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-octet .c-radio.is-selected:nth-child(7) ~ .c-radio__toggle-slider {
+      left: 75%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-octet .c-radio.is-selected:nth-child(7) ~ .c-radio__toggle-slider {
+      top: 11.0625rem; } }
+
+.c-radio__toggle-octet .c-radio.is-selected:nth-child(8) ~ .c-radio__toggle-slider {
+  opacity: 1; }
+  @media (min-width: 47.9375em) {
+    .c-radio__toggle-octet .c-radio.is-selected:nth-child(8) ~ .c-radio__toggle-slider {
+      left: 87.5%; } }
+  @media (max-width: 47.9275em) {
+    .c-radio__toggle-octet .c-radio.is-selected:nth-child(8) ~ .c-radio__toggle-slider {
+      top: 12.9375rem; } }
+
+.c-has-error .c-radio [type="radio"] + .c-radio--faux,
+.c-has-error .c-radio [type="radio"] ~ .c-radio--faux,
+.c-has-error .c-radio [type="radio"] + .c-radio__label .c-radio--faux {
+  border-color: #EA7641;
+  border-width: 2px; }
+
+.c-has-error .c-radio [type="radio"]:checked + .c-radio--faux,
+.c-has-error .c-radio [type="radio"]:checked ~ .c-radio--faux,
+.c-has-error .c-radio [type="radio"]:checked + .c-radio__label .c-radio--faux {
+  background: white; }
+  .c-has-error .c-radio [type="radio"]:checked + .c-radio--faux:after,
+  .c-has-error .c-radio [type="radio"]:checked ~ .c-radio--faux:after,
+  .c-has-error .c-radio [type="radio"]:checked + .c-radio__label .c-radio--faux:after {
+    background: #EA7641; }
+
+.c-form-element .c-radio [type="radio"] + .c-radio--faux,
+.c-form-element .c-radio [type="radio"] ~ .c-radio--faux,
+.c-radio [type=radio] + .c-radio__label .c-radio--faux {
+  margin-right: 0.5rem; }
+
+/* ==========================================================================
+   # FORMS.SELECT
+   ========================================================================== */
+/**
+ * Derived from Salesforce's Open-source (BSD) "Lightning" design system;
+ * heavily modified to accomodate Newfi's design system.
+ */
+.c-select {
+  background-color: white;
+  color: #272727;
+  border: 1px solid #ababab;
+    border-radius: 2px;
+  width: 100%;
+  -webkit-transition: border 0.1s linear, background-color 0.1s linear;
+  transition: border 0.1s linear, background-color 0.1s linear;
+  height: calc(1.875rem + (1px * 2)); }
+  .c-select:focus, .c-select:active {
+    outline: 0;
+    border-color: #42BAF1;
+    background-color: white;
+    box-shadow: 0 0 3px rgba(66, 186, 241, 0.6); }
+  .c-select[disabled], .c-select.c-is-disabled {
+    background-color: #e0e5ee;
+    border-color: #a8b7c7;
+    cursor: not-allowed;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none; }
+    .c-select[disabled]:focus, .c-select[disabled]:active, .c-select.c-is-disabled:focus, .c-select.c-is-disabled:active {
+      box-shadow: none; }
+  .c-select[size], .c-select[multiple] {
+    min-height: calc(1.875rem + (1px * 2));
+    height: inherit; }
+    .c-select[size] option, .c-select[multiple] option {
+      padding: 0.5rem; }
+  .c-select_container {
+    position: relative; }
+    .c-select_container .c-select {
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      padding-left: 0.5rem;
+      padding-right: 1.5rem; }
+      .c-select_container .c-select::-ms-expand {
+        display: none; }
+    .c-select_container:after {
+      position: absolute;
+      content: '';
+      display: block;
+      right: 0.5rem;
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid #42BAF1;
+      bottom: calc((1.75rem / 2) - 2px); }
+
+.c-has-error .c-select {
+  background-color: #fdf1ec;
+  border-color: #EA7641;
+  box-shadow: #EA7641 0 0 0 1px inset;
+  background-clip: padding-box; }
+  .c-has-error .c-select:focus, .c-has-error .c-select:active {
+    box-shadow: #EA7641 0 0 0 1px inset, 0 0 3px rgba(234, 118, 65, 0.6); }
+
+.c-has-error .c-select_container:after {
+  border-top-color: #EA7641; }
+
+/* ==========================================================================
+   # FORMS.LINKED-PERCENT-SLIDER
+   ========================================================================== */
+/**
+ * This is a slider input that is linked to another numerical input field.
+ * It displays its own value as both a percent value and as a fractional
+ * amount of the linked input field. Relies on javascript for full
+ * functionality. Falls back to an unstyled html5 range input (or text input
+ * for older browsers).
+ *
+ * See the custom plugin "linkedPercentSlider.js" and vendor javascript
+ * "rangeslider.js" for implementation details.
+ */
+.c-linked-percent-slider,
+.c-linked-percent-slider__fill {
+  display: block;
+  border-radius: 10px; }
+
+.c-linked-percent-slider {
+  background: #F2F2F2;
+  position: relative;
+  height: 7px;
+  width: 100%;
+  margin: 3px 0; }
+  .c-linked-percent-slider__fill {
+    background: #42BAF1;
+    position: absolute;
+    top: 0;
+    height: 100%; }
+  .c-linked-percent-slider__handle {
+    background: white;
+    border: 1px solid #c7c7c7;
+    cursor: pointer;
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    position: absolute;
+    top: -7px;
+    background-size: 100%;
+    box-shadow: 0 2px 3px rgba(10, 14, 39, 0.1);
+    border-radius: 50%;
+    touch-action: pan-y;
+    -ms-touch-action: pan-y; }
+  .c-linked-percent-slider__percent-value, .c-linked-percent-slider__numeric-value {
+    color: #272727;
+    font-weight: 600;
+    font-size: 0.875rem; }
+  .c-linked-percent-slider--disabled {
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
+    opacity: 0.4; }
+  .c-linked-percent-slider--active .c-linked-percent-slider__handle, .c-linked-percent-slider__handle:active {
+    border-color: #42BAF1;
+    box-shadow: 0 0 3px 1px rgba(66, 186, 241, 0.6); }
+
+input[type="range"]:focus + .c-linked-percent-slider .c-linked-percent-slider__handle {
+  border-color: #42BAF1;
+  box-shadow: 0 0 3px 1px rgba(66, 186, 241, 0.6); }
+
+/* ==========================================================================
+   # RATES-LOADING
+   ========================================================================== */
+/**
+ * 1. Prevent dispalying as list items.
+ * 1.
+ */
+.c-rates-loading {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  margin: 0 auto 54px;
+  border-radius: 50%;
+  border: 2px solid #42BAF1;
+  text-align: center;
+  -webkit-animation: c-rates-loading__appear 300ms linear;
+          animation: c-rates-loading__appear 300ms linear; }
+  .c-rates-loading__spinner {
+    display: block;
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    top: -2px;
+    left: -2px;
+    overflow: hidden; }
+    .c-rates-loading__spinner:before, .c-rates-loading__spinner:after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: -15px;
+      left: 125px;
+      height: 30px;
+      width: 30px;
+      margin-left: -15px;
+      -webkit-transform-origin: 15px 140px;
+          -ms-transform-origin: 15px 140px;
+              transform-origin: 15px 140px;
+      -webkit-transition: all 0.3s;
+      transition: all 0.3s;
+      background-color: white;
+      box-shadow: 0 0 15px 10px white; }
+    .c-rates-loading__spinner:before {
+      -webkit-animation: c-rates-loading__rotate-1 1.8s infinite linear;
+              animation: c-rates-loading__rotate-1 1.8s infinite linear; }
+    .c-rates-loading__spinner:after {
+      -webkit-animation: c-rates-loading__rotate-2 1.2s infinite linear;
+              animation: c-rates-loading__rotate-2 1.2s infinite linear; }
+  .c-rates-loading__icon {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -30px;
+    margin-top: -30px; }
+  .c-rates-loading__message {
+    color: #42BAF1;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    position: relative;
+    top: 9.5rem; }
+
+@-webkit-keyframes c-rates-loading__rotate-1 {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+@keyframes c-rates-loading__rotate-1 {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+@-webkit-keyframes c-rates-loading__rotate-2 {
+  0% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg); }
+  100% {
+    -webkit-transform: rotate(540deg);
+            transform: rotate(540deg); } }
+
+@keyframes c-rates-loading__rotate-2 {
+  0% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg); }
+  100% {
+    -webkit-transform: rotate(540deg);
+            transform: rotate(540deg); } }
+
+@-webkit-keyframes c-rates-loading__appear {
+  from {
+    -webkit-transform: scale(0);
+            transform: scale(0); }
+  70% {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05); }
+  85% {
+    -webkit-transform: scale(0.95);
+            transform: scale(0.95); }
+  to {
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+@keyframes c-rates-loading__appear {
+  from {
+    -webkit-transform: scale(0);
+            transform: scale(0); }
+  70% {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05); }
+  85% {
+    -webkit-transform: scale(0.95);
+            transform: scale(0.95); }
+  to {
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+/* ==========================================================================
+   # RATES-LISTING
+   ========================================================================== */
+/**
+ * Responsive rates listing table
+ *
+ * 1. provide a minimum padding when screen gets narrow.
+ * 2. Don't let table grow so wide that cells loose their visual relationship
+ *    to one another
+ * 3. Align table appropriately when they are narrower than the page.
+ * 4. Shift program "headings" to left of listing data for wide screens.
+ * 5. Make sure buttons appear centered vertically with rate data.
+ */
+.c-rates-listing {
+  max-width: 53.125rem;
+  /*[2]*/
+  margin-left: auto;
+  /*[3]*/
+  margin-right: auto;
+  /*[3]*/
+  color: #272727;
+  font-size: 0.875rem; }
+  @media (max-width: 38.115em) {
+    .c-rates-listing {
+      max-width: 27.5rem;
+      /*[2]*/
+      margin-left: 0;
+      /*[3]*/
+      font-size: 0.8125rem; } }
+  @media (max-width: 29.99em) {
+    .c-rates-listing {
+      font-size: 0.75rem; } }
+  .c-rates-listing__program-shim {
+    width: 16%;
+    /*[4]*/
+    min-width: 8.125rem;
+    /*[4]*/ }
+    @media (max-width: 38.115em) {
+      .c-rates-listing__program-shim {
+        width: 0;
+        min-width: 0; } }
+  .c-rates-listing__heading {
+    text-align: left;
+    vertical-align: top; }
+    .c-rates-listing__heading--rate, .c-rates-listing__heading--apr, .c-rates-listing__heading--closing {
+      width: 12%; }
+      @media (max-width: 38.115em) {
+        .c-rates-listing__heading--rate, .c-rates-listing__heading--apr, .c-rates-listing__heading--closing {
+          width: 20%; } }
+  .c-rates-listing__program {
+    border-top: 1px solid #DDDDDD; }
+    .c-rates-listing__program-label {
+      text-align: left; }
+      @media (min-width: 38.125em) {
+        .c-rates-listing__program-label {
+          position: relative;
+          /*[4]*/
+          top: 0;
+          /*[4]*/ } }
+    .c-rates-listing__program-label-heading {
+      display: inline-block;
+      margin-right: .3em;
+      font-size: 0.875rem;
+      font-weight: 700; }
+      @media (min-width: 38.125em) {
+        .c-rates-listing__program-label-heading {
+          position: absolute;
+          top: 0; } }
+    .c-rates-listing__program-label-subheading {
+      display: inline-block;
+      font-size: 0.6875rem;
+      color: #666666; }
+      @media (min-width: 38.125em) {
+        .c-rates-listing__program-label-subheading {
+          position: absolute;
+          top: 1.1rem; } }
+  .c-rates-listing__rate, .c-rates-listing__apr, .c-rates-listing__closing, .c-rates-listing__monthlies {
+    text-align: left;
+    width: 12%;
+    padding-right: 5px;
+    /*[1]*/ }
+    @media (max-width: 38.115em) {
+      .c-rates-listing__rate, .c-rates-listing__apr, .c-rates-listing__closing, .c-rates-listing__monthlies {
+        width: 20%; } }
+  .c-rates-listing__actions {
+    text-align: right;
+    padding: 0 0 2px;
+    /*[5]*/ }
+    .c-rates-listing__actions .c-btn {
+      margin-left: 0; }
+  .c-rates-listing--normal {
+    display: none; }
+    @media (min-width: 38.125em) and (max-width: 47.9275em) {
+      .c-rates-listing--normal {
+        display: inline-block;
+        z-index: 2; } }
+  .c-rates-listing--terse {
+    display: none; }
+    @media (max-width: 38.115em) {
+      .c-rates-listing--terse {
+        display: inline-block;
+        z-index: 3; } }
+  .c-rates-listing--verbose {
+    display: none; }
+    @media (min-width: 47.9375em) {
+      .c-rates-listing--verbose {
+        display: inline-block;
+        z-index: 4; } }
+
+/* ==========================================================================
+   # RATES-DETAIL
+   ========================================================================== */
+/**
+ * Responsive rates detail table
+ *
+ */
+.c-rates-detail {
+  position: relative;
+  max-width: 47.125rem;
+  margin: 0 auto 27px;
+  padding: 27px;
+  border: 1px solid #E5E5E5;
+  background-color: #FAFAFA;
+  color: #666666;
+  font-size: 0.875rem;
+  font-weight: 600; }
+  @media (max-width: 38.115em) {
+    .c-rates-detail {
+      font-size: 0.8125rem; } }
+  @media (max-width: 29.99em) {
+    .c-rates-detail {
+      font-size: 0.75rem; } }
+  .c-rates-detail__header {
+    font-weight: 400;
+    color: #DDDDDD; }
+    .c-rates-detail__header em {
+      font-weight: 800;
+      color: #0C5397;
+      font-style: normal; }
+    .c-rates-detail__header strong {
+      font-weight: 800;
+      font-style: normal;
+      color: #272727; }
+  .c-rates-detail__icon-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 14px; }
+  .c-rates-detail__item {
+    font-size: 0.75rem; }
+    .c-rates-detail__item-label {
+      color: #5F5F5F;
+      padding-left: 14px; }
+    .c-rates-detail__item-sublabel {
+      color: #5F5F5F;
+      padding-left: 27px;
+      font-style: italic; }
+  .c-rates-detail__totals {
+    font-weight: 700; }
+    .c-rates-detail__totals-label {
+      color: #2C3239; }
+  .c-rates-detail__item-value, .c-rates-detail__totals-value {
+    color: #0C5397;
+    text-align: right; }
+
+/* ==========================================================================
+   # FORM-SUMMARY
+   ========================================================================== */
+/**
+ *
+ *
+ */
+.c-form-summary {
+  margin-bottom: 1.655em;
+  margin-left: 0.875rem;
+  font-size: 14px;
+  font-size: 0.875rem;
+  line-height: 1.9285714286; }
+  @media (min-width: 43.75rem) {
+    .c-form-summary {
+      -webkit-column-count: 2;
+         -moz-column-count: 2;
+              column-count: 2; } }
+  .c-form-summary__item {
+    width: 100%;
+    clear: left; }
+  .c-form-summary__label {
+    float: left;
+    clear: left;
+    width: 7.5rem;
+    color: #666666;
+    font-weight: 400; }
+  .c-form-summary__value {
+    color: #272727;
+    font-weight: 700;
+    margin-left: 7.8125rem; }
+
+/* ==========================================================================
+   # MASTHEAD
+   ========================================================================== */
+/**
+ * 1.
+ */
+.c-masthead {
+  border-bottom: #eee 1px solid; }
+  .c-masthead:after {
+    content: "" !important;
+    display: block !important;
+    clear: both !important; }
+  .c-masthead__logo {
+    margin-top: 14px;
+    float: left; }
+  @media (max-width: 61.1775em) {
+    .c-masthead__navbar {
+      overflow: hidden;
+      clear: right; } }
+  @media (min-width: 61.1875em) {
+    .c-masthead__navbar {
+      float: right; } }
+
+/* ==========================================================================
+   # PAGE CONTENT
+   ========================================================================== */
+.c-page-content__section .o-wrapper {
+  margin-top: 27px; }
+
+.c-page-content blockquote,
+.c-page-content .h1, .c-page-content .h1 a, .c-page-content .h2, .c-page-content .h2 a, .c-page-content .h3, .c-page-content .h3 a, .c-page-content .h4, .c-page-content .h4 a, .c-page-content .h5, .c-page-content .h5 a, .c-page-content .h6, .c-page-content .h6 a,
+.c-page-content h1, .c-page-content h1 a, .c-page-content h2, .c-page-content h2 a, .c-page-content h3, .c-page-content h3 a, .c-page-content h4, .c-page-content h4 a, .c-page-content h5, .c-page-content h5 a, .c-page-content h6, .c-page-content h6 a {
+  color: #272727; }
+
+/* ==========================================================================
+   # FOOTER
+   ========================================================================== */
+/**
+ * 1.
+ */
+.c-footer {
+  padding-top: 40px;
+  padding-bottom: 10px; }
+  .c-footer__heading {
+    line-height: 1;
+    margin-bottom: .5em;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700; }
+  .c-footer__norton-seal {
+    margin-top: 0.625rem;
+    margin-bottom: 1.5625rem; }
+    @media (min-width: 61.1875em) {
+      .c-footer__norton-seal {
+        margin-top: 1.875rem; } }
+
+/* ==========================================================================
+   # NAV-MENU
+   ========================================================================== */
+/**
+ * At present, this only accomodates a single level navigation-scheme
+ *
+ * 1. If nav-menu is a list element, prevent it dispalying as one.
+ * 2. Apply unneeded style in order to accomodate quirks in main WP site's theme
+ */
+.c-nav-menu {
+  list-style: none;
+  /* [1] */
+  margin-left: 0;
+  /* [1] */ }
+  .c-nav-menu__item {
+    position: relative; }
+    @media (min-width: 61.1875em) {
+      .c-nav-menu__item {
+        float: left; } }
+    .c-nav-menu__item > a,
+    .c-nav-menu__item > span {
+      display: inline-block;
+      color: inherit; }
+  .c-nav-menu--main {
+    font-size: 0.625rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #666666;
+    letter-spacing: 0.098em;
+    text-transform: uppercase; }
+    @media (max-width: 61.1775em) {
+      .c-nav-menu--main {
+        color: #b7b7b7;
+        /* [2] */
+        font-size: 0.875rem;
+        font-weight: 400;
+        margin-top: 12px; } }
+    @media (min-width: 61.1875em) {
+      .c-nav-menu--main .c-nav-menu__item > a,
+      .c-nav-menu--main .c-nav-menu__item > span {
+        height: 40px;
+        padding-top: 17px;
+        padding-left: 20px;
+        padding-right: 20px;
+        margin-right: -0.098em;
+        /* [2] */ } }
+    @media (max-width: 61.1775em) {
+      .c-nav-menu--main .c-nav-menu__item > a,
+      .c-nav-menu--main .c-nav-menu__item > span {
+        display: block;
+        position: relative;
+        line-height: 1.5;
+        white-space: normal;
+        margin: 0 0 -1px;
+        border: 1px solid #f2f2f2;
+        border-left: 0;
+        border-right: 0;
+        padding: 1em 0;
+        background-color: transparent; } }
+    .c-nav-menu--main .c-nav-menu__item:hover, .c-nav-menu--main .c-nav-menu__item--current {
+      color: #222; }
+    .c-nav-menu--main__mobile-toggle {
+      float: right;
+      padding-right: 0;
+      padding-top: 0.875rem;
+      padding-bottom: 0.375rem; }
+      @media (min-width: 61.1875em) {
+        .c-nav-menu--main__mobile-toggle {
+          display: none; } }
+    .c-nav-menu--main.is-collapsed {
+      height: 0;
+      display: none;
+      -webkit-transition: height 2s ease 0s, display 0s linear 2s;
+      transition: height 2s ease 0s, display 0s linear 2s; }
+    .c-nav-menu--main.is-expanded {
+      height: auto;
+      display: block;
+      -webkit-transition: height 2s ease 0s, display 0s linear 0s;
+      transition: height 2s ease 0s, display 0s linear 0s; }
+    .c-nav-menu--main__mobile-toggle.is-collapsed {
+      -webkit-transition: opacity .33s ease 0s;
+      transition: opacity .33s ease 0s;
+      opacity: 1; }
+    .c-nav-menu--main__mobile-toggle.is-expanded {
+      -webkit-transition: opacity .33s ease 0s;
+      transition: opacity .33s ease 0s;
+      opacity: .7; }
+
+/* ==========================================================================
+   # VLIST
+   ========================================================================== */
+/**
+ */
+/* ==========================================================================
+   #CLEARFIX
+   ========================================================================== */
+/**
+ * Attach our clearfix mixin to a utility class.
+ */
+.u-clearfix:after {
+  content: "" !important;
+  display: block !important;
+  clear: both !important; }
+
+/* ==========================================================================
+   #WIDTHS
+   ========================================================================== */
+/**
+ * inuitcss generates a series of utility classes that give a fluid width to
+ * whichever element they’re applied, e.g.:
+ *
+ *   <img src="" alt="" class="u-1/2" />
+ *
+ * These classes are most commonly used in conjunction with our layout system,
+ * e.g.:
+ *
+ *   <div class="o-layout__item  u-1/2">
+ *
+ * By default, inuitcss will also generate responsive variants of each of these
+ * classes by using your Sass MQ configuration, e.g.:
+ *
+ *   <div class="o-layout__item  u-1/1  u-1/2@tablet  u-1/3@desktop">
+ *
+ * Optionally, inuitcss can generate offset classes which can push and pull
+ * elements left and right by a specified amount, e.g.:
+ *
+ *   <div class="o-layout__item  u-2/3  u-pull-1/3">
+ *
+ * This is useful for making very granular changes to the rendered order of
+ * items in a layout.
+ *
+ * N.B. This option is turned off by default.
+ */
+/**
+ * A series of width helper classes that you can use to size things like grid
+ * systems. Classes take a fraction-like format (e.g. `.u-2/3`). Use these in
+ * your markup:
+ *
+ * <div class="u-7/12">
+ *
+ * The following will generate widths helper classes based on the fractions
+ * defined in the `$inuit-fractions` list.
+ */
+.u-1\/1 {
+  width: 100% !important; }
+
+.u-1\/2 {
+  width: 50% !important; }
+
+.u-2\/2 {
+  width: 100% !important; }
+
+.u-1\/3 {
+  width: 33.3333333333% !important; }
+
+.u-2\/3 {
+  width: 66.6666666667% !important; }
+
+.u-3\/3 {
+  width: 100% !important; }
+
+.u-1\/4 {
+  width: 25% !important; }
+
+.u-2\/4 {
+  width: 50% !important; }
+
+.u-3\/4 {
+  width: 75% !important; }
+
+.u-4\/4 {
+  width: 100% !important; }
+
+.u-1\/5 {
+  width: 20% !important; }
+
+.u-2\/5 {
+  width: 40% !important; }
+
+.u-3\/5 {
+  width: 60% !important; }
+
+.u-4\/5 {
+  width: 80% !important; }
+
+.u-5\/5 {
+  width: 100% !important; }
+
+/**
+ * If we’re using Sass-MQ, automatically generate grid system(s) for each of our
+ * defined breakpoints, and give them a Responsive Suffix, e.g.:
+ *
+ * <div class="u-3/12@mobile">
+ */
+@media (min-width: 30em) {
+  .u-1\/1\@small {
+    width: 100% !important; }
+  .u-1\/2\@small {
+    width: 50% !important; }
+  .u-2\/2\@small {
+    width: 100% !important; }
+  .u-1\/3\@small {
+    width: 33.3333333333% !important; }
+  .u-2\/3\@small {
+    width: 66.6666666667% !important; }
+  .u-3\/3\@small {
+    width: 100% !important; }
+  .u-1\/4\@small {
+    width: 25% !important; }
+  .u-2\/4\@small {
+    width: 50% !important; }
+  .u-3\/4\@small {
+    width: 75% !important; }
+  .u-4\/4\@small {
+    width: 100% !important; }
+  .u-1\/5\@small {
+    width: 20% !important; }
+  .u-2\/5\@small {
+    width: 40% !important; }
+  .u-3\/5\@small {
+    width: 60% !important; }
+  .u-4\/5\@small {
+    width: 80% !important; }
+  .u-5\/5\@small {
+    width: 100% !important; } }
+
+@media (min-width: 38.125em) {
+  .u-1\/1\@mediumsmall {
+    width: 100% !important; }
+  .u-1\/2\@mediumsmall {
+    width: 50% !important; }
+  .u-2\/2\@mediumsmall {
+    width: 100% !important; }
+  .u-1\/3\@mediumsmall {
+    width: 33.3333333333% !important; }
+  .u-2\/3\@mediumsmall {
+    width: 66.6666666667% !important; }
+  .u-3\/3\@mediumsmall {
+    width: 100% !important; }
+  .u-1\/4\@mediumsmall {
+    width: 25% !important; }
+  .u-2\/4\@mediumsmall {
+    width: 50% !important; }
+  .u-3\/4\@mediumsmall {
+    width: 75% !important; }
+  .u-4\/4\@mediumsmall {
+    width: 100% !important; }
+  .u-1\/5\@mediumsmall {
+    width: 20% !important; }
+  .u-2\/5\@mediumsmall {
+    width: 40% !important; }
+  .u-3\/5\@mediumsmall {
+    width: 60% !important; }
+  .u-4\/5\@mediumsmall {
+    width: 80% !important; }
+  .u-5\/5\@mediumsmall {
+    width: 100% !important; } }
+
+@media (min-width: 47.9375em) {
+  .u-1\/1\@medium {
+    width: 100% !important; }
+  .u-1\/2\@medium {
+    width: 50% !important; }
+  .u-2\/2\@medium {
+    width: 100% !important; }
+  .u-1\/3\@medium {
+    width: 33.3333333333% !important; }
+  .u-2\/3\@medium {
+    width: 66.6666666667% !important; }
+  .u-3\/3\@medium {
+    width: 100% !important; }
+  .u-1\/4\@medium {
+    width: 25% !important; }
+  .u-2\/4\@medium {
+    width: 50% !important; }
+  .u-3\/4\@medium {
+    width: 75% !important; }
+  .u-4\/4\@medium {
+    width: 100% !important; }
+  .u-1\/5\@medium {
+    width: 20% !important; }
+  .u-2\/5\@medium {
+    width: 40% !important; }
+  .u-3\/5\@medium {
+    width: 60% !important; }
+  .u-4\/5\@medium {
+    width: 80% !important; }
+  .u-5\/5\@medium {
+    width: 100% !important; } }
+
+@media (min-width: 61.1875em) {
+  .u-1\/1\@mediumlarge {
+    width: 100% !important; }
+  .u-1\/2\@mediumlarge {
+    width: 50% !important; }
+  .u-2\/2\@mediumlarge {
+    width: 100% !important; }
+  .u-1\/3\@mediumlarge {
+    width: 33.3333333333% !important; }
+  .u-2\/3\@mediumlarge {
+    width: 66.6666666667% !important; }
+  .u-3\/3\@mediumlarge {
+    width: 100% !important; }
+  .u-1\/4\@mediumlarge {
+    width: 25% !important; }
+  .u-2\/4\@mediumlarge {
+    width: 50% !important; }
+  .u-3\/4\@mediumlarge {
+    width: 75% !important; }
+  .u-4\/4\@mediumlarge {
+    width: 100% !important; }
+  .u-1\/5\@mediumlarge {
+    width: 20% !important; }
+  .u-2\/5\@mediumlarge {
+    width: 40% !important; }
+  .u-3\/5\@mediumlarge {
+    width: 60% !important; }
+  .u-4\/5\@mediumlarge {
+    width: 80% !important; }
+  .u-5\/5\@mediumlarge {
+    width: 100% !important; } }
+
+@media (min-width: 75em) {
+  .u-1\/1\@large {
+    width: 100% !important; }
+  .u-1\/2\@large {
+    width: 50% !important; }
+  .u-2\/2\@large {
+    width: 100% !important; }
+  .u-1\/3\@large {
+    width: 33.3333333333% !important; }
+  .u-2\/3\@large {
+    width: 66.6666666667% !important; }
+  .u-3\/3\@large {
+    width: 100% !important; }
+  .u-1\/4\@large {
+    width: 25% !important; }
+  .u-2\/4\@large {
+    width: 50% !important; }
+  .u-3\/4\@large {
+    width: 75% !important; }
+  .u-4\/4\@large {
+    width: 100% !important; }
+  .u-1\/5\@large {
+    width: 20% !important; }
+  .u-2\/5\@large {
+    width: 40% !important; }
+  .u-3\/5\@large {
+    width: 60% !important; }
+  .u-4\/5\@large {
+    width: 80% !important; }
+  .u-5\/5\@large {
+    width: 100% !important; } }
+
+@media (min-width: 38.125em) {
+  .u-1\/1\@rates_collapse_table {
+    width: 100% !important; }
+  .u-1\/2\@rates_collapse_table {
+    width: 50% !important; }
+  .u-2\/2\@rates_collapse_table {
+    width: 100% !important; }
+  .u-1\/3\@rates_collapse_table {
+    width: 33.3333333333% !important; }
+  .u-2\/3\@rates_collapse_table {
+    width: 66.6666666667% !important; }
+  .u-3\/3\@rates_collapse_table {
+    width: 100% !important; }
+  .u-1\/4\@rates_collapse_table {
+    width: 25% !important; }
+  .u-2\/4\@rates_collapse_table {
+    width: 50% !important; }
+  .u-3\/4\@rates_collapse_table {
+    width: 75% !important; }
+  .u-4\/4\@rates_collapse_table {
+    width: 100% !important; }
+  .u-1\/5\@rates_collapse_table {
+    width: 20% !important; }
+  .u-2\/5\@rates_collapse_table {
+    width: 40% !important; }
+  .u-3\/5\@rates_collapse_table {
+    width: 60% !important; }
+  .u-4\/5\@rates_collapse_table {
+    width: 80% !important; }
+  .u-5\/5\@rates_collapse_table {
+    width: 100% !important; } }
+
+/* ==========================================================================
+   #SPACING
+   ========================================================================== */
+/**
+ * Utility classes to put specific spacing values onto elements. The below loop
+ * will generate us a suite of classes like:
+ *
+ *   .u-margin-top {}
+ *   .u-padding-left-large {}
+ *   .u-margin-right-small {}
+ *   .u-padding {}
+ *   .u-padding-right-none {}
+ */
+/* stylelint-disable string-quotes */
+.u-padding {
+  padding: 27px !important; }
+
+.u-padding-tiny {
+  padding: 7px !important; }
+
+.u-padding-small {
+  padding: 14px !important; }
+
+.u-padding-large {
+  padding: 54px !important; }
+
+.u-padding-huge {
+  padding: 108px !important; }
+
+.u-padding-none {
+  padding: 0 !important; }
+
+.u-padding-top {
+  padding-top: 27px !important; }
+
+.u-padding-top-tiny {
+  padding-top: 7px !important; }
+
+.u-padding-top-small {
+  padding-top: 14px !important; }
+
+.u-padding-top-large {
+  padding-top: 54px !important; }
+
+.u-padding-top-huge {
+  padding-top: 108px !important; }
+
+.u-padding-top-none {
+  padding-top: 0 !important; }
+
+.u-padding-right {
+  padding-right: 27px !important; }
+
+.u-padding-right-tiny {
+  padding-right: 7px !important; }
+
+.u-padding-right-small {
+  padding-right: 14px !important; }
+
+.u-padding-right-large {
+  padding-right: 54px !important; }
+
+.u-padding-right-huge {
+  padding-right: 108px !important; }
+
+.u-padding-right-none {
+  padding-right: 0 !important; }
+
+.u-padding-bottom {
+  padding-bottom: 27px !important; }
+
+.u-padding-bottom-tiny {
+  padding-bottom: 7px !important; }
+
+.u-padding-bottom-small {
+  padding-bottom: 14px !important; }
+
+.u-padding-bottom-large {
+  padding-bottom: 54px !important; }
+
+.u-padding-bottom-huge {
+  padding-bottom: 108px !important; }
+
+.u-padding-bottom-none {
+  padding-bottom: 0 !important; }
+
+.u-padding-left {
+  padding-left: 27px !important; }
+
+.u-padding-left-tiny {
+  padding-left: 7px !important; }
+
+.u-padding-left-small {
+  padding-left: 14px !important; }
+
+.u-padding-left-large {
+  padding-left: 54px !important; }
+
+.u-padding-left-huge {
+  padding-left: 108px !important; }
+
+.u-padding-left-none {
+  padding-left: 0 !important; }
+
+.u-margin {
+  margin: 27px !important; }
+
+.u-margin-tiny {
+  margin: 7px !important; }
+
+.u-margin-small {
+  margin: 14px !important; }
+
+.u-margin-large {
+  margin: 54px !important; }
+
+.u-margin-huge {
+  margin: 108px !important; }
+
+.u-margin-none {
+  margin: 0 !important; }
+
+.u-margin-top {
+  margin-top: 27px !important; }
+
+.u-margin-top-tiny {
+  margin-top: 7px !important; }
+
+.u-margin-top-small {
+  margin-top: 14px !important; }
+
+.u-margin-top-large {
+  margin-top: 54px !important; }
+
+.u-margin-top-huge {
+  margin-top: 108px !important; }
+
+.u-margin-top-none {
+  margin-top: 0 !important; }
+
+.u-margin-right {
+  margin-right: 27px !important; }
+
+.u-margin-right-tiny {
+  margin-right: 7px !important; }
+
+.u-margin-right-small {
+  margin-right: 14px !important; }
+
+.u-margin-right-large {
+  margin-right: 54px !important; }
+
+.u-margin-right-huge {
+  margin-right: 108px !important; }
+
+.u-margin-right-none {
+  margin-right: 0 !important; }
+
+.u-margin-bottom {
+  margin-bottom: 27px !important; }
+
+.u-margin-bottom-tiny {
+  margin-bottom: 7px !important; }
+
+.u-margin-bottom-small {
+  margin-bottom: 14px !important; }
+
+.u-margin-bottom-large {
+  margin-bottom: 54px !important; }
+
+.u-margin-bottom-huge {
+  margin-bottom: 108px !important; }
+
+.u-margin-bottom-none {
+  margin-bottom: 0 !important; }
+
+.u-margin-left {
+  margin-left: 27px !important; }
+
+.u-margin-left-tiny {
+  margin-left: 7px !important; }
+
+.u-margin-left-small {
+  margin-left: 14px !important; }
+
+.u-margin-left-large {
+  margin-left: 54px !important; }
+
+.u-margin-left-huge {
+  margin-left: 108px !important; }
+
+.u-margin-left-none {
+  margin-left: 0 !important; }
+
+/* stylelint-enable string-quotes */
+/* ==========================================================================
+   #PRINT
+   ========================================================================== */
+/**
+ * Very crude, reset-like styles taken from the HTML5 Boilerplate:
+ * https://github.com/h5bp/html5-boilerplate/blob/5.3.0/dist/doc/css.md#print-styles
+ * https://github.com/h5bp/html5-boilerplate/blob/master/dist/css/main.css#L205-L282
+ */
+@media print {
+  /**
+   * 1. Black prints faster: http://www.sanbeiji.com/archives/953
+   */
+  *,
+  *:before,
+  *:after,
+  *:first-letter,
+  *:first-line {
+    background: transparent !important;
+    color: #000 !important;
+    /* [1] */
+    box-shadow: none !important;
+    text-shadow: none !important; }
+  a,
+  a:visited {
+    text-decoration: underline; }
+  a[href]:after {
+    content: " (" attr(href) ")"; }
+  abbr[title]:after {
+    content: " (" attr(title) ")"; }
+  /**
+   * Don't show links that are fragment identifiers, or use the `javascript:`
+   * pseudo protocol.
+   */
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: ""; }
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid; }
+  /**
+   * Printing Tables: http://css-discuss.incutio.com/wiki/Printing_Tables
+   */
+  thead {
+    display: table-header-group; }
+  tr,
+  img {
+    page-break-inside: avoid; }
+  img {
+    max-width: 100% !important; }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3; }
+  h2,
+  h3 {
+    page-break-after: avoid; } }
+
+/* ==========================================================================
+   #HIDE
+   ========================================================================== */
+/**
+ * Hide only visually, but have it available for screen readers:
+ * http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ */
+.u-hidden-visually {
+  border: 0 !important;
+  clip: rect(0 0 0 0) !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important; }
+
+/**
+ * Hide visually and from screen readers.
+ */
+.u-hidden {
+  display: none !important; }
+
+/* ==========================================================================
+   #TEXT EFFECTS
+   ========================================================================== */
+/**
+ * Basic text layout adjustments
+ */
+.u-text-centered {
+  text-align: center; }
+
+.u-text-left {
+  text-align: left; }
+
+.u-text-right {
+  text-align: right; }
+
+.u-text-uppercase {
+  text-transform: uppercase; }
+
+.u-text-lowercase {
+  text-transform: lowercase; }
+
+.u-text-capitalize {
+  text-transform: capitalize; }
+
+.u-text-nowrap {
+  white-space: nowrap; }
+
+/* ==========================================================================
+   # BOOTSTRAP COLLAPSE
+   ========================================================================== */
+/**
+  * These selectors are used by hte Bootstrap javascript we're including to collapse
+  * the main navigation on mobile screens.
+  *
+  * As authored below, this will only collapse elements up to the "mediumlarge"
+  * breakpoint. This is a hack; The bootstrap collapse script is intended to
+  * work at any window size. We're doing this since we've only included
+  * the collapse script to mirror the beavior of the main WP site's mobile nav.
+  *
+  * Since the mobilenav DOM is the same as for desktop, we don't want the menu
+  * to be hidden at desktop-sizes.
+  *
+  * TODO: Ideally, we should replace the bootstrap script with something functionally
+  * equivalent that applies configurable BEM classes, moving these
+  * properties to a mixin and adding to its module.
+  */
+@media (max-width: 61.1775em) {
+  .collapse {
+    display: none; }
+  .collapse.in {
+    display: block; }
+  .collapsing {
+    position: relative;
+    height: 0;
+    overflow: hidden;
+    -webkit-transition-property: height, visibility;
+    transition-property: height, visibility;
+    -webkit-transition-duration: 0.35s;
+            transition-duration: 0.35s;
+    -webkit-transition-timing-function: ease;
+            transition-timing-function: ease; } }
+
+/* ==========================================================================
+   # HERO STYLE
+   ========================================================================== */
+/**
+ * One of the available styles intended for sections within the page-content component.
+ *
+ * This style should only be used once, as the first section. While it has a
+ * fallback color and gradient, the intention is that it have a
+ * background-image applied inline.
+ *
+ * 1. Fallback color so contents aren't invisible on slow load of
+ *    background image.
+ * 2. Fallback to a nice gradient if no image is applied inline
+ * 3. Contrasting text colors.
+ */
+.s-hero {
+  text-align: center;
+  padding-top: 81px;
+  padding-bottom: 81px;
+  background-repeat: no-repeat;
+  background-size: cover; }
+  .s-hero--dark {
+    background-color: #0C5397;
+    /* [1] */
+    background-image: -webkit-linear-gradient(276deg, #0c5497 26.8%, #1c66b0 100%);
+    background-image: linear-gradient(174deg, #0c5497 26.8%, #1c66b0 100%);
+    /* [2] */
+    color: #FFFFFF;
+    /* [3] */ }
+    .s-hero--dark blockquote,
+    .s-hero--dark .h1, .s-hero--dark .h1 a, .s-hero--dark .h2, .s-hero--dark .h2 a, .s-hero--dark .h3, .s-hero--dark .h3 a, .s-hero--dark .h4, .s-hero--dark .h4 a, .s-hero--dark .h5, .s-hero--dark .h5 a, .s-hero--dark .h6, .s-hero--dark .h6 a,
+    .s-hero--dark h1, .s-hero--dark h1 a, .s-hero--dark h2, .s-hero--dark h2 a, .s-hero--dark h3, .s-hero--dark h3 a, .s-hero--dark h4, .s-hero--dark h4 a, .s-hero--dark h5, .s-hero--dark h5 a, .s-hero--dark h6, .s-hero--dark h6 a {
+      color: inherit;
+      /* [3] */ }
+  .s-hero--light {
+    background-color: #FAFAFA;
+    /* [1] */
+    background-image: -webkit-linear-gradient(276deg, #fafafa 26.8%, #ededed 100%);
+    background-image: linear-gradient(174deg, #fafafa 26.8%, #ededed 100%);
+    /* [2] */
+    color: inherit;
+    /* [3] */ }
+
+/* ==========================================================================
+   # FOOTER STYLE
+   ========================================================================== */
+.s-footer {
+  background-color: #272727;
+  color: #DDDDDD;
+  font-weight: 700;
+  line-height: 1.8; }
+  .s-footer address {
+    font-style: normal;
+    margin-bottom: 0; }
+  .s-footer p {
+    letter-spacing: 2px;
+    line-height: 1.3;
+    margin-bottom: 1.313em; }
+  .s-footer .c-vlist,
+  .s-footer .c-address {
+    text-transform: uppercase; }
+  .s-footer a {
+    color: inherit; }
+    .s-footer a:hover {
+      text-decoration: underline; }
+  .s-footer .o-layout__item {
+    font-size: 0.625rem; }
+    @media (max-width: 61.1775em) {
+      .s-footer .o-layout__item {
+        margin-top: 3em; }
+        .s-footer .o-layout__item:first-child {
+          margin-top: 0; } }
+  .s-footer .o-icon--facebook-logo {
+    margin-top: 9px; }
+/*# sourceMappingURL=customer-engagement.css.map */

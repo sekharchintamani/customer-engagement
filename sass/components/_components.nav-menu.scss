@@ -1,0 +1,112 @@
+/* ==========================================================================
+   # NAV-MENU
+   ========================================================================== */
+
+/**
+ * At present, this only accomodates a single level navigation-scheme
+ *
+ * 1. If nav-menu is a list element, prevent it dispalying as one.
+ * 2. Apply unneeded style in order to accomodate quirks in main WP site's theme
+ */
+
+.c-nav-menu {
+
+  list-style: none; /* [1] */
+  margin-left: 0; /* [1] */
+
+  &__item {
+    position: relative;
+    @include mq($from: mediumlarge) {
+      float: left;
+    }
+
+    &>a,
+    &>span {
+      display: inline-block;
+      color: inherit;
+    }
+  }
+
+  // Variatons
+  &--main {
+    font-size: inuit-rem(10px);
+    font-weight: 700;
+    line-height: 1;
+    color: newfi-color(dove_grey);
+    letter-spacing: 0.098em;
+    text-transform: uppercase;
+
+    @include mq($until: mediumlarge) {
+      color: #b7b7b7; /* [2] */
+      font-size: inuit-rem(14px);
+      font-weight: 400;
+      margin-top: 12px;
+    }
+
+    .c-nav-menu__item {
+      &>a,
+      &>span {
+        @include mq($from: mediumlarge) {
+          height: 40px;
+          padding-top: 17px;
+          padding-left: 20px;
+          padding-right: 20px;
+          margin-right: -0.098em; /* [2] */
+        }
+
+        @include mq($until: mediumlarge) {
+          display: block;
+          position: relative;
+          line-height: 1.5;
+          white-space: normal;
+          margin: 0 0 -1px;
+          border: 1px solid #f2f2f2;
+          border-left: 0;
+          border-right: 0;
+          padding: 1em 0;
+          background-color: transparent;
+        }
+      }
+
+      &:hover,
+      &--current {
+        color: #222;
+      }
+
+    }
+
+    &__mobile-toggle {
+      float: right;
+      padding-right: 0;
+      padding-top: inuit-rem(14px);
+      padding-bottom: inuit-rem(6px);
+
+      @include mq($from: mediumlarge) {
+        display: none;
+      }
+    }
+
+    // States
+    &.is-collapsed {
+      height:0;
+      display: none;
+      transition: height 2s ease 0s, display 0s linear 2s;
+    }
+    &.is-expanded {
+      height: auto;
+      display: block;
+      transition: height 2s ease 0s, display 0s linear 0s;
+    }
+    &__mobile-toggle.is-collapsed {
+      transition: opacity .33s ease 0s;
+      opacity: 1;
+    }
+    &__mobile-toggle.is-expanded {
+      transition: opacity .33s ease 0s;
+      opacity: .7;
+    }
+
+  }
+
+
+}

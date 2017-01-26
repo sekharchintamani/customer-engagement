@@ -1,0 +1,251 @@
+/* ==========================================================================
+   NEWFI STYLE SYSTEM
+   ========================================================================== */
+
+/**
+ * This code uses BEM methodology [1], namespaces [2], and the Inuitcss framework [3].
+
+ * 1. http://getbem.com/introduction/
+ * 2. http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/
+ * 3. https://github.com/inuitcss/inuitcss
+ *
+ */
+
+/**
+ * CONTENTS
+ *
+ * SETTINGS
+ * Config...............Project-level configuration and feature switches.
+ * Core.................inuitcss’ core and setup settings.
+ * Global...............Project-wide variables and settings.
+ *
+ * TOOLS
+ * Rem..................Tools for converting pixel inputs into their rem
+ *                      equivalents.
+ * Font-size............A mixin which guarantees baseline-friendly line-heights.
+ * Clearfix.............Micro clearfix mixin.
+ * Hidden...............Mixin for hiding elements.
+ * Sass MQ..............inuitcss’ default media query manager.
+ *
+ * GENERIC
+ * Box-sizing...........Better default `box-sizing`.
+ * Normalize.css........A level playing field using @necolas’ Normalize.css.
+ * Reset................A tiny reset to complement Normalize.css.
+ * Shared...............Sensibly and tersely share some global commonalities
+ *                      (particularly useful when managing vertical rhythm).
+ *
+ * ELEMENTS
+ * Page.................Set up our document’s default `font-size` and
+ *                      `line-height`.
+ * Headings.............Very minimal (i.e. only font-size information) for
+ *                      headings 1 through 6.
+ * Images...............Base image styles.
+ * Tables...............Simple table styles.
+ *
+ * OBJECTS
+ * Wrapper..............Page constraint object.
+ * Layout...............Generic layout module.
+ * Media................Image- and text-like content side by side. The
+ *                      poster-child of OOCSS.
+ * Flag.................Table-layout-based advancement on the Media object.
+ * List-bare............Lists with no bullets or indents.
+ * List-inline..........A list whose items all site in a line.
+ * Box..................Simple boxing abstraction.
+ * Block................Image-on-top-of-text object.
+ * Ratio................A container for maintaining aspect ratio of content.
+ * Crop.................Provide a cropping context for media (images, etc.).
+ * Tables...............Classes for manipulating `table`s.
+ * Pack.................Pack items into available horizontal space.
+ *
+ * COMPONENTS
+ * Buttons..............
+ *
+ * UTILITIES
+ * Clearfix.............Bind our clearfix onto a utility class.
+ * Widths...............Simple width helper classes.
+ * Headings.............Reassigning our heading styles to helper classes.
+ * Spacing..............Nudge bits of the DOM around with these spacing
+ *                      classes.
+ * Print................Reset-like styles taken from the HTML5 Boilerplate.
+ * Hide.................Helper classes to hide content
+ */
+
+// SETTINGS
+@import "settings/settings.config";
+// Customize core Inuit variables to suit this project
+$inuit-global-font-size:    16px;
+$inuit-global-line-height:  27px;
+$inuit-global-spacing-unit: round($inuit-global-line-height);
+// How many times larger/smaller than the default should our spacing unit
+// variants be?
+$inuit-global-spacing-unit-factor-tiny:   0.25;
+$inuit-global-spacing-unit-factor-small:  0.5;
+$inuit-global-spacing-unit-factor-large:  2;
+$inuit-global-spacing-unit-factor-huge:   4;
+@import "../node_modules/inuitcss/settings/settings.core";
+@import "settings/settings.global";
+
+
+// TOOLS
+@import "../node_modules/inuitcss/tools/tools.rem";
+@import "../node_modules/inuitcss/tools/tools.font-size";
+@import "../node_modules/inuitcss/tools/tools.clearfix";
+@import "../node_modules/inuitcss/tools/tools.hidden";
+// General media query breakpoints
+$mq-base-font-size: 16px;
+$mq-breakpoints: (
+  small:       480px,
+  mediumsmall: 610px,
+  medium:      767px,
+  mediumlarge: 979px,
+  large:       1200px,
+
+  // Tweakpoints
+  rates_collapse_table: 610px
+
+);
+@import "../node_modules/sass-mq/mq";
+@import "tools/tools.aliases"; // shorthand for inuitcss's built-in mixins
+@import "tools/tools.forms";
+
+
+// GENERIC
+@import "../node_modules/inuitcss/generic/generic.box-sizing";
+@import "../node_modules/inuitcss/generic/generic.normalize";
+@import "../node_modules/inuitcss/generic/generic.reset";
+@import "../node_modules/inuitcss/generic/generic.shared";
+@import "generic/generic.typography";
+// @import "generic/generic.animation";
+
+
+
+// ELEMENTS
+@import "../node_modules/inuitcss/elements/elements.page";
+@import "elements/elements.html";
+@import "elements/elements.headings";
+@import "elements/elements.emphasis";
+@import "elements/elements.lists";
+@import "../node_modules/inuitcss/elements/elements.images";
+@import "elements/elements.tables";
+@import "elements/elements.anchors";
+
+
+// OBJECTS
+@import "objects/objects.wrapper";
+@import "../node_modules/inuitcss/objects/objects.layout";
+@import "../node_modules/inuitcss/objects/objects.media";
+@import "../node_modules/inuitcss/objects/objects.flag";
+@import "../node_modules/inuitcss/objects/objects.list-bare";
+@import "../node_modules/inuitcss/objects/objects.list-inline";
+@import "../node_modules/inuitcss/objects/objects.box";
+@import "../node_modules/inuitcss/objects/objects.block";
+@import "../node_modules/inuitcss/objects/objects.ratio";
+@import "../node_modules/inuitcss/objects/objects.crop";
+@import "../node_modules/inuitcss/objects/objects.tables";
+@import "../node_modules/inuitcss/objects/objects.pack";
+
+@import "objects/objects.icon";
+
+
+// COMPONENTS
+@import "components/components.buttons";
+@import "components/components.vlist";
+// Variables used in form mixins and components
+$border-radius-circle: 50%;
+$border-radius-medium: .25rem;
+$border-radius-small: 2px;
+$border-width-thick: 2px;
+$border-width-thin: 1px;
+$color-background-error: #EA7641;
+$color-background-input: rgb(255, 255, 255);
+$color-background-input-error: mix($color-background-error,white,10%);
+$color-background-input-active: rgb(255, 255, 255);
+$color-background-input-disabled: rgb(224, 229, 238);
+$color-background-inverse: rgb(6, 28, 63);
+$color-background-slider: #F2F2F2;
+$color-background-slider-handle: white;
+$color-background-slider-handle-active: white;
+$color-background-slider-fill: $color-interactive;
+$color-border-error: $color-background-error;
+$color-border-input: hsl(0,0,67);
+$color-border-input-active: $color-interactive;
+$color-border-input-disabled: rgb(168, 183, 199);
+$color-border-slider-handle: #c7c7c7;
+$color-border-slider-handle-focus: $color-interactive;
+$color-border-slider-handle-active: white;
+$color-brand: $color-interactive;
+$color-text-default: newfi-color(nero);
+$color-text-error: #FFFFFF;
+$color-text-icon-default: rgb(84, 105, 141);
+$color-text-label: newfi-color(dove_grey);
+  $duration-immediately: 0.05s;
+  $duration-instantly: 0s;
+  $duration-paused: 3.2s;
+  $duration-promptly: 0.2s;
+$duration-quickly: 0.1s;
+  $duration-slowly: 0.4s;
+$font-size-small: inuit-rem(14px);
+$font-size-tiny: inuit-rem(12px);
+$height-input: 1.875rem;
+$line-height-button-small: 1.75rem;
+$line-height-button: 2.125rem;
+$line-height-text: 1.375;
+$shadow-input-focus: 0 0 3px rgba($color-interactive, .6);
+$shadow-input-focus-error: 0 0 3px rgba($color-border-error, .6);
+$shadow-slider-handle: 0 2px 3px rgba(10,14,39, .1);
+$shadow-slider-handle-focus: 0 0 3px 1px rgba($color-interactive, .6);
+$shadow-slider-handle-active: $shadow-slider-handle-focus;
+$spacing-large: 1.5rem;
+$spacing-medium: 1rem;
+  $spacing-none: 0;
+$spacing-small: 0.75rem;
+$spacing-x-large: 2rem;
+$spacing-x-small: 0.5rem;
+$spacing-xx-small: 0.25rem;
+$spacing-xxx-small: 0.125rem;
+$square-icon-medium-content: 1rem;
+$square-icon-x-small-content: .5rem;
+
+@import "components/components.forms";
+@import "components/components.forms.input";
+@import "components/components.forms.textarea";
+@import "components/components.forms.checkbox";
+@import "components/components.forms.radio";
+@import "components/components.forms.select";
+@import "components/components.forms.linked-percent-slider";
+
+@import "components/components.rates-loading";
+@import "components/components.rates-listing";
+@import "components/components.rates-detail";
+@import "components/components.form-summary";
+@import "components/components.masthead";
+@import "components/components.page-content";
+@import "components/components.footer";
+@import "components/components.nav-menu";
+
+@import "components/components.rates-app";
+
+
+// UTILITIES
+@import "../node_modules/inuitcss/utilities/utilities.clearfix";
+
+$inuit-fractions: 1 2 3 4 5;
+$inuit-offsets: false;
+@import "../node_modules/inuitcss/utilities/utilities.widths";
+// @import "../node_modules/inuitcss/utilities/utilities.headings";
+
+$inuit-spacing-sizes: (
+  null: $inuit-global-spacing-unit,
+  '-tiny': $inuit-global-spacing-unit-tiny,
+  '-small': $inuit-global-spacing-unit-small,
+  '-large': $inuit-global-spacing-unit-large,
+  '-huge': $inuit-global-spacing-unit-huge,
+  '-none': 0
+);
+@import "../node_modules/inuitcss/utilities/utilities.spacing";
+@import "../node_modules/inuitcss/utilities/utilities.print";
+@import "../node_modules/inuitcss/utilities/utilities.hide";
+@import "utilities/utilities.text-effects";
+@import "utilities/utilities.bootstrap-collapse";
+@import "utilities/utilities.style-hero";
+@import "utilities/utilities.style-footer";

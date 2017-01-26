@@ -1,0 +1,17 @@
+/* ==========================================================================
+   # TYPOGRAPHY
+   ========================================================================== */
+
+/**
+ * 1. Reduce thickening effect on Mac browsers.
+ * 2. Lato's "fi" ligature removes the dot above the lowercase i, making Newfi's name look odd.
+ */
+
+body {
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "liga" 0; /* [1] */
+}
+
+button, input, optgroup, select, textarea {
+  font-family: "Lato", sans-serif;
+}

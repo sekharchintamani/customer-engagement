@@ -1,0 +1,98 @@
+/* ==========================================================================
+   # RATES-LOADING
+   ========================================================================== */
+
+/**
+ * 1. Prevent dispalying as list items.
+ * 1.
+ */
+
+.c-rates-loading {
+  $container-size: 250px;
+  $spinner-mask-size: 30px;
+
+  position: relative;
+  width: $container-size;
+  height: $container-size;
+  margin: 0 auto $inuit-global-spacing-unit-large;
+  border-radius: 50%;
+  border: 2px solid $color-interactive;
+  text-align: center;
+  animation: c-rates-loading__appear 300ms linear;
+
+  &__spinner {
+    display: block;
+    position: absolute;;
+    width: $container-size;
+    height: $container-size;
+    top: -2px;
+    left: -2px;
+    overflow: hidden;
+
+
+    &:before,
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: $spinner-mask-size * -0.5;
+      left: $container-size * 0.5;
+      height: $spinner-mask-size;
+      width: $spinner-mask-size;
+      margin-left: $spinner-mask-size * -0.5;
+      transform-origin: $spinner-mask-size * 0.5 ($container-size + $spinner-mask-size) * 0.5;
+      transition: all 0.3s;
+      background-color: white;
+      box-shadow: 0 0 15px 10px white;
+    }
+    &:before {
+      animation: c-rates-loading__rotate-1 1.8s infinite linear;
+    }
+    &:after {
+      animation: c-rates-loading__rotate-2 1.2s infinite linear;
+    }
+  }
+
+
+  &__icon {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -30px;
+    margin-top: -30px;
+  }
+  &__message {
+    color: $color-interactive;
+    font-size: inuit-rem(13px);
+    font-weight: 700;
+    position: relative;
+    top: inuit-rem(152px);
+  }
+
+}
+
+
+@keyframes c-rates-loading__rotate-1 {
+  100%{
+  	transform: rotate(360deg);
+  }
+}
+
+@keyframes c-rates-loading__rotate-2 {
+  0%{
+  	transform: rotate(180deg);
+  }
+  100%{
+  	transform: rotate(360 + 180deg);
+  }
+}
+
+
+
+@keyframes c-rates-loading__appear {
+  from{transform:scale(0)}
+  70%{transform:scale(1.05)}
+  85%{transform:scale(.95)}
+  to{transform:scale(1)}
+}

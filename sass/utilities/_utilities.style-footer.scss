@@ -1,0 +1,50 @@
+/* ==========================================================================
+   # FOOTER STYLE
+   ========================================================================== */
+
+.s-footer {
+  background-color: newfi-color(nero);
+  color: newfi-color(gainsboro);
+  font-weight: 700;
+  line-height: 1.8;
+
+  address {
+    font-style: normal;
+    margin-bottom: 0;
+  }
+
+  p {
+    letter-spacing: 2px;
+    line-height: 1.3;
+    margin-bottom: 1.313em;
+  }
+
+  .c-vlist,
+  .c-address {
+    text-transform: uppercase;
+  }
+
+  a {
+    color: inherit;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .o-layout__item {
+    font-size: inuit-rem(10px);
+
+    @include mq($until: mediumlarge) {
+      margin-top: 3em;
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .o-icon--facebook-logo {
+    margin-top: 9px;
+  }
+
+}

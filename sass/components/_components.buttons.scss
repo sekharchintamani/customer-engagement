@@ -1,0 +1,164 @@
+/* ==========================================================================
+   #BUTTONS
+   ========================================================================== */
+
+/**
+ * 1. Allow us to style box model properties.
+ * 2. Line different sized buttons up a little nicer.
+ * 3. Make buttons inherit font styles (often necessary when styling `input`s as
+ *    buttons).
+ * 4. Reset/normalize some styles.
+ * 5. Force all button-styled elements to appear clickable.
+ * 6. Position as relative to allow for "depressing" buttons on click
+ */
+
+.c-btn {
+  // common button styles
+  display: inline-block; /* [1] */
+  vertical-align: middle; /* [2] */
+  font: inherit; /* [3] */
+  text-align: center; /* [4] */
+  text-decoration: none; /* [4] */
+  line-height: 1em; /* [4] */
+  margin: 0; /* [4] */
+  box-sizing: border-box; /* [4] */
+  -webkit-appearance: none; /* [4] */
+  white-space: normal; /* [4] */
+  user-select: none; /* [4] */
+  border-style: none; /* [4] */
+  cursor: pointer; /* [5] */
+  position: relative; /* [6] */
+  top: 0; /* [6] */
+  border-radius: $ui-border-radius;
+  transition: top .125s ease, /* [6] */
+              box-shadow .3s ease,
+              background-color .3s ease,
+              color .3s ease
+              ;
+
+  // default button styles
+  background-color: $color-interactive;
+  color: $color-interactive--contrasted;
+
+  &:hover {
+    background-color: $color-interactive-hover;
+    color: $color-interactive-hover--contrasted;
+    box-shadow: inset 0 0 0 2px rgba(0,0,0,.1);
+  }
+
+  &:active,
+  &:focus {
+    background-color: $color-interactive-hover;
+    color: $color-interactive-hover--contrasted;
+    outline: none;
+  }
+
+  // default button size
+  padding: inuit-rem(10px) 1em inuit-rem(9px);
+  font-weight: 900;
+  font-size: inuit-rem(15px);
+  letter-spacing: .02em;
+
+  &:active {
+    top: 1px; /* [6] */
+    transition: all .125s ease;
+  }
+
+
+
+  /* Style variants
+  ========================================================================== */
+  &--icon,
+  &--icon:hover,
+  &--icon:active,
+  &--icon:focus {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  &--prominent {
+    background-color: $color-prominent;
+    color: $color-prominent--contrasted;
+
+    &:hover {
+      background-color: $color-prominent-hover;
+      color: $color-prominent-hover--contrasted;
+    }
+
+    &:active,
+    &:focus {
+      background-color: $color-prominent-hover;
+      color: $color-prominent-hover--contrasted;
+    }
+  }
+
+  &--neutral {
+    background-color: $color-neutral;
+    color: $color-neutral--contrasted;
+
+    &:hover {
+      background-color: $color-neutral-hover;
+      color: $color-neutral-hover--contrasted;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
+    }
+
+    &:active,
+    &:focus {
+      background-color: $color-neutral-active;
+      color: $color-neutral-active--contrasted;
+    }
+  }
+
+  &--subtle {
+    background-color: $color-subtle;
+    color: $color-subtle--contrasted;
+    border-width: 1px;
+    border-style: solid;
+    border-color: newfi-color(gainsboro);
+
+    &:hover {
+      background-color: $color-subtle-hover;
+      color: $color-subtle-hover--contrasted;
+      border-color: darken(newfi-color(gainsboro), 20%);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
+    }
+
+    &:active,
+    &:focus {
+      background-color: $color-subtle-active;
+      color: $color-subtle-active--contrasted;
+      border-color: darken(newfi-color(gainsboro), 30%);
+    }
+  }
+
+  &--as-link {
+    background: none;
+    border: none;
+    color: $color-interactive;
+    font-weight: 400;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+
+
+
+  /* Size variants
+  ========================================================================== */
+
+  &--small {
+    padding: inuit-rem(5px) 1em inuit-rem(4px);
+    font-weight: 700;
+    font-size: inuit-rem(12px);
+    letter-spacing: .04em;
+  }
+
+
+  + .c-btn {
+    margin-left: 1rem;
+  }
+
+}

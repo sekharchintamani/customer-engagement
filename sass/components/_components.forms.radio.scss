@@ -1,0 +1,224 @@
+/* ==========================================================================
+   # FORMS.RADIO
+   ========================================================================== */
+
+/**
+ * Foundational form componenets:
+ * Derived from Salesforce's Open-source (BSD) "Lightning" design system;
+ * heavily modified to accomodate Newfi's design system.
+ *
+ * 1. Use display:content-box on slider to accomodate for extending the size
+ *    of slider beyond a baseline percentage,so it can slightly overlap the
+ *    boundary of the option it is meant to highlight.
+ */
+
+// Copyright (c) 2015, salesforce.com, inc. All rights reserved.
+
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+// Neither the name of salesforce.com, inc. nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+
+.c-radio {
+  display: inline-block;
+
+  .c-radio--faux {
+    @include square($square-icon-medium-content);
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    border: $border-width-thin solid $color-border-input;
+    border-radius: $border-radius-circle;
+    background: $color-background-input;
+    transition: border $duration-quickly linear, background-color $duration-quickly linear;
+  }
+
+  .c-form-element__label {
+    display: inline;
+    vertical-align: middle;
+    font-size: $font-size-small;
+  }
+
+  [type="radio"] {
+    @include square(1px);
+    border: 0;
+    clip: rect(0 0 0 0);
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+
+    &:checked + .c-radio--faux,
+    &:checked ~ .c-radio--faux,
+    &:checked + .c-radio__label .c-radio--faux {
+      background: $color-background-input;
+
+      &:after {
+        @include square(0.5rem);
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate3d(-50%, -50%, 0);
+        border-radius: $border-radius-circle;
+        background: $color-brand;
+      }
+    }
+
+    &:focus + .c-radio--faux,
+    &:focus ~ .c-radio--faux,
+    &:focus + .c-radio__label .c-radio--faux {
+      border-color: $color-border-input-active;
+      box-shadow: $shadow-input-focus;
+    }
+
+    &[disabled] {
+      // scss-lint:disable NestingDepth
+      cursor: not-allowed;
+      user-select: none;
+
+      ~ .c-radio--faux,
+      + .c-radio__label .c-radio--faux {
+        background-color: $color-background-input-disabled;
+        border-color: $color-border-input-disabled;
+      }
+    }
+  }
+}
+
+$c-radio-row-height: inuit-rem(30px);
+$c-radio-slider-height: inuit-rem(36px);
+$c-radio-slider-initial-top: ($c-radio-slider-height - $c-radio-row-height) * -0.5;
+
+.c-radio__toggle-duo,
+.c-radio__toggle-trio,
+.c-radio__toggle-quartet,
+.c-radio__toggle-quintet,
+.c-radio__toggle-sextet,
+.c-radio__toggle-septet,
+.c-radio__toggle-octet {
+
+  @include inuit-clearfix();
+  position: relative;
+  z-index: 0;
+
+  @include mq($from: medium) {
+    background-color: #f3f3f3;
+    border-radius: 1em;
+    height: $c-radio-row-height;
+  }
+
+
+  .c-radio {
+    @include mq($from: medium) {
+      float: left;
+    }
+    position: relative;
+    z-index: 2;
+
+    &__label {
+      width: 100%;
+      height: $c-radio-row-height;
+      display: block;
+      line-height: 1;
+      padding: 5px .5rem;
+    }
+
+    &__toggle-slider {
+      display: block;
+      box-sizing: content-box; /*[1]*/
+      z-index: 1;
+      opacity: 0;
+      height: $c-radio-slider-height - inuit-rem(2px); /*[1]*/
+      position: absolute;
+      top: $c-radio-slider-initial-top;
+      margin-left: ($c-radio-slider-height - $c-radio-row-height) * -0.5;
+      padding-right: 2px; /*[1]*/
+      background-color: white;
+      border-radius: $c-radio-slider-height / 2; /*[1]*/
+      border: inuit-rem(1px) solid #F2F2F2;
+      box-shadow: 0 2px 3px 0 rgba(10,14,31,0.09);
+      transition: all .2s ease;
+    }
+  }
+
+}
+
+@mixin c-radio__toggle-slider-variation ($num, $initial-top, $row-height) {
+  $width: 100% / $num;
+
+    .c-radio,
+    .c-radio__toggle-slider {
+      @include mq($until: medium) {
+        width: 100%;
+      }
+      @include mq($from: medium) {
+        width: $width;
+      }
+    }
+
+  @for $i from 1 through $num {
+    .c-radio.is-selected:nth-child(#{$i}) ~ .c-radio__toggle-slider {
+      opacity: 1;
+      @include mq($from: medium) {
+        left: if($i == 1, 0, ($width * ($i - 1)));
+      }
+      @include mq($until: medium) {
+        top: if($i == 1, $initial-top, (($row-height * ($i - 1)) + ($initial-top)));
+      }
+    }
+  }
+
+}
+
+.c-radio__toggle-duo {
+  @include c-radio__toggle-slider-variation (2, $c-radio-slider-initial-top, $c-radio-row-height);
+}
+.c-radio__toggle-trio {
+  @include c-radio__toggle-slider-variation (3, $c-radio-slider-initial-top, $c-radio-row-height);
+}
+.c-radio__toggle-quartet {
+  @include c-radio__toggle-slider-variation (4, $c-radio-slider-initial-top, $c-radio-row-height);
+}
+.c-radio__toggle-quintet {
+  @include c-radio__toggle-slider-variation (5, $c-radio-slider-initial-top, $c-radio-row-height);
+}
+.c-radio__toggle-sextet {
+  @include c-radio__toggle-slider-variation (6, $c-radio-slider-initial-top, $c-radio-row-height);
+}
+.c-radio__toggle-septet {
+  @include c-radio__toggle-slider-variation (7, $c-radio-slider-initial-top, $c-radio-row-height);
+}
+.c-radio__toggle-octet {
+  @include c-radio__toggle-slider-variation (8, $c-radio-slider-initial-top, $c-radio-row-height);
+}
+
+.c-has-error .c-radio [type="radio"] {
+
+  + .c-radio--faux,
+  ~ .c-radio--faux,
+  + .c-radio__label .c-radio--faux {
+    border-color: $color-border-error;
+    border-width: $border-width-thick;
+  }
+
+  &:checked + .c-radio--faux,
+  &:checked ~ .c-radio--faux,
+  &:checked + .c-radio__label .c-radio--faux {
+    background: $color-background-input;
+
+    &:after {
+      background: $color-background-error;
+    }
+  }
+}
+
+.c-form-element .c-radio [type="radio"] + .c-radio--faux,
+.c-form-element .c-radio [type="radio"] ~ .c-radio--faux,
+.c-radio [type=radio] + .c-radio__label .c-radio--faux {
+  margin-right: $spacing-x-small;
+}

@@ -1,0 +1,38 @@
+/* ==========================================================================
+   #TEXT EFFECTS
+   ========================================================================== */
+
+/**
+ * Basic text layout adjustments
+ */
+
+.u-text {
+  &-centered {
+    text-align: center;
+  }
+
+  &-left {
+    text-align: left;;
+  }
+
+  &-right {
+    text-align: right;;
+  }
+
+  &-uppercase {
+    text-transform: uppercase;
+  }
+
+  &-lowercase {
+    text-transform: lowercase;
+  }
+
+  &-capitalize {
+    text-transform: capitalize;
+  }
+
+  &-nowrap {
+    white-space: nowrap;
+  }
+
+}

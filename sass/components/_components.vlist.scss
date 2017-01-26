@@ -1,0 +1,23 @@
+/* ==========================================================================
+   # VLIST
+   ========================================================================== */
+
+/**
+ * 1. Prevent dispalying as list items.
+ * 1.
+ */
+
+.c-vlist {
+  list-style: none; /* [1] */
+  margin-left: 0; /* [1] */
+  margin-bottom: 1.655em;
+
+  &__item {
+
+  }
+
+  &__link:hover {
+    text-decoration: underline;
+  }
+
+}

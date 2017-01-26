@@ -1,0 +1,38 @@
+/* ==========================================================================
+   # BOOTSTRAP COLLAPSE
+   ========================================================================== */
+
+/**
+  * These selectors are used by hte Bootstrap javascript we're including to collapse
+  * the main navigation on mobile screens.
+  *
+  * As authored below, this will only collapse elements up to the "mediumlarge"
+  * breakpoint. This is a hack; The bootstrap collapse script is intended to
+  * work at any window size. We're doing this since we've only included
+  * the collapse script to mirror the beavior of the main WP site's mobile nav.
+  *
+  * Since the mobilenav DOM is the same as for desktop, we don't want the menu
+  * to be hidden at desktop-sizes.
+  *
+  * TODO: Ideally, we should replace the bootstrap script with something functionally
+  * equivalent that applies configurable BEM classes, moving these
+  * properties to a mixin and adding to its module.
+  */
+
+
+@include mq($until: mediumlarge) {
+  .collapse {
+    display: none;
+  }
+  .collapse.in {
+    display: block;
+  }
+  .collapsing {
+    position: relative;
+    height: 0;
+    overflow: hidden;
+    transition-property: height, visibility;
+    transition-duration: 0.35s;
+    transition-timing-function: ease;
+  }
+}
