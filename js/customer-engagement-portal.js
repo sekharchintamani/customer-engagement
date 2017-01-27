@@ -253,9 +253,9 @@
           },
           rules: {
             loantype: 'required',
-            zipCodeValidation: true,
             zipcode:  {
               required: true,
+              zipCodeValidation: true,
               remote:   {
                 url:        'http://52.74.75.203:8080/NewfiWeb/rest/states/zipCode',
                 type:       'GET',
@@ -1074,8 +1074,10 @@
       $.validator.addMethod('zipCodeValidation', function(value, element) {
         if(isNaN(value)) {
           return false;
+        } else {
+          return true;
         }
-      });
+      }, 'Please enter correct zipcode');
     }
 
     /**
