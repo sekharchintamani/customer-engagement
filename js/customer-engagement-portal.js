@@ -248,7 +248,7 @@
         .validate({
           messages: {
             zipcode: {
-              remote: 'Please use a valid US zipcode'
+              remote:  jQuery.validator.format("Please Enter a valid US zipcode")
             }
           },
           rules: {
@@ -256,23 +256,15 @@
             zipcode:  {
               required: true,
               zipCodeValidation: true,
-              remote:   {
+              'remote':   {
                 url:        'http://52.74.75.203:8080/NewfiWeb/rest/states/zipCode',
                 type:       'GET',
-                datatype:   'application/json',
+                datatype:   'text',
                 data:       {zipCode: function(){return $('#zipcode').val();}},
                 dataFilter: function(data, type){
                   return /Valid ZipCode/.test(data) ? 'true' : 'false';
-                },
-                success: function(response)
-                {
-                  console.log(response)
-                  if(response == true) {
-                    return true;
-                  } else {
-                    return 'Please Enter a valid zipcode';
-                  }
                 }
+                
               }
             },
             residencetype: 'required',
@@ -1310,6 +1302,11 @@
               _.sum(_.values(rate.lender_costs))
             + _.sum(_.values(rate.third_party_costs))
             , 0);
+            
+            if(rate.total_closing_costs < 0) {
+                rate.total_closing_costs = 0;
+            }
+            
           rate.total_prepaids = _.round(
             _.sum(_.values(rate.prepaids))
             , 0);
