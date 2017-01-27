@@ -253,6 +253,7 @@
           },
           rules: {
             loantype: 'required',
+            zipCodeValidation: true,
             zipcode:  {
               required: true,
               remote:   {
@@ -263,10 +264,14 @@
                 dataFilter: function(data, type){
                   return /Valid ZipCode/.test(data) ? 'true' : 'false';
                 },
-                success: function()
+                success: function(response)
                 {
-                  /*void; avoid submit form a second time */
-
+                  console.log(response)
+                  if(response == true) {
+                    return true;
+                  } else {
+                    return 'Please Enter a valid zipcode';
+                  }
                 }
               }
             },
@@ -1011,8 +1016,8 @@
 
           // Redirect to Thank You Page
           if(registration_details && registration_details.user) {
-              window.location.href = "thankYouPage.html?email="+registration_details.user.emailId.split(":")[0];  
-          } 
+              window.location.href = "thankYouPage.html?email="+registration_details.user.emailId.split(":")[0];
+          }
 
         },
         error: function (xhr) {
@@ -1065,6 +1070,12 @@
         value = accounting.unformat(value);
         return !isNaN(value) && value * 1 > 0;
       }, 'Please enter a dollar amount');
+
+      $.validator.addMethod('zipCodeValidation', function(value, element) {
+        if(isNaN(value)) {
+          return false;
+        }
+      }
     }
 
     /**
