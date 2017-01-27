@@ -974,7 +974,7 @@
         dataType : 'text',
         data : {'registrationDetails' : JSON.stringify(request_data)},
         success : function(response) {
-          var result = JSON.parse(xhr.responseText);
+          var result = JSON.parse(response.responseText);
           console.log(result);
           if(result.resultObject) {
             console.log('validation success');
