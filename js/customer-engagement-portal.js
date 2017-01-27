@@ -1075,7 +1075,7 @@
         if(isNaN(value)) {
           return false;
         }
-      }
+      });
     }
 
     /**
