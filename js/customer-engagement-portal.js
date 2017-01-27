@@ -1008,6 +1008,12 @@
         data : {'registrationDetails' : JSON.stringify(registration_details), 'teaserRateData' : JSON.stringify(teaserRate)},
         success : function(response) {
           console.log(response);
+
+          // Redirect to Thank You Page
+          if(registration_details && registration_details.user) {
+              window.location.href = "thankYouPage.html?email="+registration_details.user.emailId.split(":")[0];  
+          } 
+
         },
         error: function (xhr) {
           console.log(xhr);
