@@ -20,6 +20,7 @@
        engagement portal redesign.
   -->
   <link href="./css/customer-engagement.css" rel="stylesheet">
+  <link href="./css/qtip.min.css" rel="stylesheet">  
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
   <!-- Using Grunt-Icon to generate svg and fallback png css for icons.
@@ -80,6 +81,9 @@
    -->
   <script type="text/javascript" src="./js/vendors/rangeslider.js"></script>
 
+   <!-- Qtips Lib -->
+  
+  <script type="text/javascript" src="js/vendors/qtip.min.js"></script>
 
   <!-- Custom handlebars helpers -->
   <script type="text/javascript" src="./js/handlebars-helpers.js"></script>
@@ -111,6 +115,7 @@
 
   <!-- Main app script; handles all aspects of UX for portal -->
   <script type="text/javascript" src="./js/customer-engagement-portal.js"></script>
+ 
 <!-- /build -->
 
   <script id="details_summary_template" type="text/x-handlebars-template">
@@ -166,10 +171,27 @@
             <thead>
               <tr>
                 <th class="c-rates-listing__program-shim"></th>
-                <th class="c-rates-listing__heading c-rates-listing__heading--rate">Rate<sup>*</sup></th>
-                <th class="c-rates-listing__heading c-rates-listing__heading--apr">APR<sup>*</sup></th>
-                <th class="c-rates-listing__heading c-rates-listing__heading--closing">Closing<sup>**</sup></th>
-                <th class="c-rates-listing__heading c-rates-listing__heading--monthlies" colspan="2"><span class="c-rates-listing--verbose">Monthly Mortgage Payment</span><span class="c-rates-listing--normal">Monthly Mortgage Payment</span><span class="c-rates-listing--terse">Mo. Payment</span><sup>**</sup></th>
+                <th class="c-rates-listing__heading c-rates-listing__heading--rate">Rate<sup>*</sup>
+                <div>
+                <img id="rateTooltips" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADZElEQVQ4T2WTXUybBRSGn+9r+/W/o4XyM9aCI8OMYiYMWbJdOBbIys8uJEJ252LmNGpmvBNvbDQ6L8z0Qs3UmC1m6sWECzdcGUtQl02mgIDQMmKZCI6fllL6D+331QBmQT13Jyfvk/fNOUfgv7W3qw0pr12Vr23VWW1GBEivriXkcKKX9FoPM+eu7ZQIDxuXx8S6dKXgaK277PCj5Beb0Qgy4rpMSs4RCqeZ/3ma0MCoF+16B5Oe+KZ2G3DwEwPZjO+J08fKag7vIT8ao8Em4rRJVNpN+JZidN+L8/uuPKZGFvjlws1Z1FIVw88ntwHVH3ubXm08XnvEie/ODN90lCOZ9P9L9/KXfsTHnEwNL9B/vr+PiRfdAo9/1lLt3t/71LP1DN6LEphZ4U2XhtIiE+/fWaamVEdXUzlaScV3Iwt8MJbAWV3C3Z5RJrz+VoFjX18881rDqaAgkU5l0SgKwb+CRFV6isrtBCbmuN7pYL/Dwq2pIJfnlIfOPn134JJQ+Ezf0omXjhQmIuvo1TniWQglBOKKyLgvRKclyhdna4Ec7Rf82CvytwBynomrH91eFpxnf0ydPFOvWw0lCURk5teyZGTYkHNkp+ZYfK8OEOn4cJzuoJbGQ8U47eotSP/lkbTgemMk9fRJl653PEoqA5JKwGDScHdokW+bLTQfKubz2w947nqM+voS4rEMek2Osj0m/F5/WtjbNbxU01ZVOLeQRK/eXsoGIulghBudRRRYdDSd9zNfWkyJAWQF0tkcjhIDo9d8y4LllaGLde7KU3qNiJyVN6Oi1qlYXkzw2+giBoOIzqCnprYIOaNsjlGpVaQyCkPe6UuC4fRgy4GGst6KShuxWAZBBEEQuD8b4YVKLftsWt76KYrkyMOkAllWMJslAtNhxgZmW7c8W7smvY0nHjlu1omk0zJLSYXClShfde7eipSJxWkZVLBbNOglkVha4ebV+32r51zuLcBuz5BBNFp9R58sKSuwaAgnZP6cidDdbMNm1PD2rTC/anQ4rBKhaIbvf1iYVRKrVQ88df+cMmD3TJowGq4cPGBz73PoSSow80cMs1bFhiRRYZcIzCUYHgt7SSQ7gh7XjmfacfXWdwJtu/IN7VazqtVolIxyDrLrG4lgRO5dW0n2rL5e8a93/hsrzGE/b1t9BAAAAABJRU5ErkJggg=="></img>
+                </div>
+                </th>
+                <th class="c-rates-listing__heading c-rates-listing__heading--apr">APR<sup>*</sup>
+                <div>
+                <img id="aprTooltips" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADZElEQVQ4T2WTXUybBRSGn+9r+/W/o4XyM9aCI8OMYiYMWbJdOBbIys8uJEJ252LmNGpmvBNvbDQ6L8z0Qs3UmC1m6sWECzdcGUtQl02mgIDQMmKZCI6fllL6D+331QBmQT13Jyfvk/fNOUfgv7W3qw0pr12Vr23VWW1GBEivriXkcKKX9FoPM+eu7ZQIDxuXx8S6dKXgaK277PCj5Beb0Qgy4rpMSs4RCqeZ/3ma0MCoF+16B5Oe+KZ2G3DwEwPZjO+J08fKag7vIT8ao8Em4rRJVNpN+JZidN+L8/uuPKZGFvjlws1Z1FIVw88ntwHVH3ubXm08XnvEie/ODN90lCOZ9P9L9/KXfsTHnEwNL9B/vr+PiRfdAo9/1lLt3t/71LP1DN6LEphZ4U2XhtIiE+/fWaamVEdXUzlaScV3Iwt8MJbAWV3C3Z5RJrz+VoFjX18881rDqaAgkU5l0SgKwb+CRFV6isrtBCbmuN7pYL/Dwq2pIJfnlIfOPn134JJQ+Ezf0omXjhQmIuvo1TniWQglBOKKyLgvRKclyhdna4Ec7Rf82CvytwBynomrH91eFpxnf0ydPFOvWw0lCURk5teyZGTYkHNkp+ZYfK8OEOn4cJzuoJbGQ8U47eotSP/lkbTgemMk9fRJl653PEoqA5JKwGDScHdokW+bLTQfKubz2w947nqM+voS4rEMek2Osj0m/F5/WtjbNbxU01ZVOLeQRK/eXsoGIulghBudRRRYdDSd9zNfWkyJAWQF0tkcjhIDo9d8y4LllaGLde7KU3qNiJyVN6Oi1qlYXkzw2+giBoOIzqCnprYIOaNsjlGpVaQyCkPe6UuC4fRgy4GGst6KShuxWAZBBEEQuD8b4YVKLftsWt76KYrkyMOkAllWMJslAtNhxgZmW7c8W7smvY0nHjlu1omk0zJLSYXClShfde7eipSJxWkZVLBbNOglkVha4ebV+32r51zuLcBuz5BBNFp9R58sKSuwaAgnZP6cidDdbMNm1PD2rTC/anQ4rBKhaIbvf1iYVRKrVQ88df+cMmD3TJowGq4cPGBz73PoSSow80cMs1bFhiRRYZcIzCUYHgt7SSQ7gh7XjmfacfXWdwJtu/IN7VazqtVolIxyDrLrG4lgRO5dW0n2rL5e8a93/hsrzGE/b1t9BAAAAABJRU5ErkJggg=="></img>
+                </div>
+                </th>
+                <th class="c-rates-listing__heading c-rates-listing__heading--closing">Closing<sup>**</sup>
+                <div>
+                <img id="closingTooltips" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADZElEQVQ4T2WTXUybBRSGn+9r+/W/o4XyM9aCI8OMYiYMWbJdOBbIys8uJEJ252LmNGpmvBNvbDQ6L8z0Qs3UmC1m6sWECzdcGUtQl02mgIDQMmKZCI6fllL6D+331QBmQT13Jyfvk/fNOUfgv7W3qw0pr12Vr23VWW1GBEivriXkcKKX9FoPM+eu7ZQIDxuXx8S6dKXgaK277PCj5Beb0Qgy4rpMSs4RCqeZ/3ma0MCoF+16B5Oe+KZ2G3DwEwPZjO+J08fKag7vIT8ao8Em4rRJVNpN+JZidN+L8/uuPKZGFvjlws1Z1FIVw88ntwHVH3ubXm08XnvEie/ODN90lCOZ9P9L9/KXfsTHnEwNL9B/vr+PiRfdAo9/1lLt3t/71LP1DN6LEphZ4U2XhtIiE+/fWaamVEdXUzlaScV3Iwt8MJbAWV3C3Z5RJrz+VoFjX18881rDqaAgkU5l0SgKwb+CRFV6isrtBCbmuN7pYL/Dwq2pIJfnlIfOPn134JJQ+Ezf0omXjhQmIuvo1TniWQglBOKKyLgvRKclyhdna4Ec7Rf82CvytwBynomrH91eFpxnf0ydPFOvWw0lCURk5teyZGTYkHNkp+ZYfK8OEOn4cJzuoJbGQ8U47eotSP/lkbTgemMk9fRJl653PEoqA5JKwGDScHdokW+bLTQfKubz2w947nqM+voS4rEMek2Osj0m/F5/WtjbNbxU01ZVOLeQRK/eXsoGIulghBudRRRYdDSd9zNfWkyJAWQF0tkcjhIDo9d8y4LllaGLde7KU3qNiJyVN6Oi1qlYXkzw2+giBoOIzqCnprYIOaNsjlGpVaQyCkPe6UuC4fRgy4GGst6KShuxWAZBBEEQuD8b4YVKLftsWt76KYrkyMOkAllWMJslAtNhxgZmW7c8W7smvY0nHjlu1omk0zJLSYXClShfde7eipSJxWkZVLBbNOglkVha4ebV+32r51zuLcBuz5BBNFp9R58sKSuwaAgnZP6cidDdbMNm1PD2rTC/anQ4rBKhaIbvf1iYVRKrVQ88df+cMmD3TJowGq4cPGBz73PoSSow80cMs1bFhiRRYZcIzCUYHgt7SSQ7gh7XjmfacfXWdwJtu/IN7VazqtVolIxyDrLrG4lgRO5dW0n2rL5e8a93/hsrzGE/b1t9BAAAAABJRU5ErkJggg=="></img>
+                </div>
+                </th>
+                <th class="c-rates-listing__heading c-rates-listing__heading--monthlies" colspan="2"><span class="c-rates-listing--verbose">Monthly Payment</span><span class="c-rates-listing--normal">Monthly Payment</span><span class="c-rates-listing--terse">Mo. Payment</span><sup>**</sup>
+
+                <div>
+                <img id="paymentTooltips" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADZElEQVQ4T2WTXUybBRSGn+9r+/W/o4XyM9aCI8OMYiYMWbJdOBbIys8uJEJ252LmNGpmvBNvbDQ6L8z0Qs3UmC1m6sWECzdcGUtQl02mgIDQMmKZCI6fllL6D+331QBmQT13Jyfvk/fNOUfgv7W3qw0pr12Vr23VWW1GBEivriXkcKKX9FoPM+eu7ZQIDxuXx8S6dKXgaK277PCj5Beb0Qgy4rpMSs4RCqeZ/3ma0MCoF+16B5Oe+KZ2G3DwEwPZjO+J08fKag7vIT8ao8Em4rRJVNpN+JZidN+L8/uuPKZGFvjlws1Z1FIVw88ntwHVH3ubXm08XnvEie/ODN90lCOZ9P9L9/KXfsTHnEwNL9B/vr+PiRfdAo9/1lLt3t/71LP1DN6LEphZ4U2XhtIiE+/fWaamVEdXUzlaScV3Iwt8MJbAWV3C3Z5RJrz+VoFjX18881rDqaAgkU5l0SgKwb+CRFV6isrtBCbmuN7pYL/Dwq2pIJfnlIfOPn134JJQ+Ezf0omXjhQmIuvo1TniWQglBOKKyLgvRKclyhdna4Ec7Rf82CvytwBynomrH91eFpxnf0ydPFOvWw0lCURk5teyZGTYkHNkp+ZYfK8OEOn4cJzuoJbGQ8U47eotSP/lkbTgemMk9fRJl653PEoqA5JKwGDScHdokW+bLTQfKubz2w947nqM+voS4rEMek2Osj0m/F5/WtjbNbxU01ZVOLeQRK/eXsoGIulghBudRRRYdDSd9zNfWkyJAWQF0tkcjhIDo9d8y4LllaGLde7KU3qNiJyVN6Oi1qlYXkzw2+giBoOIzqCnprYIOaNsjlGpVaQyCkPe6UuC4fRgy4GGst6KShuxWAZBBEEQuD8b4YVKLftsWt76KYrkyMOkAllWMJslAtNhxgZmW7c8W7smvY0nHjlu1omk0zJLSYXClShfde7eipSJxWkZVLBbNOglkVha4ebV+32r51zuLcBuz5BBNFp9R58sKSuwaAgnZP6cidDdbMNm1PD2rTC/anQ4rBKhaIbvf1iYVRKrVQ88df+cMmD3TJowGq4cPGBz73PoSSow80cMs1bFhiRRYZcIzCUYHgt7SSQ7gh7XjmfacfXWdwJtu/IN7VazqtVolIxyDrLrG4lgRO5dW0n2rL5e8a93/hsrzGE/b1t9BAAAAABJRU5ErkJggg=="></img>
+                </div>
+                </th>
               </tr>
             </thead>
           </table>

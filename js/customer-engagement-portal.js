@@ -363,6 +363,7 @@
 
 
 
+
     /**
      * Helper to remove the rates table fom the DOM
      */
@@ -524,8 +525,60 @@
         dom.$rates_listing__wrapper.empty().append(template(context));
         switchRateTypes();
         dom.$rates_listing__wrapper.add(dom.$ratetype_form__wrapper).not(':visible').fadeIn(300);
-      }
+      }    
 
+      loadQtipsTooltips();
+    }
+
+  function loadQtipsTooltips() {
+      setTimeout(function(){ 
+            // Rate Column Tooltip
+            $('#rateTooltips').qtip({
+            content: {
+              text: 'The interest rate is the yearly rate charged by lender to a borrower in order for the borrower to obtain a loan. This is expressed as a percentage of the total amount loaned. Note that rates may increase for adjustable rate mortgages.',
+              title: '',
+              //button: 'Close'
+            },
+            style: 'qTipsCustomCss',
+            position: {
+              my: 'top center',  // Position my top left...
+              at: 'bottom center', // at the bottom right of...
+              target: this // my target
+            }
+          }); 
+
+          // APR Column Tooltip
+          $('#aprTooltips').qtip({
+            content: {
+              text: 'Annual percentage rate (APR) is the cost of credit expressed as a yearly rate. The APR includes the interest rate, points, lender fees, and certain other financing charges the borrower is required to pay.',
+              title: '',
+              //button: 'Close'
+            },
+            style: 'qTipsCustomCss',
+            position: {
+              my: 'top center',  // Position my top left...
+              at: 'bottom center', // at the bottom right of...
+              target: this // my target
+            }
+          }); 
+
+          // Monthly Payemnt Column Tooltip
+          $('#paymentTooltips').qtip({
+            content: {
+              text: 'This is the estimated monthly mortgage payment for principal and interest only. This does not include property taxes, homeowner\'s insurance, or mortgage insurance (if applicable), which could increase your monthly payment.',
+              title: '',
+              //button: 'Close'
+            },
+            style: 'qTipsCustomCss',
+            position: {
+              my: 'top center',  // Position my top left...
+              at: 'bottom center', // at the bottom right of...
+              target: this // my target
+            }
+          });        
+
+            
+        }, 2000);
     }
 
     /**

@@ -36,7 +36,7 @@ module.exports = function(grunt) {
 					outputStyle: 'compressed'
 				},
 				files: {
-					'./prod/css/customer-engagement.css': './sass/customer-engagement.scss'
+					'./prod/css/customer-engagement.css': './sass/customer-engagement.scss',
 				}
 			}
 		},
@@ -60,7 +60,9 @@ module.exports = function(grunt) {
 					]
 				},
 				src: './css/customer-engagement.css',
-				dest:'./prod/css/customer-engagement.css'
+				dest:'./prod/css/customer-engagement.css',
+				src: './css/qtip.min.css',
+				dest:'./prod/css/qtip.min.css'			
 			}
 		},
 
@@ -68,7 +70,8 @@ module.exports = function(grunt) {
     processhtml: {
 			prod: {
 				files: {
-					'prod/index.html' : ['index.html']
+					'prod/index.html' : ['index.html'],
+					'prod/thankYouPage.html' : ['thankYouPage.html']					
 				}
 			}
     },
@@ -102,6 +105,7 @@ module.exports = function(grunt) {
 						'./js/vendors/handlebars.min-v4.0.5.js',
 						'./js/vendors/bootstrap.custom.js',
 						'./js/vendors/rangeslider.js',
+						'./js/vendors/qtip.min.js',
 						'./js/handlebars-helpers.js',
 						'./js/validator-global-defaults.js',
 						'./js/accounting-settings.js',
@@ -109,7 +113,8 @@ module.exports = function(grunt) {
 						'./js/components/c-currency-input.js',
 						'./js/components/c-radio.js',
 						'./js/mobilenav.js',
-						'./js/customer-engagement-portal.js'					]
+						'./js/customer-engagement-portal.js'
+						]
 				}
 			}
 		},
@@ -118,7 +123,7 @@ module.exports = function(grunt) {
 				files: [
 					{expand: true, src: ['css/icons/png/**'], dest: 'prod'},
 					{expand: true, src: ['css/icons/*.css'], dest: 'prod'},
-					{expand: true, src: ['js/vendors/jquery-*.min.js'], dest: 'prod'},
+					{expand: true, src: ['js/vendors/jquery-*.min.js'], dest: 'prod'}					
 				],
 			},
 		},
