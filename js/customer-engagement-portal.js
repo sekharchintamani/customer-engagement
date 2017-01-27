@@ -847,24 +847,24 @@
           }
         }
   	  });
-
-      // $('input[name=newfiadvisorsname]').on('change', function() {
-      //   var advisorName = $(this).val();
-      //   if(advisorName != "" && advisorName != undefined) {
-      //     console.log(advisorName)
-      //   }
-      // });
     }
 
     /**
      * Handle user registration form submission
      */
     function submitUserRegistration(user_data) {
-      // TODO: parse and refactor logic from existing portal
-
-      // fresh_request = buildRatesDataRequestObj();
 
       var requestData = buildUserRegistrationData();
+
+      var loanManagerEmail = $('#newfiadvisorsname').data('email');
+
+      if(loanManagerEmail != "" && loanManagerEmail != undefined) {
+        requestData.loanManagerEmail = loanManagerEmail;
+      }
+
+      console.log(requestData);
+      //Validates user exists in database or not
+      var validateUser = validateUserDetails(requestData);
 
     }
 
@@ -877,75 +877,160 @@
         v = {
           'firstName' : $('#fname').val(),
           'lastName' : $('#lname').val(),
-          'emailId' : $('#email').val(),
-          'loanManagerEmail' : $('#newfiadvisorsname').data('email')
+          'emailId' : $('#email').val() + ":" + new Date().getTimezoneOffset()
         };
 
       // Return an object suitable for the chosen loan type
-      // switch (chosen_type) {
-      //   case 'new-purchase':
-      //     return {
-      //       'loanType':        'PUR',
-      //       'purchaseDetails': {
-      //         'livingSituation': 'homeOwner',
-      //         'housePrice':      v.purchaseprice,
-      //         'loanAmount':      v.purchaseprice - v.downpaymentdollars,
-      //         'zipCode':         v.zipcode
-      //       },
-      //       'livingSituation':        'renting',
-      //       'homeWorthToday':         v.purchaseprice,
-      //       'currentMortgageBalance': v.downpaymentdollars,
-      //       'loanAmount':             v.purchaseprice - v.downpaymentdollars,
-      //       'propertyType':           v.propertyuse,
-      //       'residenceType':          v.residencetype,
-      //       'zipCode':                v.zipcode,
-      //       'creditscore':            v.creditscore + 0
-      //     };
-      //     break;
-      //
-      //   case 'refinance':
-      //     return {
-      //       'loanType':               'REF',
-      //       'refinanceOption':        'REFLMP',
-      //       'currentMortgageBalance': v.curmortgagebalance,
-      //       'loanAmount':             v.curmortgagebalance,
-      //       'subordinateFinancing':   null,
-      //       'currentMortgagePayment': v.curmortgagepayment,
-      //       'isIncludeTaxes':         null,
-      //       'impounds':               'YES',
-      //       'propTaxMonthlyOryearly': 'Year',
-      //       'propInsMonthlyOryearly': 'Year',
-      //       'homeWorthToday':         v.estval,
-      //       'propertyType':           v.propertyuse,
-      //       'residenceType':          v.residencetype,
-      //       'zipCode':                v.zipcode,
-      //       'productType':            v.fha,
-      //       'creditscore':            v.creditscore + 0
-      //     };
-      //     break;
-      //
-      //   case 'cashout':
-      //     return {
-      //       'loanType':               'REF',
-      //       'refinanceOption':        'REFCO',
-      //       'cashTakeOut':            v.cashout,
-      //       'currentMortgageBalance': v.curmortgagebalance,
-      //       'loanAmount':             v.cashout + v.curmortgagebalance,
-      //       'subordinateFinancing':   null,
-      //       'currentMortgagePayment': v.curmortgagepayment,
-      //       'isIncludeTaxes':         null,
-      //       'impounds':               'YES',
-      //       'propTaxMonthlyOryearly': 'Year',
-      //       'propInsMonthlyOryearly': 'Year',
-      //       'homeWorthToday':         v.estval,
-      //       'propertyType':           v.propertyuse,
-      //       'residenceType':          v.residencetype,
-      //       'zipCode':                v.zipcode,
-      //       'creditscore':            v.creditscore + 0
-      //     };
-      //     break;
-      // }
+      switch (chosen_type) {
+        case 'new-purchase':
+          return {
+            'loanType': {
+              "loanTypeCd": "PUR"
+            },
+            'monthlyRent' : cache.purchaseDetails.housePrice,
+            'purchaseDetails': {
+              'livingSituation': 'renting',
+              'housePrice':      cache.purchaseDetails.housePrice,
+              'loanAmount':      cache.purchaseDetails.loanAmount,
+              'buyhomeZipPri':   cache.purchaseDetails.zipCode
+            },
+            "propertyTypeMaster": {
+          		'propertyTypeCd': cache.propertyType,
+          		'residenceTypeCd': cache.residenceType,
+          		'homeZipCode': cache.zipCode
+          	},
+            'loanAmount':             cache.loanAmount,
+            'user' : {
+              'firstName': v.firstName,
+          		'lastName': v.lastName,
+          		'emailId': v.emailId
+            }
+          };
+          break;
 
+        case 'refinance':
+          return {
+            'loanType':               {
+            		"loanTypeCd": "REF"
+            	},
+              "refinancedetails": {
+            		"refinanceOption": "REFLMP",
+            		"currentMortgageBalance": cache.currentMortgageBalance,
+            		"includeTaxes": cache.isIncludeTaxes
+            	},
+              "propertyTypeMaster": {
+            		"homeWorthToday": cache.homeWorthToday,
+            		"homeZipCode": cache.zipCode,
+            		"propTaxMonthlyOryearly": cache.propTaxMonthlyOryearly,
+            		"propInsMonthlyOryearly": cache.propInsMonthlyOryearly,
+            		"propertyTypeCd": cache.propertyType,
+            		"residenceTypeCd": cache.residenceType
+            	},
+            'loanAmount': cache.loanAmount,
+            'user' : {
+              'firstName': v.firstName,
+          		'lastName': v.lastName,
+          		'emailId': v.emailId
+            }
+          };
+          break;
+
+        case 'cashout':
+          return {
+            'loanType':               {
+            		"loanTypeCd": "REF"
+            	},
+              "refinancedetails": {
+            		"refinanceOption": "REFCO",
+                "cashTakeOut": cache.cashTakeOut,
+            		"currentMortgageBalance": cache.currentMortgageBalance,
+            		"includeTaxes": cache.isIncludeTaxes
+            	},
+              "propertyTypeMaster": {
+            		"homeWorthToday": cache.homeWorthToday,
+            		"homeZipCode": cache.zipCode,
+            		"propTaxMonthlyOryearly": cache.propTaxMonthlyOryearly,
+            		"propInsMonthlyOryearly": cache.propInsMonthlyOryearly,
+            		"propertyTypeCd": cache.propertyType,
+            		"residenceTypeCd": cache.residenceType
+            	},
+            'loanAmount': cache.loanAmount,
+            'user' : {
+              'firstName': v.firstName,
+          		'lastName': v.lastName,
+          		'emailId': v.emailId
+            }
+          };
+          break;
+      }
+
+    }
+
+
+    function validateUserDetails(request_data) {
+      $.ajax({
+        url : 'http://52.74.75.203:8080/NewfiWeb/rest/shopper/validate',
+        type : 'POST',
+        dataType : 'text',
+        data : {'registrationDetails' : JSON.stringify(request_data)},
+        success : function(response) {
+          var result = JSON.parse(xhr.responseText);
+          console.log(result);
+          if(result.resultObject) {
+            console.log('validation success');
+            //Final user data submission with teaserRate data
+            createUserAccount(request_data);
+
+          }
+
+          if(result.error) {
+            if(result.error.message != "" && result.error.message != undefined) {
+              $('.user-registration-error').show();
+              $('#registration-error').text(result.error.message);
+            }
+          }
+        },
+        error: function (xhr) {
+          console.log(xhr);
+        }
+      });
+
+    }
+
+    function createUserAccount(registration_details) {
+      var teaserRate = state.chosen_rate;
+
+      $.ajax({
+        url : 'http://52.74.75.203:8080/NewfiWeb/rest/shopper/registration',
+        type : 'POST',
+        dataType : 'text',
+        data : {'registrationDetails' : JSON.stringify(registration_details), 'teaserRateData' : JSON.stringify(teaserRate)},
+        success : function(response) {
+          var result = JSON.parse(xhr.responseText);
+          console.log(result);
+        },
+        error: function (xhr) {
+          console.log(xhr);
+        }
+
+      });
+    }
+
+    function loanAdvisorListCallBack(response) {
+      var response = JSON.parse(response);
+      if(response.error == null){
+        var loanAdvisorObjList = response.resultObject;
+
+        if(loanAdvisorObjList != undefined) {
+          for(var i=0; i<loanAdvisorObjList.length; i++) {
+            loanAdvisorList.push(loanAdvisorObjList[i].displayName);
+            loanAdvisorMap.push({
+              name : loanAdvisorObjList[i].displayName,
+              email : loanAdvisorObjList[i].emailId
+            });
+          }
+        }
+      }
     }
 
 
@@ -1145,7 +1230,8 @@
               'homeowners_ins':         propValueOrDefault(raw_rate, 'hazIns903', 0),
               'tax_reserve':            propValueOrDefault(raw_rate, 'taxResrv1004', 0),
               'homeowners_ins_reserve': propValueOrDefault(raw_rate, 'hazInsReserve1002', 0),
-            }
+            },
+            'teaserRate': raw_rate
           };
 
           rate.total_closing_costs = _.round(
@@ -1233,23 +1319,6 @@
 
       // Return our parsed object
       return {'programs': programs};
-    }
-
-    function loanAdvisorListCallBack(response) {
-      var response = JSON.parse(response);
-    	if(response.error == null){
-    		var loanAdvisorObjList = response.resultObject;
-
-    		if(loanAdvisorObjList != undefined) {
-    			for(var i=0; i<loanAdvisorObjList.length; i++) {
-    				loanAdvisorList.push(loanAdvisorObjList[i].displayName);
-            loanAdvisorMap.push({
-              name : loanAdvisorObjList[i].displayName,
-              email : loanAdvisorObjList[i].emailId
-            });
-    			}
-    		}
-      }
     }
 
 
