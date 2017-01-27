@@ -974,10 +974,11 @@
         dataType : 'text',
         data : {'registrationDetails' : JSON.stringify(request_data)},
         success : function(response) {
-          var result = JSON.parse(response.responseText);
+          var result = JSON.parse(response);
           console.log(result);
           if(result.resultObject) {
             console.log('validation success');
+            $('.user-registration-error').hide();
             //Final user data submission with teaserRate data
             createUserAccount(request_data);
 
@@ -1006,8 +1007,7 @@
         dataType : 'text',
         data : {'registrationDetails' : JSON.stringify(registration_details), 'teaserRateData' : JSON.stringify(teaserRate)},
         success : function(response) {
-          var result = JSON.parse(xhr.responseText);
-          console.log(result);
+          console.log(response);
         },
         error: function (xhr) {
           console.log(xhr);
