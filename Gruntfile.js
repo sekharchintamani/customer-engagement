@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 		watch: {
 			sass: {
 				files: ['sass/**/*.{scss,sass}','sass/_partials/**/*.{scss,sass}'],
-				tasks: ['sass:dev','postcss:dist']
+				tasks: ['sass:dev','postcss:dev']
 			}
 		},
 
@@ -31,7 +31,6 @@ module.exports = function(grunt) {
 			},
 			prod: {
 				options: {
-					sourceMap: false,
 					sourceComments: false,
 					outputStyle: 'compressed'
 				},
@@ -61,8 +60,8 @@ module.exports = function(grunt) {
 				},
 				src: './css/customer-engagement.css',
 				dest:'./prod/css/customer-engagement.css',
-				src: './css/qtip.min.css',
-				dest:'./prod/css/qtip.min.css'			
+				src: './css/jquery-ui.min.css',
+				dest:'./prod/css/jquery-ui.min.css'
 			}
 		},
 
@@ -71,7 +70,7 @@ module.exports = function(grunt) {
 			prod: {
 				files: {
 					'prod/index.html' : ['index.html'],
-					'prod/thankYouPage.html' : ['thankYouPage.html']					
+					'prod/thankYouPage.html' : ['thankYouPage.html']
 				}
 			}
     },
@@ -102,6 +101,7 @@ module.exports = function(grunt) {
 						'./js/vendors/lodash.custom.min.js',
 						'./js/vendors/accounting.js',
 						'./js/vendors/jquery.validate.js',
+						'./js/jquery-ui.min.js',
 						'./js/vendors/handlebars.min-v4.0.5.js',
 						'./js/vendors/bootstrap.custom.js',
 						'./js/vendors/rangeslider.js',
@@ -123,7 +123,7 @@ module.exports = function(grunt) {
 				files: [
 					{expand: true, src: ['css/icons/png/**'], dest: 'prod'},
 					{expand: true, src: ['css/icons/*.css'], dest: 'prod'},
-					{expand: true, src: ['js/vendors/jquery-*.min.js'], dest: 'prod'}					
+					{expand: true, src: ['js/vendors/jquery-*.min.js'], dest: 'prod'}
 				],
 			},
 		},

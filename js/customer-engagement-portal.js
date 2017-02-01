@@ -8,7 +8,7 @@
     /**
      * Setup several app-wide collections:
      * 1. dict:
-     *      Dictionaries used human-readable strings.
+     *      Dictionaries used for human-readable strings.
      * 2. config:
      *      Configuration objects used throughout the app.
      * 3. dom:
@@ -36,8 +36,17 @@
           'curmortgagebalance': 'Mortgage Balance',
           'fha':                'FHA Loan',
           'cashout':            'Cash Out'
-        }
-      },
+        },
+
+        'tooltips': {
+        /* eslint-disable max-len */
+         'rate':      'The interest rate is the yearly rate charged by lender to a borrower in order for the borrower to obtain a loan. This is expressed as a percentage of the total amount loaned. Note that rates may increase for adjustable rate mortgages.',
+         'apr':       'Annual percentage rate (APR) is the cost of credit expressed as a yearly rate. The APR includes the interest rate, points, lender fees, and certain other financing charges the borrower is required to pay.',
+         'closing':   'Click on the Details button for detailed split of the total estimated closing closts.',
+         'monthlies': 'This is the estimated monthly mortgage payment for principal and interest only. This does not include property taxes, homeowner’s insurance, or mortgage insurance (if applicable), which could increase your monthly payment.'
+         /* eslint-enable max-len */
+         }
+       },
 
       config = {
         'loantypes': {
@@ -97,7 +106,8 @@
           'rate_loading_animation': Handlebars.compile($('#rate_loading_animation_template').html()),
           'rates_listing':          Handlebars.compile($('#rates_listing_template').html()),
           'rates_detail':           Handlebars.compile($('#rates_detail_template').html()),
-          'chosen_rate_summary':    Handlebars.compile($('#chosen_rate_summary_template').html())
+          'chosen_rate_summary':    Handlebars.compile($('#chosen_rate_summary_template').html()),
+          'tooltip':                Handlebars.compile($('#tooltip_template').html())
         }
       },
 
@@ -248,7 +258,7 @@
         .validate({
           messages: {
             zipcode: {
-              remote:  jQuery.validator.format("Please Enter a valid US zipcode")
+              remote:  jQuery.validator.format("Please enter a valid Zip Code in a Newfi approved state: AZ, CA, CO, OR or WA")
             }
           },
           rules: {
@@ -264,7 +274,7 @@
                 dataFilter: function(data, type){
                   return /Valid ZipCode/.test(data) ? 'true' : 'false';
                 }
-                
+
               }
             },
             residencetype: 'required',
@@ -308,6 +318,7 @@
         .on( 'click', '[data-js=close-rate-details]', showRatesTable)
         .on( 'click', '[data-js=show-rate-table]', regressToRateTable)
         .on( 'click', '[data-js=select-rate]', function(){selectRate(this);})
+        .on( 'click', '[data-js=trigger-tooltip]', function(event){toggleTooltips(event, this);})
         ;
     }
 
@@ -329,6 +340,37 @@
       removeLoantypeIcons();
       showLoanDetailsForm();
     }
+
+    /**
+    * Helper to add/remove any tooltips from the DOM
+    * @param  {element} event The event that trigggered this call
+    */
+   function toggleTooltips(event, el) {
+     // TODO: Show/hide tooltips. pseudo-code:
+     //
+     // if (showing a tooltip) {
+     //   renderTooltip(el)
+     // } else if (clicking on an existing tooltip){
+     //   return; // do nothing
+     // } else {
+     //   remove tooltips
+     // }
+
+     $('.c-tooltip').remove();
+
+     var tooltip = renderTooltip(el);
+
+     $(el).append(tooltip);
+
+     $('.close-tooltip').on('click', function(){
+        closeTooltips();
+     });
+     
+   }
+
+   function closeTooltips() {
+      $('.c-tooltip').remove();
+   }
 
     /**
      * Update UI state and manage DOM transitions when the rate type
@@ -435,6 +477,7 @@
      * app to the state of collecting Loan Details
      */
     function regressToLoanDetails() {
+      $('#basic-information').fadeIn(300);
       dom.$user_registration__wrapper
         .add(dom.$loan_summary)
         .add(dom.$ratetype_form__wrapper)
@@ -510,6 +553,7 @@
       if (loadingIndicatorPresent) {
         dom.$rates_listing__wrapper.fadeOut(1000, function(){
           $(this).empty().append(template(context));
+          // hide rows that don't meet the currently selected rate type option before showing the table
           switchRateTypes();
           $(this).add(dom.$ratetype_form__wrapper).not(':visible').fadeIn(300);
         });
@@ -517,13 +561,13 @@
         dom.$rates_listing__wrapper.empty().append(template(context));
         switchRateTypes();
         dom.$rates_listing__wrapper.add(dom.$ratetype_form__wrapper).not(':visible').fadeIn(300);
-      }    
+      }
 
-      loadQtipsTooltips();
+      // loadQtipsTooltips();
     }
 
   function loadQtipsTooltips() {
-      setTimeout(function(){ 
+      setTimeout(function(){
             // Rate Column Tooltip
             $('#rateTooltips').qtip({
             content: {
@@ -537,7 +581,7 @@
               at: 'bottom center', // at the bottom right of...
               target: this // my target
             }
-          }); 
+          });
 
           // APR Column Tooltip
           $('#aprTooltips').qtip({
@@ -552,7 +596,7 @@
               at: 'bottom center', // at the bottom right of...
               target: this // my target
             }
-          }); 
+          });
 
           // Monthly Payemnt Column Tooltip
           $('#paymentTooltips').qtip({
@@ -567,9 +611,22 @@
               at: 'bottom center', // at the bottom right of...
               target: this // my target
             }
-          });        
+          });
 
-            
+          $('#closingTooltips').qtip({
+            content: {
+              text: 'Click on the Details button for detailed split of the total estimated closing closts',
+              title: '',
+              //button: 'Close'
+            },
+            style: 'qTipsCustomCss',
+            position: {
+              my: 'top center',  // Position my top left...
+              at: 'bottom center', // at the bottom right of...
+              target: this // my target
+            }
+          });
+
         }, 2000);
     }
 
@@ -639,6 +696,34 @@
         $(this).empty().append(template(context)).fadeIn(300);
       });
     }
+
+
+    /**
+    * Build a Tooltip's html from template and passed triggering element;
+    * insert into the DOM and show
+    * @param  {element} el The element that trigggered this call
+    */
+   function renderTooltip(el) {
+     var
+       template = config.templates.tooltip,
+       context = {},
+       $trigger = $(el),
+       offset,
+       tooltip,
+       html
+       ;
+
+     // Get the tooltip text from the triggering element's attribute
+     html = dict.tooltips[$trigger.attr('data-tooltip-name')];
+
+     // Make sure we have some tooltip text to show
+     if (typeof html !== 'undefined') {
+       // Build the data to be passsed to the template
+       context = {'html': html};
+       // Create and return the tooltip dom element
+       return $(template(context));
+     }
+   }
 
 
 
@@ -743,7 +828,6 @@
      * @return {[jqXHR object]} deferred object, or recursive call
      */
     function getRatesData(attempt) {
-      console.log('getRatesData:'+attempt);
       var
         cache = state.data_cache.rates,
         fresh_request = buildRatesDataRequestObj();
@@ -757,6 +841,7 @@
         return;
       } else if (cache.response !== null && _.isEqual(cache.request, fresh_request) ) {
         // We have a cached deferred object; leave it alone
+        $('#basic-information').fadeOut(300);
         return;
       } else {
         // Save our request to compare against next tme rates data is requested
@@ -766,6 +851,7 @@
         // Parse remote data immediately, so it's available for subsequent actions
         cache.response
           .done(function(data){
+            $('#basic-information').fadeOut(300);
             cache.cleaned = tranformRatesData(JSON.parse(data));
             console.log(cache.cleaned);
             // Wait to render rates table when we hav valid data
@@ -1114,7 +1200,7 @@
       $.validator.addMethod('currencyNumber', function(value, element) {
         value = accounting.unformat(value);
         return !isNaN(value) && value * 1 > 0;
-      }, 'Please enter a dollar amount');
+      }, 'This field is required');
 
       $.validator.addMethod('zipCodeValidation', function(value, element) {
         if(isNaN(value)) {
@@ -1122,7 +1208,7 @@
         } else {
           return true;
         }
-      }, 'Please enter correct zipcode');
+      }, 'Please enter a valid Zip Code in a Newfi approved state: AZ, CA, CO, OR or WA');
     }
 
     /**
@@ -1302,11 +1388,11 @@
               _.sum(_.values(rate.lender_costs))
             + _.sum(_.values(rate.third_party_costs))
             , 0);
-            
+
             if(rate.total_closing_costs < 0) {
                 rate.total_closing_costs = 0;
             }
-            
+
           rate.total_prepaids = _.round(
             _.sum(_.values(rate.prepaids))
             , 0);
@@ -1373,6 +1459,8 @@
 
       });
 
+      console.log(programs)
+
 
       // Sort programs into preferred order
       programs = _.sortBy(programs, [function(o) {
@@ -1382,6 +1470,8 @@
           ;
         return (isNaN(i_name) || isNaN(i_program)) ? '9999999' : i_name + i_program;
       }]);
+
+
 
       // Add index properties to programs and rates, to be used in templates
       return {'programs': programs};

@@ -52,7 +52,18 @@
   height: inuit-rem(60px);
 }
 
-.o-icon--close-button {
+.o-icon--close-button,
+.o-icon--close-button-white {
   width: inuit-rem(23px);
   height: inuit-rem(23px);
+  position: absolute;
+  top: 0px;
+  right: 1px;
+}
+
+.o-icon--tooltip-help,
+.o-icon--tooltip-confirm,
+.o-icon--tooltip-alert {
+  width: inuit-rem(16px);
+  height: inuit-rem(16px);
 }

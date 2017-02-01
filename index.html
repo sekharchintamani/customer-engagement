@@ -20,9 +20,9 @@
        engagement portal redesign.
   -->
   <link href="./css/customer-engagement.css" rel="stylesheet">
-  <link href="./css/qtip.min.css" rel="stylesheet">  
+  <link href="./css/jquery-ui.min.css" rel="stylesheet">
+  <!-- <link href="./css/qtip.min.css" rel="stylesheet"> -->
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
   <!-- Using Grunt-Icon to generate svg and fallback png css for icons.
 
        To add new icons (or replace existing):
@@ -47,6 +47,8 @@
   <!-- jQuery is a prerequisite for several vendor scripts below. -->
   <script type="text/javascript" src="./js/vendors/jquery-3.1.1.min.js"></script>
 
+  <script type="text/javascript" src="./js/vendors/jquery-ui.min.js"></script>
+
 <!-- build:js:prod ./js/app.min.js -->
   <!-- simple polyfill for string.trim -->
   <script type="text/javascript" src="./js/polyfill.string-trim.js"></script>
@@ -61,8 +63,6 @@
        - Depends on jQuery.
   -->
   <script type="text/javascript" src="./js/vendors/jquery.validate.js"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
   <!-- Templating -->
   <script type="text/javascript" src="./js/vendors/handlebars.min-v4.0.5.js"></script>
@@ -82,7 +82,7 @@
   <script type="text/javascript" src="./js/vendors/rangeslider.js"></script>
 
    <!-- Qtips Lib -->
-  
+
   <script type="text/javascript" src="js/vendors/qtip.min.js"></script>
 
   <!-- Custom handlebars helpers -->
@@ -115,7 +115,7 @@
 
   <!-- Main app script; handles all aspects of UX for portal -->
   <script type="text/javascript" src="./js/customer-engagement-portal.js"></script>
- 
+
 <!-- /build -->
 
   <script id="details_summary_template" type="text/x-handlebars-template">
@@ -149,7 +149,7 @@
               <dd class="c-form-summary__value">{{loanRate rate.apr}}</dd>
             </div>
             <div class="c-form-summary__item">
-              <dt class="c-form-summary__label">Closing Costs</dt>
+              <dt class="c-form-summary__label">Closing</dt>
               <dd class="c-form-summary__value">{{currencyUSDNoCents rate.total_closing_costs}}</dd>
             </div>
             <div class="c-form-summary__item">
@@ -167,30 +167,30 @@
       <div class="o-layout">
         <div class="o-layout__item u-1/1 c-rates-listing">
           <h5>Select your preferred loan option:</h5>
-          <table class="c-rates-listing__header">
+          <table class="c-rates-listing__header u-margin-bottom-tiny">
             <thead>
               <tr>
                 <th class="c-rates-listing__program-shim"></th>
                 <th class="c-rates-listing__heading c-rates-listing__heading--rate">Rate<sup>*</sup>
-                <div>
-                <img id="rateTooltips" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADZElEQVQ4T2WTXUybBRSGn+9r+/W/o4XyM9aCI8OMYiYMWbJdOBbIys8uJEJ252LmNGpmvBNvbDQ6L8z0Qs3UmC1m6sWECzdcGUtQl02mgIDQMmKZCI6fllL6D+331QBmQT13Jyfvk/fNOUfgv7W3qw0pr12Vr23VWW1GBEivriXkcKKX9FoPM+eu7ZQIDxuXx8S6dKXgaK277PCj5Beb0Qgy4rpMSs4RCqeZ/3ma0MCoF+16B5Oe+KZ2G3DwEwPZjO+J08fKag7vIT8ao8Em4rRJVNpN+JZidN+L8/uuPKZGFvjlws1Z1FIVw88ntwHVH3ubXm08XnvEie/ODN90lCOZ9P9L9/KXfsTHnEwNL9B/vr+PiRfdAo9/1lLt3t/71LP1DN6LEphZ4U2XhtIiE+/fWaamVEdXUzlaScV3Iwt8MJbAWV3C3Z5RJrz+VoFjX18881rDqaAgkU5l0SgKwb+CRFV6isrtBCbmuN7pYL/Dwq2pIJfnlIfOPn134JJQ+Ezf0omXjhQmIuvo1TniWQglBOKKyLgvRKclyhdna4Ec7Rf82CvytwBynomrH91eFpxnf0ydPFOvWw0lCURk5teyZGTYkHNkp+ZYfK8OEOn4cJzuoJbGQ8U47eotSP/lkbTgemMk9fRJl653PEoqA5JKwGDScHdokW+bLTQfKubz2w947nqM+voS4rEMek2Osj0m/F5/WtjbNbxU01ZVOLeQRK/eXsoGIulghBudRRRYdDSd9zNfWkyJAWQF0tkcjhIDo9d8y4LllaGLde7KU3qNiJyVN6Oi1qlYXkzw2+giBoOIzqCnprYIOaNsjlGpVaQyCkPe6UuC4fRgy4GGst6KShuxWAZBBEEQuD8b4YVKLftsWt76KYrkyMOkAllWMJslAtNhxgZmW7c8W7smvY0nHjlu1omk0zJLSYXClShfde7eipSJxWkZVLBbNOglkVha4ebV+32r51zuLcBuz5BBNFp9R58sKSuwaAgnZP6cidDdbMNm1PD2rTC/anQ4rBKhaIbvf1iYVRKrVQ88df+cMmD3TJowGq4cPGBz73PoSSow80cMs1bFhiRRYZcIzCUYHgt7SSQ7gh7XjmfacfXWdwJtu/IN7VazqtVolIxyDrLrG4lgRO5dW0n2rL5e8a93/hsrzGE/b1t9BAAAAABJRU5ErkJggg=="></img>
-                </div>
+                  <button class="c-btn c-btn--icon c-btn--nopad c-rates-listing__heading--tooltip" data-js="trigger-tooltip" data-tooltip-name="rate"> 
+                    <span class="u-hidden-visually">“Rate” Description</span><span class="o-icon o-icon--tooltip-help"></span>
+                  </button>
+                
                 </th>
                 <th class="c-rates-listing__heading c-rates-listing__heading--apr">APR<sup>*</sup>
-                <div>
-                <img id="aprTooltips" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADZElEQVQ4T2WTXUybBRSGn+9r+/W/o4XyM9aCI8OMYiYMWbJdOBbIys8uJEJ252LmNGpmvBNvbDQ6L8z0Qs3UmC1m6sWECzdcGUtQl02mgIDQMmKZCI6fllL6D+331QBmQT13Jyfvk/fNOUfgv7W3qw0pr12Vr23VWW1GBEivriXkcKKX9FoPM+eu7ZQIDxuXx8S6dKXgaK277PCj5Beb0Qgy4rpMSs4RCqeZ/3ma0MCoF+16B5Oe+KZ2G3DwEwPZjO+J08fKag7vIT8ao8Em4rRJVNpN+JZidN+L8/uuPKZGFvjlws1Z1FIVw88ntwHVH3ubXm08XnvEie/ODN90lCOZ9P9L9/KXfsTHnEwNL9B/vr+PiRfdAo9/1lLt3t/71LP1DN6LEphZ4U2XhtIiE+/fWaamVEdXUzlaScV3Iwt8MJbAWV3C3Z5RJrz+VoFjX18881rDqaAgkU5l0SgKwb+CRFV6isrtBCbmuN7pYL/Dwq2pIJfnlIfOPn134JJQ+Ezf0omXjhQmIuvo1TniWQglBOKKyLgvRKclyhdna4Ec7Rf82CvytwBynomrH91eFpxnf0ydPFOvWw0lCURk5teyZGTYkHNkp+ZYfK8OEOn4cJzuoJbGQ8U47eotSP/lkbTgemMk9fRJl653PEoqA5JKwGDScHdokW+bLTQfKubz2w947nqM+voS4rEMek2Osj0m/F5/WtjbNbxU01ZVOLeQRK/eXsoGIulghBudRRRYdDSd9zNfWkyJAWQF0tkcjhIDo9d8y4LllaGLde7KU3qNiJyVN6Oi1qlYXkzw2+giBoOIzqCnprYIOaNsjlGpVaQyCkPe6UuC4fRgy4GGst6KShuxWAZBBEEQuD8b4YVKLftsWt76KYrkyMOkAllWMJslAtNhxgZmW7c8W7smvY0nHjlu1omk0zJLSYXClShfde7eipSJxWkZVLBbNOglkVha4ebV+32r51zuLcBuz5BBNFp9R58sKSuwaAgnZP6cidDdbMNm1PD2rTC/anQ4rBKhaIbvf1iYVRKrVQ88df+cMmD3TJowGq4cPGBz73PoSSow80cMs1bFhiRRYZcIzCUYHgt7SSQ7gh7XjmfacfXWdwJtu/IN7VazqtVolIxyDrLrG4lgRO5dW0n2rL5e8a93/hsrzGE/b1t9BAAAAABJRU5ErkJggg=="></img>
-                </div>
+                  <button class="c-btn c-btn--icon c-btn--nopad c-rates-listing__heading--tooltip" data-js="trigger-tooltip" data-tooltip-name="apr">
+                    <span class="u-hidden-visually">“APR” Description</span><span class="o-icon o-icon--tooltip-help"></span>
+                  </button>
                 </th>
-                <th class="c-rates-listing__heading c-rates-listing__heading--closing">Closing<sup>**</sup>
-                <div>
-                <img id="closingTooltips" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADZElEQVQ4T2WTXUybBRSGn+9r+/W/o4XyM9aCI8OMYiYMWbJdOBbIys8uJEJ252LmNGpmvBNvbDQ6L8z0Qs3UmC1m6sWECzdcGUtQl02mgIDQMmKZCI6fllL6D+331QBmQT13Jyfvk/fNOUfgv7W3qw0pr12Vr23VWW1GBEivriXkcKKX9FoPM+eu7ZQIDxuXx8S6dKXgaK277PCj5Beb0Qgy4rpMSs4RCqeZ/3ma0MCoF+16B5Oe+KZ2G3DwEwPZjO+J08fKag7vIT8ao8Em4rRJVNpN+JZidN+L8/uuPKZGFvjlws1Z1FIVw88ntwHVH3ubXm08XnvEie/ODN90lCOZ9P9L9/KXfsTHnEwNL9B/vr+PiRfdAo9/1lLt3t/71LP1DN6LEphZ4U2XhtIiE+/fWaamVEdXUzlaScV3Iwt8MJbAWV3C3Z5RJrz+VoFjX18881rDqaAgkU5l0SgKwb+CRFV6isrtBCbmuN7pYL/Dwq2pIJfnlIfOPn134JJQ+Ezf0omXjhQmIuvo1TniWQglBOKKyLgvRKclyhdna4Ec7Rf82CvytwBynomrH91eFpxnf0ydPFOvWw0lCURk5teyZGTYkHNkp+ZYfK8OEOn4cJzuoJbGQ8U47eotSP/lkbTgemMk9fRJl653PEoqA5JKwGDScHdokW+bLTQfKubz2w947nqM+voS4rEMek2Osj0m/F5/WtjbNbxU01ZVOLeQRK/eXsoGIulghBudRRRYdDSd9zNfWkyJAWQF0tkcjhIDo9d8y4LllaGLde7KU3qNiJyVN6Oi1qlYXkzw2+giBoOIzqCnprYIOaNsjlGpVaQyCkPe6UuC4fRgy4GGst6KShuxWAZBBEEQuD8b4YVKLftsWt76KYrkyMOkAllWMJslAtNhxgZmW7c8W7smvY0nHjlu1omk0zJLSYXClShfde7eipSJxWkZVLBbNOglkVha4ebV+32r51zuLcBuz5BBNFp9R58sKSuwaAgnZP6cidDdbMNm1PD2rTC/anQ4rBKhaIbvf1iYVRKrVQ88df+cMmD3TJowGq4cPGBz73PoSSow80cMs1bFhiRRYZcIzCUYHgt7SSQ7gh7XjmfacfXWdwJtu/IN7VazqtVolIxyDrLrG4lgRO5dW0n2rL5e8a93/hsrzGE/b1t9BAAAAABJRU5ErkJggg=="></img>
-                </div>
+                <th class="c-rates-listing__heading c-rates-listing__heading--closing"><span class="c-rates-listing--verbose">Closing Costs</span><span class="c-rates-listing--normal">Closing</span><span class="c-rates-listing--terse">Closing</span><sup>**</sup>
+                  <button class="c-btn c-btn--icon c-btn--nopad c-rates-listing__heading--tooltip" data-js="trigger-tooltip" data-tooltip-name="closing">
+                    <span class="u-hidden-visually">“Closing” Description</span><span class="o-icon o-icon--tooltip-help"></span>
+                  </button>
                 </th>
                 <th class="c-rates-listing__heading c-rates-listing__heading--monthlies" colspan="2"><span class="c-rates-listing--verbose">Monthly Payment</span><span class="c-rates-listing--normal">Monthly Payment</span><span class="c-rates-listing--terse">Mo. Payment</span><sup>**</sup>
-
-                <div>
-                <img id="paymentTooltips" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADZElEQVQ4T2WTXUybBRSGn+9r+/W/o4XyM9aCI8OMYiYMWbJdOBbIys8uJEJ252LmNGpmvBNvbDQ6L8z0Qs3UmC1m6sWECzdcGUtQl02mgIDQMmKZCI6fllL6D+331QBmQT13Jyfvk/fNOUfgv7W3qw0pr12Vr23VWW1GBEivriXkcKKX9FoPM+eu7ZQIDxuXx8S6dKXgaK277PCj5Beb0Qgy4rpMSs4RCqeZ/3ma0MCoF+16B5Oe+KZ2G3DwEwPZjO+J08fKag7vIT8ao8Em4rRJVNpN+JZidN+L8/uuPKZGFvjlws1Z1FIVw88ntwHVH3ubXm08XnvEie/ODN90lCOZ9P9L9/KXfsTHnEwNL9B/vr+PiRfdAo9/1lLt3t/71LP1DN6LEphZ4U2XhtIiE+/fWaamVEdXUzlaScV3Iwt8MJbAWV3C3Z5RJrz+VoFjX18881rDqaAgkU5l0SgKwb+CRFV6isrtBCbmuN7pYL/Dwq2pIJfnlIfOPn134JJQ+Ezf0omXjhQmIuvo1TniWQglBOKKyLgvRKclyhdna4Ec7Rf82CvytwBynomrH91eFpxnf0ydPFOvWw0lCURk5teyZGTYkHNkp+ZYfK8OEOn4cJzuoJbGQ8U47eotSP/lkbTgemMk9fRJl653PEoqA5JKwGDScHdokW+bLTQfKubz2w947nqM+voS4rEMek2Osj0m/F5/WtjbNbxU01ZVOLeQRK/eXsoGIulghBudRRRYdDSd9zNfWkyJAWQF0tkcjhIDo9d8y4LllaGLde7KU3qNiJyVN6Oi1qlYXkzw2+giBoOIzqCnprYIOaNsjlGpVaQyCkPe6UuC4fRgy4GGst6KShuxWAZBBEEQuD8b4YVKLftsWt76KYrkyMOkAllWMJslAtNhxgZmW7c8W7smvY0nHjlu1omk0zJLSYXClShfde7eipSJxWkZVLBbNOglkVha4ebV+32r51zuLcBuz5BBNFp9R58sKSuwaAgnZP6cidDdbMNm1PD2rTC/anQ4rBKhaIbvf1iYVRKrVQ88df+cMmD3TJowGq4cPGBz73PoSSow80cMs1bFhiRRYZcIzCUYHgt7SSQ7gh7XjmfacfXWdwJtu/IN7VazqtVolIxyDrLrG4lgRO5dW0n2rL5e8a93/hsrzGE/b1t9BAAAAABJRU5ErkJggg=="></img>
-                </div>
+                  <button class="c-btn c-btn--icon c-btn--nopad c-rates-listing__heading--tooltip" data-js="trigger-tooltip" data-tooltip-name="monthlies">
+                    <span class="u-hidden-visually">“Monlthy Mortgage Payment” Description</span><span class="o-icon o-icon--tooltip-help"></span>
+                  </button>
                 </th>
               </tr>
             </thead>
@@ -202,7 +202,7 @@
               <span class="c-rates-listing__program-label-subheading">{{product_type}}</span>
             </caption>
             {{#each rates}}
-            <tr class="c-rates-listing__result{{#each tags}} c-rates-listing__result--{{this}}{{/each}}" data-js-rate-id="{{@index}}" data-js-rate-attributes="{{#each tags}} tag-{{this}}{{/each}}">
+            <tr class="c-rates-listing__result{{#each tags}} c-rates-listing__result--{{this}}{{/each}} hover" data-js-rate-id="{{@index}}" data-js-rate-attributes="{{#each tags}} tag-{{this}}{{/each}}">
               <td class="c-rates-listing__program-shim"></td>
               <td class="c-rates-listing__rate">{{loanRate rate}}</td>
               <td class="c-rates-listing__apr">{{loanRate apr}}</td>
@@ -342,6 +342,15 @@
     </div>
   </script>
 
+  <script id="tooltip_template" type="text/x-handlebars-template">
+    <div class="c-tooltip" data-js="tooltip">
+      <button class="c-btn c-btn--icon c-rates-detail__icon-close" data-js="close-tooltip">
+       <span class="u-hidden-visually">Close</span><span class="o-icon o-icon--close-button-white close-tooltip"></span>
+     </button>
+     {{{html}}}
+   </div>
+  </script>
+
 </head>
 
 <body>
@@ -387,7 +396,7 @@
         <div class="o-layout">
           <div class="o-layout__item  u-1/1">
             <h3 class="u-text-centered">Find the Best Rate</h3>
-            <p>Enter some basic information below and we will give you a customized quote with the best rates we offer for a variety of loan types.</p>
+            <p id="basic-information">Enter some basic information below and we will give you a customized quote with the best rates we offer for a variety of loan types.</p>
           </div>
         </div>
       </div>
@@ -410,7 +419,7 @@
                   <span class="c-radio--faux"></span>
                   <span class="c-form-element__label">Home Purchase</span>
                 </label>
-                <span class="o-icon o-icon--centered o-icon--condomnium u-margin-top"></span>
+                <span class="o-icon o-icon--centered o-icon--house-money u-margin-top c-rates-app__loan-type-icon"></span>
               </span>
               <span class="c-radio">
                 <input type="radio" id="loantype--refinance" name="loantype" value="refinance"/>
@@ -418,7 +427,7 @@
                   <span class="c-radio--faux"></span>
                   <span class="c-form-element__label">Refinance</span>
                 </label>
-                <span class="o-icon o-icon--centered o-icon--house-money u-margin-top"></span>
+                <span class="o-icon o-icon--centered o-icon--house-money u-margin-top c-rates-app__loan-type-icon"></span>
               </span>
               <span class="c-radio">
                 <input type="radio" id="loantype--cashout" name="loantype" value="cashout"/>
@@ -426,7 +435,7 @@
                   <span class="c-radio--faux"></span>
                   <span class="c-form-element__label">Take Out Cash</span>
                 </label>
-                <span class="o-icon o-icon--centered o-icon--piggy-bank u-margin-top"></span>
+                <span class="o-icon o-icon--centered o-icon--piggy-bank u-margin-top c-rates-app__loan-type-icon"></span>
               </span>
               <span class="c-radio__toggle-slider"></span>
             </div>
@@ -756,8 +765,8 @@
         		<script type="text/javascript" src="https://seal.websecurity.norton.com/getseal?host_name=www.newfi.com&size=XS&use_flash=NO&use_transparent=NO&lang=en"></script>
         		<!-- <a href="http://www.symantec.com/ssl-certificates" target="_blank"  style="color:#000000; text-decoration:none; font:bold 7px verdana,sans-serif; letter-spacing:.5px; text-align:center; margin:0px; padding:0px;">ABOUT SSL CERTIFICATES</a> -->
         	</div>
-          <p class="o-text-centered">© 2016 newfi dba of Nexera Holding LLC | All Rights Reserved | NMLS ID 1231327 | <a target="_blank" href="http://www.nmlsconsumeraccess.org/Home.aspx/SubSearch?searchText=newfi" class="consumer-access-footer">NMLS Consumer Access</a></p>
-          <p class="o-text-centered"><a href="https://portal.hud.gov/hudportal/HUD" target="_blank">Equal Housing Lender <span class="o-icon o-icon--hud-logo"></span></a></p>
+          <p class="u-text-centered">© 2016 newfi dba of Nexera Holding LLC | All Rights Reserved | NMLS ID 1231327 | <a target="_blank" href="http://www.nmlsconsumeraccess.org/Home.aspx/SubSearch?searchText=newfi" class="consumer-access-footer">NMLS Consumer Access</a></p>
+          <p class="u-text-centered"><a href="https://portal.hud.gov/hudportal/HUD" target="_blank">Equal Housing Lender <span class="o-icon o-icon--hud-logo"></span></a></p>
         </div>
       </div>
     </section>

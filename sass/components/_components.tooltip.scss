@@ -1,0 +1,30 @@
+/* ==========================================================================
+   # TOOLTIP
+   ========================================================================== */
+
+/**
+ * 1.
+ */
+
+.c-tooltip {
+  position: absolute;
+  background-color: #184B94;
+  /*max-width: 100%;*/
+  width: inuit-rem(300px);
+  padding: $inuit-global-spacing-unit-small $inuit-global-spacing-unit;
+  color: white;
+  font-size: inuit-rem(12px);
+  line-height: 1.75;
+  font-weight: 600;
+  z-index: 9999;
+
+  >:last-child {
+    margin-bottom: 0;
+  }
+
+  &--close-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}

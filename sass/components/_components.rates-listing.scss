@@ -49,10 +49,14 @@
     &--rate,
   	&--apr,
   	&--closing {
-      width: 12%;
+      width: 14%;
       @include mq($until: rates_collapse_table) {
         width: 20%;
       }
+    }
+
+    &--tooltip {
+      display: block;
     }
   }
 
@@ -102,7 +106,7 @@
 	&__closing,
   &__monthlies {
     text-align: left;
-    width: 12%;
+    width: 14%;
     padding-right:5px; /*[1]*/
     @include mq($until: rates_collapse_table) {
       width: 20%;

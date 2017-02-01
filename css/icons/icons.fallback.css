@@ -4,6 +4,8 @@
 
 .o-icon--brand-logo { background-image: url('png/brand-logo.png'); background-repeat: no-repeat; }
 
+.o-icon--close-button-white { background-image: url('png/close-button-white.png'); background-repeat: no-repeat; }
+
 .o-icon--close-button { background-image: url('png/close-button.png'); background-repeat: no-repeat; }
 
 .o-icon--condomnium { background-image: url('png/condomnium.png'); background-repeat: no-repeat; }
@@ -15,4 +17,10 @@
 .o-icon--hud-logo { background-image: url('png/hud-logo.png'); background-repeat: no-repeat; }
 
 .o-icon--piggy-bank { background-image: url('png/piggy-bank.png'); background-repeat: no-repeat; }
+
+.o-icon--tooltip-alert { background-image: url('png/tooltip-alert.png'); background-repeat: no-repeat; }
+
+.o-icon--tooltip-confirm { background-image: url('png/tooltip-confirm.png'); background-repeat: no-repeat; }
+
+.o-icon--tooltip-help { background-image: url('png/tooltip-help.png'); background-repeat: no-repeat; }
 
