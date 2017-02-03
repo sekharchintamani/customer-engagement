@@ -102,6 +102,7 @@ module.exports = function(grunt) {
 						'./js/vendors/accounting.js',
 						'./js/vendors/jquery.validate.js',
 						'./js/jquery-ui.min.js',
+						'./js/js_cookie.js',
 						'./js/vendors/handlebars.min-v4.0.5.js',
 						'./js/vendors/bootstrap.custom.js',
 						'./js/vendors/rangeslider.js',
@@ -123,7 +124,8 @@ module.exports = function(grunt) {
 				files: [
 					{expand: true, src: ['css/icons/png/**'], dest: 'prod'},
 					{expand: true, src: ['css/icons/*.css'], dest: 'prod'},
-					{expand: true, src: ['js/vendors/jquery-*.min.js'], dest: 'prod'}
+					{expand: true, src: ['js/vendors/jquery-*.min.js'], dest: 'prod'},
+					{expand: true, src: ['js/vendors/js_cookie.js'], dest: 'prod'}
 				],
 			},
 		},

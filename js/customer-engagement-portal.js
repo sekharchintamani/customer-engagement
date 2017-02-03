@@ -1146,8 +1146,9 @@
           console.log(response);
 
           // Redirect to Thank You Page
-          if(registration_details && registration_details.user) {
-              window.location.href = "thankYouPage.html?email="+registration_details.user.emailId.split(":")[0];
+          if(registration_details && registration_details.user) {              
+              Cookies.set('registration_email', registration_details.user.emailId.split(":")[0]);
+              window.location.href = "thankYouPage.html";
           }
 
         },
