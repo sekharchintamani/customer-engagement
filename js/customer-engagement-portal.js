@@ -123,7 +123,8 @@
         $ratetype_form:                             $('[data-js=ratetype-form]'),
         $rates_listing__wrapper:                    $('[data-js=rates-listing__injectionpoint]'),
         $user_registration__wrapper:                $('[data-js=user-registration-wrapper]'),
-        $user_registration_form:                    $('[data-js=user-registration-form]')
+        $user_registration_form:                    $('[data-js=user-registration-form]'),
+        $rate_list_error:                           $('[data-js=rate-list-error]')
       },
 
       // Application state
@@ -148,8 +149,9 @@
         }
       },
       lasearch = false,
-      loanAdvisorList =[];
-      loanAdvisorMap =[];
+      loanAdvisorList =[],
+      loanAdvisorMap =[],
+      userRegistrationValidator = null
       ;
 
     /**
@@ -210,37 +212,13 @@
         .on( 'submit', function(ev){
           ev.preventDefault ? ev.preventDefault() : (ev.returnValue = false); // IE
           // ev.cancelBubble = true; // IE
+
+          userRegistrationFormValidation();
+
           if ($(this).valid()) {
             submitUserRegistration(this);
           }
           // return false; // IE
-        })
-        .validate({
-          rules: {
-            fname : {
-              required : true
-            },
-            lname : {
-              required : true
-            },
-            email: {
-              required : true,
-              email : true
-            },
-            newfiadvisor : {
-              required : true
-            },
-            newfiadvisorsname : {
-              required : true
-            }
-          },
-          messages: {
-            fname: "Please enter your firstname",
-            lname : "Please enter your lastname",
-            email : "Please enter a valid email address",
-            newfiadvisor : "Please choose newfi loan advisor",
-            newfiadvisorsname : "Please enter your advisor's name"
-          }
         })
         ;
 
@@ -251,6 +229,8 @@
         .on( 'submit', function(ev){
           ev.preventDefault ? ev.preventDefault() : (ev.returnValue = false); // IE
           if ($(this).valid()) {
+            $('#basic-information').fadeOut(300);
+            dom.$rate_list_error.fadeOut(300);
             submitLoanDetailsForm();
           }
         })
@@ -394,6 +374,41 @@
     }
 
 
+    /*validation for user registration form */
+
+    function userRegistrationFormValidation() {
+      userRegistrationValidator = dom.$user_registration_form.validate({
+          rules: {
+            fname : {
+              required : true
+            },
+            lname : {
+              required : true
+            },
+            email: {
+              required : true,
+              email : true
+            },
+            newfiadvisor : {
+              required : true
+            },
+            newfiadvisorsname : {
+              required : true
+            }
+          },
+          messages: {
+            fname: "Please enter your firstname",
+            lname : "Please enter your lastname",
+            email : "Please enter a valid email address",
+            newfiadvisor : "Please choose newfi loan advisor",
+            newfiadvisorsname : "Please enter your advisor's name"
+          }
+        });
+
+      return userRegistrationValidator;
+    }
+
+
 
 
 
@@ -487,6 +502,9 @@
           dom.$loan_form
             .not(':visible').fadeIn(300);
         });
+
+        userRegistrationValidator.resetForm();
+        
     }
 
     /**
@@ -502,6 +520,8 @@
             .add(dom.$rates_listing__wrapper)
             .not(':visible').fadeIn(300);
         });
+
+        userRegistrationValidator.resetForm();
 
     }
 
@@ -558,9 +578,15 @@
           $(this).add(dom.$ratetype_form__wrapper).not(':visible').fadeIn(300);
         });
       } else {
-        dom.$rates_listing__wrapper.empty().append(template(context));
-        switchRateTypes();
-        dom.$rates_listing__wrapper.add(dom.$ratetype_form__wrapper).not(':visible').fadeIn(300);
+        console.log(context)
+        if(context.programs.length > 0) {
+          dom.$rates_listing__wrapper.empty().append(template(context));
+          switchRateTypes();
+          dom.$rates_listing__wrapper.add(dom.$ratetype_form__wrapper).not(':visible').fadeIn(300);
+        } else {
+          dom.$rate_list_error.fadeIn(300);
+        }
+        
       }
 
       // loadQtipsTooltips();
@@ -832,8 +858,6 @@
         cache = state.data_cache.rates,
         fresh_request = buildRatesDataRequestObj();
 
-        console.log(fresh_request);
-
       // Avoid calling the API if we already queried it recently with identical paramaters
       if (attempt > 4) {
         // Abort if we've tried getting data too many times.
@@ -851,11 +875,19 @@
         // Parse remote data immediately, so it's available for subsequent actions
         cache.response
           .done(function(data){
-            $('#basic-information').fadeOut(300);
             cache.cleaned = tranformRatesData(JSON.parse(data));
             console.log(cache.cleaned);
+
             // Wait to render rates table when we hav valid data
-            renderRatesTable();
+
+            if(cache.cleaned.programs.length > 0) {
+              dom.$rate_list_error.fadeOut(300);
+              renderRatesTable();
+            } else {
+              console.log('no data fetched from the server for this query...........');
+              renderError();
+            }
+            
           })
           .fail(function(){
             // Clear cache and try again
@@ -864,6 +896,20 @@
           })
           ;
       }
+    }
+
+    /**
+    *Renders error message if data not fetched for a particular query
+    **/
+
+    function renderError() {
+      var loadingIndicatorPresent = $('[data-js=rates-loading-indicator]').length;
+
+      if (loadingIndicatorPresent) {
+        dom.$rates_listing__wrapper.fadeOut(300);
+        dom.$rate_list_error.fadeIn(300);
+      }
+
     }
 
     /**

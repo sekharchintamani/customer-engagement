@@ -168,7 +168,7 @@
     <div class="o-wrapper o-wrapper--narrow u-margin-bottom-large">
       <div class="o-layout">
         <div class="o-layout__item u-1/1 c-rates-listing">
-          <h5>Select your preferred loan option:</h5>
+          <!-- <h5>Select your preferred loan option:</h5> -->
           <table class="c-rates-listing__header u-margin-bottom-tiny">
             <thead>
               <tr>
@@ -416,12 +416,12 @@
             <h5 class="u-margin-bottom-small">What will your loan be for?</h5>
             <div class="c-form-element__control c-radio__toggle-trio" data-js="loantype-radioset">
               <span class="c-radio">
-                <input type="radio" id="loantype--new-purchase" name="loantype" value="new-purchase"/>
+                <input type="radio" id="loantype--new-purchase" name="loantype" value="new-purchase" autocomplete="off"/>
                 <label class="c-radio__label" for="loantype--new-purchase">
                   <span class="c-radio--faux"></span>
                   <span class="c-form-element__label">Home Purchase</span>
                 </label>
-                <span class="o-icon o-icon--centered o-icon--house-money u-margin-top c-rates-app__loan-type-icon"></span>
+                <span class="o-icon o-icon--centered o-icon--condomnium u-margin-top c-rates-app__loan-type-icon"></span>
               </span>
               <span class="c-radio">
                 <input type="radio" id="loantype--refinance" name="loantype" value="refinance"/>
@@ -602,13 +602,14 @@
     <!-- BEGIN rates type form section -->
     <section class="c-page-content__section c-rates-app__rates-listing-wrapper" data-js="rates-listing__wrapper" style="display:none">
       <!-- BEGIN rate type form -->
+      <h3 class="u-text-centered">Loan Options for This Quote</h3>
       <form class="c-form--stacked o-wrapper o-wrapper--narrow u-margin-top-none" data-js="ratetype-form">
 
         <div class="o-layout">
           <div class="o-layout__item u-1/1">
-            <h5 class="u-margin-bottom-small">Show:</h5>
+            <!-- <h5 class="u-margin-bottom-small">Show:</h5> -->
 
-            <div class="c-form-element__control c-radio__toggle-trio u-margin-bottom-large" data-js="ratetype-radioset">
+            <div class="c-form-element__control c-radio__toggle-trio u-margin-bottom-large" style="margin-bottom: 30px !important;" data-js="ratetype-radioset">
               <span class="c-radio">
                 <input type="radio" checked id="ratetype--bestrate" name="ratetype" value="bestrate"/>
                 <label class="c-radio__label" for="ratetype--bestrate">
@@ -644,6 +645,12 @@
     <section data-js="rates-listing__injectionpoint">
     </section>
     <!-- END rate listings table -->
+
+    <!-- Error message if we don't get any rate list -->
+    <section class="o-wrapper o-wrapper--narrow u-margin-top-none u-margin-bottom" data-js="rate-list-error" style="display: none; margin-bottom: 50px !important; text-align: center; padding: 30px;">
+      <span id="rate-list-error" style="font-size: 12px;"> We were unable to match you with the right program based on the information you provided.But don't worry, you can call us during normal business hours at 888-316-3934 or complete the form below and someone from the Newfi team will contact you to review your options.</span>
+    </section>
+    <!-- END Error message -->
 
     <!-- BEGIN user registration -->
     <section data-js="user-registration-wrapper" class="u-margin-bottom-large" style="display:none">
@@ -820,6 +827,9 @@
     }
   </style>
   <script type="text/javascript">
+
+
+  
     // function devtoolsFillRateForm() {
     //   $('#zipcode').val('94611');
     //   $('#residencetype').val('0');
