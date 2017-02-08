@@ -25,8 +25,12 @@
 
     // Enhance the input
     this.$element
-      .on('input, change', function(){
-        that.updateValue();
+      .on('input, change, keyup', function(e){
+        if(e.keyCode == 8) {
+          //
+        } else {
+          that.updateValue();
+        }
       });
 
     // Set value on init
