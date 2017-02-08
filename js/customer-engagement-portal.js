@@ -1251,7 +1251,7 @@
     }
 
     function createUserAccount(registration_details) {
-      var teaserRate = state.chosen_rate.teaserRate;
+      var teaserRate = [state.chosen_rate.teaserRate];
 
       console.log(teaserRate)
 
@@ -1259,7 +1259,7 @@
         url : 'http://52.74.75.203:8080/NewfiWeb/rest/shopper/registration',
         type : 'POST',
         dataType : 'text',
-        data : {'registrationDetails' : JSON.stringify(registration_details), 'teaserRateData' : [JSON.stringify(teaserRate)]},
+        data : {'registrationDetails' : JSON.stringify(registration_details), 'teaseRateData' : JSON.stringify(teaserRate)},
         success : function(response) {
           console.log(response);
 
