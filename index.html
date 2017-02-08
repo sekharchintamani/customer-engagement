@@ -334,9 +334,9 @@
         </div>
 
         <div class="o-layout">
-          <div class="o-layout__item u-1/1 o-layout--right">
+          <div class="o-layout__item u-1/1 o-layout--right" id="select-different-container">
             <button class="c-btn c-btn--prominent u-margin-bottom-small" data-js-program-id="{{program_id}}" data-js-rate-id="{{rate_id}}" data-js="select-rate">Get Started With This Rate</button>
-            <button class="c-btn c-btn--subtle u-margin-bottom-small" data-js="close-rate-details">Choose a Different Rate</button>
+            <button class="c-btn c-btn--subtle u-margin-bottom-small" id="different-rate-btn" data-js="close-rate-details">Choose a Different Rate</button>
           </div>
         </div>
 
@@ -372,7 +372,7 @@
         <ul class="c-nav-menu c-nav-menu--main" id="main_nav">
           <li class="c-nav-menu__item"><a href="https://www.newfi.com/"><span>Home</span></a></li>
           <li class="c-nav-menu__item"><a href="https://www.newfi.com/about-us/"><span>Why Newfi</span></a></li>
-          <li class="c-nav-menu__item c-nav-menu__item--current"><span>See Rates</span></li>
+          <li class="c-nav-menu__item c-nav-menu__item--current"><a href="http://52.74.75.203:8080/customerEngagement"><span>See Rates</span></a></li>
           <li class="c-nav-menu__item"><a href="https://www.newfi.com/NewfiWeb/"><span>Login</span></a></li>
         </ul>
       </nav>
@@ -424,7 +424,7 @@
                 <span class="o-icon o-icon--centered o-icon--condomnium u-margin-top c-rates-app__loan-type-icon"></span>
               </span>
               <span class="c-radio">
-                <input type="radio" id="loantype--refinance" name="loantype" value="refinance"/>
+                <input type="radio" id="loantype--refinance" name="loantype" value="refinance" autocomplete="off"/>
                 <label class="c-radio__label" for="loantype--refinance">
                   <span class="c-radio--faux"></span>
                   <span class="c-form-element__label">Refinance</span>
@@ -432,7 +432,7 @@
                 <span class="o-icon o-icon--centered o-icon--house-money u-margin-top c-rates-app__loan-type-icon"></span>
               </span>
               <span class="c-radio">
-                <input type="radio" id="loantype--cashout" name="loantype" value="cashout"/>
+                <input type="radio" id="loantype--cashout" name="loantype" value="cashout" autocomplete="off"/>
                 <label class="c-radio__label" for="loantype--cashout">
                   <span class="c-radio--faux"></span>
                   <span class="c-form-element__label">Take Out Cash</span>
@@ -518,7 +518,7 @@
               <label class="c-form-element__label" for="purchaseprice">Purchase Price</label>
               <div class="c-form-element__control c-input-has-fixed-addon">
                 <span class="c-form-element__addon c-form-element__addon--hanging-prefix">$</span>
-                <input id="purchaseprice" name="purchaseprice" class="c-input" type="text" data-format-as-currency />
+                <input id="purchaseprice" name="purchaseprice" onfocus="this.value = this.value;" class="c-input" type="text" data-format-as-currency />
               </div>
             </div>
           </div>

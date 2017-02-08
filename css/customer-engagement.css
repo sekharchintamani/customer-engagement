@@ -3884,4 +3884,10 @@ input[type="range"]:focus + .c-linked-percent-slider .c-linked-percent-slider__h
           margin-top: 0; } }
   .s-footer .o-icon--facebook-logo {
     margin-top: 9px; }
+
+@media (max-width: 38.115em) {
+  #select-different-container {
+    text-align: center !important; }
+  #different-rate-btn {
+    margin: 0px !important; } }
 /*# sourceMappingURL=customer-engagement.css.map */

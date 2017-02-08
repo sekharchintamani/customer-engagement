@@ -25,7 +25,7 @@
 
     // Enhance the input
     this.$element
-      .on('input, change, keyup', function(){
+      .on('input, change', function(){
         that.updateValue();
       });
 

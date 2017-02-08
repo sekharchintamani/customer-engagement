@@ -244,6 +244,7 @@ $inuit-spacing-sizes: (
   '-huge': $inuit-global-spacing-unit-huge,
   '-none': 0
 );
+
 @import "../node_modules/inuitcss/utilities/utilities.spacing";
 @import "../node_modules/inuitcss/utilities/utilities.print";
 @import "../node_modules/inuitcss/utilities/utilities.hide";
@@ -251,3 +252,13 @@ $inuit-spacing-sizes: (
 @import "utilities/utilities.bootstrap-collapse";
 @import "utilities/utilities.style-hero";
 @import "utilities/utilities.style-footer";
+
+@media (max-width: 38.115em) {
+  #select-different-container {
+    text-align: center !important;
+  }
+
+  #different-rate-btn {
+    margin: 0px !important;
+  }
+}
