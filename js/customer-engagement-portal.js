@@ -124,7 +124,8 @@
         $rates_listing__wrapper:                    $('[data-js=rates-listing__injectionpoint]'),
         $user_registration__wrapper:                $('[data-js=user-registration-wrapper]'),
         $user_registration_form:                    $('[data-js=user-registration-form]'),
-        $rate_list_error:                           $('[data-js=rate-list-error]')
+        $rate_list_error:                           $('[data-js=rate-list-error]'),
+        $user_query_form:                           $('[data-js=user-query-form]')
       },
 
       // Application state
@@ -205,6 +206,16 @@
         })
         ;
 
+      dom.$user_query_form.
+      on('submit', function(ev){
+        ev.preventDefault ? ev.preventDefault() : (ev.returnValue = false);
+
+        userqueryFormValidation();
+        if($(this).valid()) {
+          submitUserQuery($(this));
+        }
+      })
+
       dom.$user_registration_form
         // Handle selection of loan types
         .on( 'change, click', 'input[name=newfiadvisor]', toggleAdvisorInput)
@@ -236,6 +247,7 @@
         })
         // Configure validation
         .validate({
+          onkeyup: false,
           messages: {
             zipcode: {
               remote:  jQuery.validator.format("Please enter a valid Zip Code in a Newfi approved state: AZ, CA, CO, OR or WA")
@@ -406,6 +418,30 @@
         });
 
       return userRegistrationValidator;
+    }
+
+    function userqueryFormValidation() {
+      userQueryFormValidator = dom.$user_query_form.validate({
+          rules: {
+            firstname : {
+              required : true
+            },
+            lastname : {
+              required : true
+            },
+            emailid: {
+              required : true,
+              email : true
+            }
+          },
+          messages: {
+            firstname: "Please enter your firstname",
+            lastname : "Please enter your lastname",
+            emailid : "Please enter a valid email address"
+          }
+        });
+
+      return userQueryFormValidator;
     }
 
 
@@ -906,7 +942,8 @@
       var loadingIndicatorPresent = $('[data-js=rates-loading-indicator]').length;
 
       if (loadingIndicatorPresent) {
-        dom.$rates_listing__wrapper.fadeOut(300);
+        dom.$ratetype_form__wrapper.fadeOut();
+        dom.$rates_listing__wrapper.fadeOut();
         dom.$rate_list_error.fadeIn(300);
       }
 
@@ -1050,6 +1087,39 @@
 
     }
 
+    /*****
+      Handle user query form submission, 
+      for user entered information 
+      there is no quotation means, 
+      user can send the query form submission 
+    *****/
+
+    function submitUserQuery(query_obj) {
+      var user_query = {};
+
+      user_query.firstName = $('#firstname').val();
+      user_query.lastName = $('#lastname').val();
+      user_query.emailId = $('#emailid').val() + ":" + new Date().getTimezoneOffset();
+
+      // var requestData = buildUserRegistrationData();
+      // var validateUser = validateUserDetails(requestData);
+
+      $.ajax({
+        url: 'http://52.74.75.203:8080/NewfiWeb/rest/shopper/record',
+        method: 'POST',
+        dataType: 'text',
+        data: {'registrationDetails' : JSON.stringify(user_query)},
+        success: function(data, textStatus, xhr){
+          console.log(xhr.status);
+          if(xhr.status == 200) {
+            Cookies.set("query_page", "query_success");
+            window.location.href = "thankYouPage.html";
+          }
+        }
+
+      });
+    }
+
     function buildUserRegistrationData() {
       var cache = state.data_cache.rates.request;
       var
@@ -1181,13 +1251,15 @@
     }
 
     function createUserAccount(registration_details) {
-      var teaserRate = state.chosen_rate;
+      var teaserRate = state.chosen_rate.teaserRate;
+
+      console.log(teaserRate)
 
       $.ajax({
         url : 'http://52.74.75.203:8080/NewfiWeb/rest/shopper/registration',
         type : 'POST',
         dataType : 'text',
-        data : {'registrationDetails' : JSON.stringify(registration_details), 'teaserRateData' : JSON.stringify(teaserRate)},
+        data : {'registrationDetails' : JSON.stringify(registration_details), 'teaserRateData' : [JSON.stringify(teaserRate)]},
         success : function(response) {
           console.log(response);
 
@@ -1444,6 +1516,13 @@
             _.sum(_.values(rate.prepaids))
             , 0);
 
+          var lowest_closing = rate.total_closing_costs;
+
+
+          if ( lowest_closing == 0){
+            lowest_closing_index = raw_rate_index;
+          }
+
           /**
            *
            * In previous portal, the following function adds a preset $25 fee to the
@@ -1480,10 +1559,10 @@
               lowest_points  = Math.abs(program.rates[lowest_points_index].points),
               this_points    = Math.abs(rate.points),
               lowest_rate    = program.rates[lowest_rate_index].rate,
-              this_rate      = rate.rate,
-              lowest_closing = program.rates[lowest_closing_index].total_closing_costs,
-              this_closing   = rate.total_closing_costs
+              this_rate      = rate.rate
               ;
+              // lowest_closing = program.rates[lowest_closing_index].total_closing_costs,
+              // this_closing   = rate.total_closing_costs
 
             if (lowest_points > this_points){
               lowest_points_index = raw_rate_index;
@@ -1491,10 +1570,6 @@
 
             if ( lowest_rate > this_rate){
               lowest_rate_index = raw_rate_index;
-            }
-
-            if ( lowest_closing > this_closing){
-              lowest_closing_index = raw_rate_index;
             }
           }
 

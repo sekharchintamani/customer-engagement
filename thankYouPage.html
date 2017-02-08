@@ -44,7 +44,7 @@
   </header>
   <!-- END header Component -->
 
-  <section class="c-page-content__section" style="margin-top:100px;margin-bottom:100px;">
+  <section id="create-account-page" class="c-page-content__section" style="margin-top:100px;margin-bottom:100px;">
     <div class="o-wrapper o-wrapper--narrow" style="max-width:55.75rem;text-align: center;">
       <div class="o-layout">
         <div class="o-layout__item  u-1/1">
@@ -52,6 +52,16 @@
           <p>To help keep your information confidential and secure, we have sent an account validation email to 
             <a id="emailIdAfterReg" class="cus-eng-succ-mess-email"></a></p>
           <p>The validation link will expire after 72 hours so please check your email ASAP to confirm your Newfi account.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="create-query-page" class="c-page-content__section" style="margin-top:100px;margin-bottom:100px;">
+    <div class="o-wrapper o-wrapper--narrow" style="max-width:55.75rem;text-align: center;">
+      <div class="o-layout">
+        <div class="o-layout__item  u-1/1">
+          <p>Your information has been submitted and someone from the Newfi team will contact you shortly. </p>
         </div>
       </div>
     </div>
@@ -122,9 +132,17 @@
     var google_conversion_label = "w_1kCIGMlW0Qh6z1mwM";
     var google_remarketing_only = false;
     /* ]]> */
-
+    var query_msg = Cookies.get('query_page');
     var registrationEmail = Cookies.get('registration_email');
-    if (registrationEmail) {
+
+    // console.log(query_msg);
+
+    if(query_msg) {
+      $('#create-account-page').hide();
+      Cookies.remove('query_msg');
+    }
+    else if (registrationEmail) {
+      $('#create-query-page').hide();
       $("#emailIdAfterReg").attr("href", "mailto:"+registrationEmail);
       $("#emailIdAfterReg").text(registrationEmail);
       Cookies.remove('registration_email');

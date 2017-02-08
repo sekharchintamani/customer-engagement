@@ -648,7 +648,39 @@
 
     <!-- Error message if we don't get any rate list -->
     <section class="o-wrapper o-wrapper--narrow u-margin-top-none u-margin-bottom" data-js="rate-list-error" style="display: none; margin-bottom: 50px !important; text-align: center; padding: 30px;">
-      <span id="rate-list-error" style="font-size: 12px;"> We were unable to match you with the right program based on the information you provided.But don't worry, you can call us during normal business hours at 888-316-3934 or complete the form below and someone from the Newfi team will contact you to review your options.</span>
+      <span id="rate-list-error" style="font-size: 14px; color: rgba(24, 72, 141, 0.9);"> We were unable to match you with the right program based on the information you provided.But don't worry, you can call us during normal business hours at 888-316-3934 or complete the form below and someone from the Newfi team will contact you to review your options.</span>
+
+      <div class="o-layout__item" style="width: 50%; margin-top: 30px;">
+        <form data-js="user-query-form">
+          <div class="c-form-element u-margin-bottom-small">
+            <label class="c-form-element__label" for="lastname">First Name</label>
+            <div class="c-form-element__control">
+              <input type="text" id="firstname" name="lastname" class="c-input"/>
+            </div>
+          </div>
+
+          <div class="c-form-element u-margin-bottom-small">
+            <label class="c-form-element__label" for="lastname">Last Name</label>
+            <div class="c-form-element__control">
+              <input type="text" id="lastname" name="lastname" class="c-input"/>
+            </div>
+          </div>
+
+          <div class="c-form-element u-margin-bottom-small">
+            <label class="c-form-element__label" for="emailid">Email Address</label>
+            <div class="c-form-element__control">
+              <input type="email" id="emailid" name="emailid" class="c-input"/>
+            </div>
+          </div>
+
+          <div class="quote-submission-error" style="display:none; line-height: 18px; margin-bottom: 10px;">
+            <span id="quote-error" style="font-size: 12px; color: red;">  </span>
+          </div>
+
+          <input class="c-btn c-btn--prominent u-margin-top" type="submit" value="Submit">
+
+        </form>
+      </div>
     </section>
     <!-- END Error message -->
 
