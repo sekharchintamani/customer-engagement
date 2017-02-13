@@ -581,16 +581,26 @@
      * into the DOM
      */
     function renderRateDetails(program, rate, program_id, rate_id) {
+      var type = false;
+
+      if(state.chosen_loan_type == "new-purchase") {
+        type = true;
+      } else {
+        type = false;
+      }
+
       var
         template = config.templates.rates_detail,
         context = {
           'program':    program,
           'rate':       rate,
           'program_id': program_id,
-          'rate_id':    rate_id
+          'rate_id':    rate_id,
+          'type':       type
         }
         ;
 
+        console.log(context)
       dom.$rates_listing__wrapper.empty().append(template(context));
     }
 
@@ -1363,6 +1373,8 @@
         sum += propValueOrDefault(raw_rateObj, key, 0.0);
       });
       sum += propValueOrDefault(raw_rateObj, 'recordingFees1202', 87.0);
+
+      return sum;
     }
 
     /**
@@ -1516,6 +1528,14 @@
             _.sum(_.values(rate.prepaids))
             , 0);
 
+
+          if(state.chosen_loan_type == 'refinance' || state.chosen_loan_type == 'cashout') {
+            rate.third_party_costs.owners_title_ins = 0;
+          }
+
+
+
+
           var lowest_closing = rate.total_closing_costs;
 
 
@@ -1540,7 +1560,7 @@
            * In previous portal, the following function adds properties to the
            * new rate object, to be used with the registration form:
            *  initialiseClosingCostHolderObjectWithFormInput(rate, inputFormOb);
-           *
+           *  
            * I think this an be moved to the registration form itself; no other
            * need for these fields here.
            *
@@ -1581,8 +1601,13 @@
 
       });
 
-      console.log(programs)
-
+      for(var i = 0; i < programs.length; i++) {
+        for(var j = programs[i].rates.length - 1; j >= 0; j--) {
+          if(programs[i].rates[j].total_closing_costs == 0 && programs[i].rates[j].tags[0] !== "lowestClosing") {
+            programs[i].rates.splice(j,1);
+          }
+        }
+      }
 
       // Sort programs into preferred order
       programs = _.sortBy(programs, [function(o) {
