@@ -275,6 +275,12 @@
                 <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.third_party_costs.owners_title_ins}}</td>
               </tr>
               {{/if}}
+              {{#if type}}
+              <tr class="c-rates-detail__item">
+                <td class="c-rates-detail__item-label">City/County Tax Stamp</td>
+                <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.third_party_costs.city_county_tax}}</td>
+              </tr>
+              {{/if}}
               <tr class="c-rates-detail__item">
                 <td class="c-rates-detail__item-label">Lender‘s Title Ins.</td>
                 <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.third_party_costs.lenders_title_ins}}</td>
@@ -283,6 +289,12 @@
                 <td class="c-rates-detail__item-label">Closing/Escrow Fees</td>
                 <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.third_party_costs.closing_and_escrow_fees}}</td>
               </tr>
+              {{#if rate.third_party_costs.recording_fees}}
+              <tr class="c-rates-detail__item">
+                <td class="c-rates-detail__item-label">Recording Fees</td>
+                <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.third_party_costs.recording_fees}}</td>
+              </tr>
+              {{/if}}
               <tr class="c-rates-detail__item">
                 <td class="c-rates-detail__item-label">Other Fees</td>
                 <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.third_party_costs.other_fees}}</td>

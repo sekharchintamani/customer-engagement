@@ -250,7 +250,7 @@
           onkeyup: false,
           messages: {
             zipcode: {
-              remote:  jQuery.validator.format("Please enter a valid Zip Code in a Newfi approved state: AZ, CA, CO, OR or WA")
+              remote:  jQuery.validator.format("Please enter a valid Zip Code in a Newfi approved state: AZ, CA, CO, FL, OR or WA")
             }
           },
           rules: {
@@ -539,7 +539,9 @@
             .not(':visible').fadeIn(300);
         });
 
-        userRegistrationValidator.resetForm();
+        if(userRegistrationValidator) {
+          userRegistrationValidator.resetForm();
+        }
         
     }
 
@@ -557,7 +559,9 @@
             .not(':visible').fadeIn(300);
         });
 
-        userRegistrationValidator.resetForm();
+        if(userRegistrationValidator) {
+          userRegistrationValidator.resetForm();
+        }
 
     }
 
@@ -1369,10 +1373,10 @@
     function sumOtherThirdPartyFees(raw_rateObj) {
       var sum = 0;
 
-      _.each(['creditReport805', 'floodCertification807', 'wireFee812', 'notaryfee1110'], function(key){
+      _.each(['creditReport805', 'floodCertification807', 'wireFee812'], function(key){
         sum += propValueOrDefault(raw_rateObj, key, 0.0);
       });
-      sum += propValueOrDefault(raw_rateObj, 'recordingFees1202', 87.0);
+      // sum += propValueOrDefault(raw_rateObj, 'recordingFees1202', 87.0);
 
       return sum;
     }
@@ -1501,8 +1505,10 @@
             'third_party_costs': {
               'appraisal_fee':           propValueOrDefault(raw_rate, 'appraisalFee804', 0),
               'owners_title_ins':        propValueOrDefault(raw_rate, 'ownersTitleInsurance1103', 0),
+              'city_county_tax':         propValueOrDefault(raw_rate, 'cityCountyTaxStamps1204', 0),
               'lenders_title_ins':       propValueOrDefault(raw_rate, 'lendersTitleInsurance1104', 0),
               'closing_and_escrow_fees': propValueOrDefault(raw_rate, 'closingEscrowFee1102', 0),
+              'recording_fees':          propValueOrDefault(raw_rate, 'recordingFees1202', 0), 
               'other_fees':              sumOtherThirdPartyFees(raw_rate)
             },
 
