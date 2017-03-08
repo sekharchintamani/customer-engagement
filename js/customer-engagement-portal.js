@@ -847,8 +847,8 @@
             'homeWorthToday':         v.purchaseprice,
             'currentMortgageBalance': v.downpaymentdollars,
             'loanAmount':             v.purchaseprice - v.downpaymentdollars,
-            'propertyType':           v.propertyuse,
-            'residenceType':          v.residencetype,
+            'propertyType':           v.residencetype,
+            'residenceType':          v.propertyuse,
             'zipCode':                v.zipcode,
             'creditscore':            v.creditscore + 0
           };
@@ -867,8 +867,8 @@
             'propTaxMonthlyOryearly': 'Year',
             'propInsMonthlyOryearly': 'Year',
             'homeWorthToday':         v.estval,
-            'propertyType':           v.propertyuse,
-            'residenceType':          v.residencetype,
+            'propertyType':           v.residencetype,
+            'residenceType':          v.propertyuse,
             'zipCode':                v.zipcode,
             'productType':            v.fha,
             'creditscore':            v.creditscore + 0
@@ -889,8 +889,8 @@
             'propTaxMonthlyOryearly': 'Year',
             'propInsMonthlyOryearly': 'Year',
             'homeWorthToday':         v.estval,
-            'propertyType':           v.propertyuse,
-            'residenceType':          v.residencetype,
+            'propertyType':           v.residencetype,
+            'residenceType':          v.propertyuse,
             'zipCode':                v.zipcode,
             'creditscore':            v.creditscore + 0
           };
