@@ -269,13 +269,12 @@
                 <td class="c-rates-detail__item-label">Appraisal Fee</td>
                 <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.third_party_costs.appraisal_fee}}</td>
               </tr>
-              {{#if type}}
+              {{#if loanType}}
               <tr class="c-rates-detail__item">
                 <td class="c-rates-detail__item-label">Owner‘s Title Ins.</td>
                 <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.third_party_costs.owners_title_ins}}</td>
               </tr>
-              {{/if}}
-              {{#if type}}
+              
               <tr class="c-rates-detail__item">
                 <td class="c-rates-detail__item-label">City/County Tax Stamp</td>
                 <td class="c-rates-detail__item-value">{{currencyNumberNoCents rate.third_party_costs.city_county_tax}}</td>

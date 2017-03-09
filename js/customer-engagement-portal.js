@@ -588,9 +588,9 @@
       var type = false;
 
       if(state.chosen_loan_type == "new-purchase") {
-        type = true;
+        loanType = true;
       } else {
-        type = false;
+        loanType = false;
       }
 
       var
