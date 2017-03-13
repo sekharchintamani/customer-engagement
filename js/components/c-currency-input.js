@@ -23,14 +23,20 @@
   Plugin.prototype.init = function () {
     var that = this;
 
+    console.log(this.$element)
+
     // Enhance the input
     this.$element
       .on('input, change, keyup', function(e){
-        if(e.keyCode == 8) {
-          //
+
+        var start = that.element.selectionStart;
+
+        if(start == 0) {
+          
         } else {
           that.updateValue();
         }
+        
       });
 
     // Set value on init

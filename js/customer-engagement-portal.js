@@ -850,7 +850,7 @@
             'propertyType':           v.residencetype,
             'residenceType':          v.propertyuse,
             'zipCode':                v.zipcode,
-            'creditscore':            v.creditscore + 0
+            'creditscore':            v.creditscore
           };
           break;
 
@@ -871,7 +871,7 @@
             'residenceType':          v.propertyuse,
             'zipCode':                v.zipcode,
             'productType':            v.fha,
-            'creditscore':            v.creditscore + 0
+            'creditscore':            v.creditscore
           };
           break;
 
@@ -892,7 +892,7 @@
             'propertyType':           v.residencetype,
             'residenceType':          v.propertyuse,
             'zipCode':                v.zipcode,
-            'creditscore':            v.creditscore + 0
+            'creditscore':            v.creditscore
           };
           break;
       }
